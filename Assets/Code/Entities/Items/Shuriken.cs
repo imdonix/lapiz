@@ -1,0 +1,74 @@
+﻿using Photon.Pun;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class Shuriken : Item
+{
+    private float damage;
+    private float projectileSpeed;
+    private LivingEntity owner;
+
+    private Rigidbody rigid;
+
+    private float rotStatus = 0;
+    private bool impacted = false;
+
+    #region UNITY
+
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (!photonView.IsMine || impacted) return;
+
+        transform.rotation = Quaternion.Euler(0, rotStatus % 360, 90);
+        rotStatus += Time.deltaTime * 360;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!photonView.IsMine) return;
+
+        IDamagable target = collision.collider.GetComponent<IDamagable>();
+        if (!ReferenceEquals(target, null)) target.Damage(owner, damage);
+
+        impacted = true;
+        Destroy(rigid);
+    }
+
+    #endregion
+
+
+    public void AttachProperties(LivingEntity owner, float damage, float projectileSpeed)
+    {
+        this.owner = owner;
+        this.damage = damage;
+        this.projectileSpeed = projectileSpeed;
+    }
+
+    public void Shoot(Vector3 look)
+    {
+        rigid.AddForce(look * projectileSpeed);
+    }
+
+    public override void Iteract(Player source)
+    {
+        //TODO Equip
+    }
+
+    protected override float GetLifeTime()
+    {
+        return 15F;
+    }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+}
