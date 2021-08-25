@@ -26,7 +26,7 @@ public class HandSword : Weapon
         return Equip;
     }
 
-    public override void Attack(LivingEntity owner, Vector3 look)
+    public override void Attack(Ninja owner, Vector3 look)
     {
         Body body = owner.GetBody();
         Vector3 hitPos = body.transform.position + body.transform.forward;

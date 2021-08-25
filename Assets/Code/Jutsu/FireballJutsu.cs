@@ -10,7 +10,7 @@ public class FireballJutsu : Jutsu
 
     [SerializeField] private Fireball Fireball;
 
-    public override void Cast(LivingEntity caster, Vector3 from, Vector3 direction)
+    public override void Cast(Ninja caster, Vector3 from, Vector3 direction)
     {
         if(photonView.IsMine)
         {

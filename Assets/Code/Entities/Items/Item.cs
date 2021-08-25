@@ -13,8 +13,10 @@ public abstract class Item : Entity, IInteractable
 
     #region PRIVATE
 
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Awake();
+
         if (!photonView.IsMine) return;
 
         if (GetLifeTime() < lifeTime)

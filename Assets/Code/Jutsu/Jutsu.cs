@@ -12,11 +12,9 @@ public abstract class Jutsu : Entity
     [SerializeField] private float Cost;
     [SerializeField] private HandSeal[] Activation;
 
-    protected LivingEntity owner;
-
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {}
 
-    public abstract void Cast(LivingEntity caster, Vector3 from, Vector3 direction);
+    public abstract void Cast(Ninja caster, Vector3 from, Vector3 direction);
 
     public bool IsSubSubsequent(HandSeal[] seals)
     {
@@ -24,11 +22,6 @@ public abstract class Jutsu : Entity
             if (Activation[i] != seals[i])
                 return false;
         return true;    
-    }
-
-    public void AttachProperties(LivingEntity owner)
-    {
-        this.owner = owner;
     }
 
     public float GetCost()

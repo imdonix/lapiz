@@ -1,16 +1,11 @@
 ﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
-public class Player : LivingEntity
+public class Player : Ninja
 {
 
     private Vector3 camRot = Vector3.zero;
+    private Vector2 mouse = Vector2.zero;
 
     #region UNITY
 
@@ -31,6 +26,7 @@ public class Player : LivingEntity
         if (photonView.IsMine)
         {
             ReadInputs();
+            PassInteraction();
             MoveCamera();
         }
     }
@@ -50,7 +46,7 @@ public class Player : LivingEntity
 
     private void ReadInputs()
     {
-        direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+        direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         jump = Input.GetKey(KeyCode.Space);
         sprint = Input.GetKey(KeyCode.LeftShift);
         mouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -58,8 +54,27 @@ public class Player : LivingEntity
         cast = Input.GetKeyDown(KeyCode.E);
         for (int i = 0; i < SLOTS; i++) slots[i] = Input.GetKeyDown(KeyCode.Alpha0 + i);
         for (int i = 0; i < HANDSEALS; i++) seals[i] = Input.GetKeyDown(KeyCode.F1 + i);
+    }
 
-        legs.Forward(direction.z * Speed * Time.deltaTime, sprint, characterController.isGrounded);
+    private void PassInteraction()
+    {
+        if (cast) arms.CastJutsu();
+
+        for (int i = 0; i < SLOTS; i++)
+            if (slots[i])
+            {
+                arms.Swap(i - 1);
+                return;
+            }
+
+        for (int i = 0; i < HANDSEALS; i++)
+            if (seals[i])
+            {
+                arms.ShowSeal((HandSeal)i);
+                return;
+            }
+
+        if (attack) arms.Attack();
     }
 
     private void MaskBodyParts()

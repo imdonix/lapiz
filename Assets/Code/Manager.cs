@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -32,8 +32,6 @@ public class Manager : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void Update()
@@ -47,6 +45,7 @@ public class Manager : MonoBehaviourPunCallbacks
     {
         Debug.Log("[PUN] Connected to master");
         PhotonNetwork.JoinOrCreateRoom(ROOM, GetDefault(), TypedLobby.Default);
+        Manager.Instance.FreeCamera.EnableFreeCam();
     }
 
     public override void OnJoinedRoom()

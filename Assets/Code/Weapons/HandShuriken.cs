@@ -8,7 +8,7 @@ using Photon.Pun;
 
 public class HandShuriken : Throwable
 {
-    public override void Attack(LivingEntity owner, Vector3 look)
+    public override void Attack(Ninja owner, Vector3 look)
     {
         Shuriken projctile = PhotonNetwork.Instantiate(Manager.Instance.ShurikenPref.name, transform.position, Quaternion.identity).GetComponent<Shuriken>();
         projctile.AttachProperties(owner, Damage, ProjectileSpeed);

@@ -62,7 +62,7 @@ public abstract class Weapon : MonoBehaviour
     /// The attack;
     /// </summary>
     /// <returns></returns>
-    public abstract void Attack(LivingEntity owner, Vector3 look);
+    public abstract void Attack(Ninja owner, Vector3 look);
 
 
     #region PRIVATE

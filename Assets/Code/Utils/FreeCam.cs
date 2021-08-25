@@ -59,8 +59,12 @@ public class FreeCam : MonoBehaviour
     private void StartLooking()
     {
         looking = true;
+
+#if (UNITY_EDITOR)
+#else
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+#endif
     }
 
     private void StopLooking()

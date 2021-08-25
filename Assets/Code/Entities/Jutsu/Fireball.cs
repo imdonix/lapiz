@@ -16,13 +16,17 @@ class Fireball : Entity, IPunInstantiateMagicCallback
 
     #region UNITY
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         particle = GetComponent<ParticleSystem>();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         lifeTime += Time.deltaTime;
         if (lifeTime > 2) Destroy(gameObject);
     }
@@ -43,7 +47,7 @@ class Fireball : Entity, IPunInstantiateMagicCallback
         system.z = direction.z * range * FORCE;
     }
 
-    public void DoDamage(LivingEntity owner, float range, Vector3 direction, float damage, float burnTime)
+    public void DoDamage(Ninja owner, float range, Vector3 direction, float damage, float burnTime)
     {
         Head head = owner.GetHead();
         Vector3 hitPos = head.transform.position + head.transform.forward;

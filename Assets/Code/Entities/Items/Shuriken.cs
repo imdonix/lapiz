@@ -19,9 +19,13 @@ public class Shuriken : Item
 
     #region UNITY
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rigid = GetComponent<Rigidbody>();
+
+        if (!photonView.IsMine) Destroy(rigid);
     }
 
     protected override void Update()
@@ -30,7 +34,7 @@ public class Shuriken : Item
 
         if (!photonView.IsMine || impacted) return;
 
-        transform.rotation = Quaternion.Euler(0, rotStatus % 360, 90);
+        transform.rotation = Quaternion.Euler(GetSideRotation(), rotStatus % 360, 90F);
         rotStatus += Time.deltaTime * 360;
     }
 
@@ -71,4 +75,14 @@ public class Shuriken : Item
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+
+
+    private float GetSideRotation()
+    { 
+        Vector3 force = rigid.velocity.normalized;
+        float d = 90F;
+        return Mathf.Lerp(-d, d, force.y);
+    }
+
+
 }
