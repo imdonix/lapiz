@@ -42,6 +42,16 @@ public class Player : Ninja
         Camera.SetupCurrent(head.AttachCamera());
     }
 
+    public override bool IsAlly()
+    {
+        return true;
+    }
+
+    public override bool IsVillager()
+    {
+        return false;
+    }
+
     #endregion
 
     private void ReadInputs()
@@ -88,6 +98,7 @@ public class Player : Ninja
     {
         legs.Claim();
         arms.Claim();
+        head.SetBadge(Village.Mac);
     }
 
     private void MoveCamera()

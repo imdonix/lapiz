@@ -10,15 +10,11 @@ public class FireballJutsu : Jutsu
 
     [SerializeField] private Fireball Fireball;
 
-    public override void Cast(Ninja caster, Vector3 from, Vector3 direction)
+    protected override void OnCast(Ninja caster, Vector3 from, Vector3 direction)
     {
-        if(photonView.IsMine)
-        {
-            object[] args = new object[2] { direction, Range };
-            Fireball fire = PhotonNetwork.Instantiate(Fireball.name, from, Quaternion.identity, 0, args).GetComponent<Fireball>();
-            fire.DoDamage(caster, Range, direction, damage, burnTime);
-            PhotonNetwork.Destroy(gameObject);
-        }
+        object[] args = new object[2] { direction, Range };
+        Fireball fire = PhotonNetwork.Instantiate(Fireball.name, from, Quaternion.identity, 0, args).GetComponent<Fireball>();
+        fire.DoDamage(caster, Range, direction, damage, burnTime);
     }
 }
 

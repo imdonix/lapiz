@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
-class Fireball : Entity, IPunInstantiateMagicCallback
+public class Fireball : Entity, IPunInstantiateMagicCallback
 {
     private const float FORCE = 8F;
 

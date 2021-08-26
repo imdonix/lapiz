@@ -9,12 +9,19 @@ using UnityEngine;
 public abstract class Jutsu : Entity
 {
     [Header("Jutsu")]
+    [SerializeField] private int UnlockLapiz;
     [SerializeField] private float Cost;
     [SerializeField] private HandSeal[] Activation;
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {}
 
-    public abstract void Cast(Ninja caster, Vector3 from, Vector3 direction);
+    public void Cast(Ninja caster, Vector3 from, Vector3 direction)
+    {
+        if(photonView.IsMine) OnCast(caster, from, direction);
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    protected abstract void OnCast(Ninja caster, Vector3 from, Vector3 direction);
 
     public bool IsSubSubsequent(HandSeal[] seals)
     {

@@ -5,13 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public abstract class Ninja : LivingEntity
 {
+
+    [Header("Ninja")]
+    [SerializeField] public float Speed;
+    [SerializeField] public float JumpTime;
+    [SerializeField] public float JumpSpeed;
+    [SerializeField] public float Sensitivity;
+
     protected CharacterController characterController;
 
     protected Head head;
     protected Arms arms;
     protected Legs legs;
     protected Body body;
-
 
     protected Vector2 direction = Vector2.zero;
     protected bool jump = false;
@@ -90,6 +96,11 @@ public abstract class Ninja : LivingEntity
         casted.Cast(this, head.transform.position + body.transform.forward, head.transform.forward);
     }
 
+    public override void Teleport(Vector3 position)
+    {
+        characterController.Move(position - transform.position);
+    }
+
     protected void Move()
     {
         if (characterController.isGrounded && jump) jumpTimer = JumpTime;
@@ -119,10 +130,12 @@ public abstract class Ninja : LivingEntity
         if (stream.IsReading)
         {
             arms.SetSlot((int)stream.ReceiveNext());
+            head.SetBadge((Village)stream.ReceiveNext());
         }
         else
         {
             stream.SendNext(arms.GetSlot());
+            stream.SendNext(head.GetBadge());
         }
     }
 

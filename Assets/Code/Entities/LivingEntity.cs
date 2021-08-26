@@ -20,12 +20,6 @@ public abstract class LivingEntity : Entity, IDamagable
     public static int SLOTS = 3;
     public static int HANDSEALS = 3;
 
-    [Header("- Properties -")]
-    [SerializeField] public float Speed;
-    [SerializeField] public float JumpTime;
-    [SerializeField] public float JumpSpeed;
-    [SerializeField] public float Sensitivity;
-
     #region UNITY
 
     protected override void Update()
@@ -44,6 +38,15 @@ public abstract class LivingEntity : Entity, IDamagable
         if (health > maxHealth) health = maxHealth;
         if (chakra > maxChakra) chakra = maxChakra;
     }
+
+    public virtual void Teleport(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+    public abstract bool IsAlly();
+
+    public abstract bool IsVillager();
 
     protected abstract void Die();
 
@@ -69,6 +72,8 @@ public abstract class LivingEntity : Entity, IDamagable
 
     public void Damage(LivingEntity source, float damage)
     {
+        if ((source.IsAlly() && IsAlly()) || (!source.IsAlly() && !IsAlly())) return;
+
         photonView.RPC("OnDamage", photonView.Owner, source.photonView.GetInstanceID(), damage);
     }
 

@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Head : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("Head")]
     [SerializeField] private GameObject cameraContainer;
+    [SerializeField] private GameObject palmHolder;
+    [SerializeField] private GameObject[] villageBadges;
+
+
+    private Village badge = Village.None;
 
     public Camera AttachCamera()
     {
@@ -14,4 +19,33 @@ public class Head : MonoBehaviour
         cam.fieldOfView = Settings.Instance.FOV;
         return cam;
     }
+
+    public Village GetBadge()
+    {
+        return badge;
+    }
+
+    public void SetBadge(Village badge)
+    {
+        if (this.badge == badge) return;
+
+        HideAllBadge();
+        if (!ReferenceEquals(badge, Village.None))
+        {
+            palmHolder.SetActive(true);
+            villageBadges[(int)badge - 1].SetActive(true);
+        }
+
+        this.badge = badge;
+    }
+
+    private void HideAllBadge()
+    {
+        palmHolder.SetActive(false);
+        foreach (GameObject badge in villageBadges)
+            badge.SetActive(false);
+    }
+
+
+
 }
