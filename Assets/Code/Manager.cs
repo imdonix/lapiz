@@ -24,7 +24,7 @@ public class Manager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     private void Start()

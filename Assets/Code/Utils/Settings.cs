@@ -10,8 +10,8 @@ public class Settings : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
         Instance = this;
+        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
 }

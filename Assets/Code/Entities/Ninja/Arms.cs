@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Arms : MonoBehaviour
 {
-    private const float SEAL_TIME = .25F;
+    private const float SEAL_TIME = .15F;
     private const float PUTAWAY_TIME = .35F;
 
     [Header("Property")]

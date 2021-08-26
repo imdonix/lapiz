@@ -14,6 +14,7 @@ public class JutsuLibrary : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     #endregion
