@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Shuriken : Item
+public class Shuriken : Projectile
 {
     private float damage;
     private float projectileSpeed;
@@ -62,16 +62,6 @@ public class Shuriken : Item
     public void Shoot(Vector3 look)
     {
         rigid.AddForce(look * projectileSpeed);
-    }
-
-    public override void Iteract(Player source)
-    {
-        //TODO Equip
-    }
-
-    protected override float GetLifeTime()
-    {
-        return 15F;
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }

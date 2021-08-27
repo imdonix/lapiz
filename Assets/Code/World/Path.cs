@@ -16,7 +16,7 @@ public class Path : ICloneable
 
     public bool HasNext()
     {
-        return path.Count > i;
+        return path.Count - 1 > i;
     }
 
     public Node Current()

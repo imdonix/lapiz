@@ -14,7 +14,7 @@ public class Manager : MonoBehaviourPunCallbacks
 
     [Header("Prefhabs")]
     [SerializeField] public Player PlayerPref;
-    [SerializeField] public Shuriken ShurikenPref;
+    [SerializeField] public Chunin ChuninPref;
 
     [Header("Settings")]
     [SerializeField] public Vector3 StartPosition;
@@ -53,6 +53,8 @@ public class Manager : MonoBehaviourPunCallbacks
         Player myself = PhotonNetwork.Instantiate(PlayerPref.name, StartPosition, Quaternion.identity).GetComponent<Player>();
         myself.TakeControll();
         CurrentPlayerObject = myself;
+
+        PhotonNetwork.InstantiateRoomObject(ChuninPref.name, StartPosition + Vector3.up * 3, Quaternion.identity);
     }
 
 

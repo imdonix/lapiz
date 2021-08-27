@@ -96,7 +96,7 @@ public class PathFinder : MonoBehaviour
         int iterations = 0;
         Node endNode = null;
 
-        queue.Add(new Node(from, 0, 0));
+        queue.Add(new Node(from, 0, 0, Size));
         while (queue.Count > 0)
         {
             Node node = queue.ExtractMin();
@@ -140,13 +140,13 @@ public class PathFinder : MonoBehaviour
     {
         Node[] tmp = new Node[4];
         Vector2Int up = from.position + Vector2Int.up;
-        tmp[0] = new Node(up, from.position, Manhattan(up, target), from.G + 1);
+        tmp[0] = new Node(up, from.position, Manhattan(up, target), from.G + 1, Size);
         Vector2Int down = from.position + Vector2Int.down;
-        tmp[1] = new Node(down, from.position, Manhattan(down, target), from.G + 1);
+        tmp[1] = new Node(down, from.position, Manhattan(down, target), from.G + 1, Size);
         Vector2Int left = from.position + Vector2Int.left;
-        tmp[2] = new Node(left, from.position, Manhattan(left, target), from.G + 1);
+        tmp[2] = new Node(left, from.position, Manhattan(left, target), from.G + 1, Size);
         Vector2Int right = from.position + Vector2Int.right;
-        tmp[3] = new Node(right, from.position, Manhattan(right, target), from.G + 1);
+        tmp[3] = new Node(right, from.position, Manhattan(right, target), from.G + 1, Size);
         return tmp;
     }
 
@@ -158,7 +158,7 @@ public class PathFinder : MonoBehaviour
         while (!node.startNode)
         {
             node = map[node.parent.x, node.parent.y];
-            nodes.Add(map[node.position.x, node.position.y]);
+            nodes.Add(node);
         }
 
         return new Path(nodes);
@@ -201,9 +201,13 @@ public class PathFinder : MonoBehaviour
             while (clone.HasNext())
             {
                 Vector2Int pos = clone.Current().position;
-                Gizmos.DrawCube(new Vector3(pos.x * Size, 0, pos.y * Size), Vector3.one * Size);
+                Gizmos.DrawCube(new Vector3(pos.x * Size - Size/2, 0, pos.y * Size - Size/2), Vector3.one / 4 );
                 clone.Next();
             }
+
+            Gizmos.color = Color.red;
+            Vector3 p = LastPathDebug.Current().GetRealPos();
+            Gizmos.DrawCube(p, Vector3.one * 2);
         }
     }
 }

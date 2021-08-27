@@ -107,7 +107,7 @@ public class Player : Ninja
     {
         legs.Claim();
         arms.Claim();
-        head.SetBadge(Village.Mac);
+        head.SetBadge(Village.Mater);
     }
 
     private void MoveCamera()

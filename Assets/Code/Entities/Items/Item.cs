@@ -4,25 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-
 using Photon.Pun;
 
+
+[RequireComponent(typeof(Rigidbody))]
 public abstract class Item : Entity, IInteractable
 {
     protected float lifeTime;
 
+    private Rigidbody rigid;
+
     #region PRIVATE
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        rigid = GetComponent<Rigidbody>();
+        if (!PhotonNetwork.IsMasterClient) Destroy(rigid);
+    }
 
     protected override void Update()
     {
         base.Awake();
 
-        if (!photonView.IsMine) return;
+        if (PhotonNetwork.IsMasterClient) 
+        {
+            if (GetLifeTime() < lifeTime)
+                DestroyItem();
 
-        if (GetLifeTime() < lifeTime)
-            DestroyItem();
-
-        lifeTime += Time.deltaTime;
+            lifeTime += Time.deltaTime;
+        }
     }
 
     #endregion

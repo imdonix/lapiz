@@ -8,6 +8,10 @@ using UnityEngine;
 
 public abstract class LivingEntity : Entity, IDamagable
 {
+
+    private static List<LivingEntity> Allies = new List<LivingEntity>();
+    private static List<LivingEntity> Enemies = new List<LivingEntity>();
+
     [Header("LivingEntity")]
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float maxChakra;
@@ -22,10 +26,28 @@ public abstract class LivingEntity : Entity, IDamagable
 
     #region UNITY
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (IsAlly())
+            Allies.Add(this);
+        else
+            Enemies.Add(this);
+    }
+
     protected override void Update()
     {
         if (photonView.IsMine)
             UpdateStats();   
+    }
+
+    private void OnDestroy()
+    {
+        if (IsAlly())
+            Allies.Remove(this);
+        else
+            Enemies.Remove(this);
     }
 
     #endregion
@@ -86,5 +108,17 @@ public abstract class LivingEntity : Entity, IDamagable
 
     #endregion
 
+    #region STATIC
 
+    public static List<LivingEntity> GetAllies()
+    {
+        return LivingEntity.Allies;
+    }
+
+    public static List<LivingEntity> GetEnemies()
+    {
+        return LivingEntity.Enemies;
+    }
+
+    #endregion
 }
