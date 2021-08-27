@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
-    private const int MAX_ITERATION_PER_UPDATE = 500;
+    private const int MIPU = 500;
 
     [Header("World")]
     [SerializeField] private Vector2Int Grid;
@@ -14,10 +14,12 @@ public class PathFinder : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool DebugEnabled;
-    [SerializeField] private bool CollisionMap;
+    [SerializeField] private bool CollisionMapDebug;
+    [SerializeField] private Path LastPathDebug;
 
     private bool loaded;
     private bool[] walkable;
+        
 
     #region UNITY
 
@@ -28,6 +30,27 @@ public class PathFinder : MonoBehaviour
     }
 
     #endregion
+
+    /// <summary>
+    /// Convert world position into grid position.
+    /// </summary>
+    public Vector2Int GetGridPosition(Vector3 realPos)
+    {
+        return new Vector2Int(Mathf.FloorToInt(realPos.x / Size), Mathf.FloorToInt(realPos.z / Size));
+    }
+
+
+    /// <summary>
+    /// Request a path find
+    /// </summary>
+    /// <param name="from">Start in GRID position</param>
+    /// <param name="to">End in GRID position</param>
+    public PathFindRequest Request(Vector2Int from, Vector2Int to)
+    {
+        PathFindRequest request = new PathFindRequest(from, to);
+        StartCoroutine(PathFind(request));
+        return request;
+    }
 
     private void Init()
     {
@@ -51,7 +74,7 @@ public class PathFinder : MonoBehaviour
                 walkable[PosToArray(x, y)] = !Physics.CheckBox(new Vector3(Size * x, Height, Size * y), Vector3.one * Size, Quaternion.identity, terrainMask);
                 check++;
 
-                if (check > MAX_ITERATION_PER_UPDATE)
+                if (check > MIPU)
                 {
                     check = 0;
                     yield return new WaitForFixedUpdate();
@@ -62,13 +85,16 @@ public class PathFinder : MonoBehaviour
 
     private IEnumerator PathFind(PathFindRequest req)
     {
+        yield return new WaitUntil(() => loaded);
+
         MinHeap<Node> queue = new MinHeap<Node>();
         Node[,] visited = new Node[Grid.x, Grid.y];
 
-        Node endNode = null;
         Vector2Int from = req.GetStart();
         Vector2Int to = req.GetEnd();
+
         int iterations = 0;
+        Node endNode = null;
 
         queue.Add(new Node(from, 0, 0));
         while (queue.Count > 0)
@@ -76,12 +102,11 @@ public class PathFinder : MonoBehaviour
             Node node = queue.ExtractMin();
             visited[node.position.x, node.position.y] = node;
 
-            if (node.position == to) 
+            if (node.position == to)
             {
                 endNode = node;
                 break;
             }
-
 
             foreach (Node n in Neighbour(node, to))
                 if (IsNodeInside(n) && IsWalkable(n))
@@ -94,7 +119,7 @@ public class PathFinder : MonoBehaviour
                     }
                 }
 
-            if (iterations > MAX_ITERATION_PER_UPDATE / 2)
+            if (iterations > MIPU / 2)
             {
                 iterations = 0;
                 yield return new WaitForFixedUpdate();
@@ -102,7 +127,11 @@ public class PathFinder : MonoBehaviour
         }
 
         if (endNode != null)
-            req.FinalizePath(CreatePath(endNode, visited));
+        {
+            Path final = CreatePath(endNode, visited);
+            LastPathDebug = final;
+            req.FinalizePath(final);
+        }
         else
             req.FinalizePath();
     }
@@ -126,7 +155,7 @@ public class PathFinder : MonoBehaviour
         List<Node> nodes = new List<Node>();
         nodes.Add(map[node.position.x, node.position.y]);
 
-        while (node.parent != null)
+        while (!node.startNode)
         {
             node = map[node.parent.x, node.parent.y];
             nodes.Add(map[node.position.x, node.position.y]);
@@ -146,13 +175,6 @@ public class PathFinder : MonoBehaviour
         return walkable[PosToArray(pos.x, pos.y)];
     }
 
-    public PathFindRequest Request(Vector2Int from, Vector2Int to)
-    {
-        PathFindRequest request = new PathFindRequest(from, to);
-        StartCoroutine(PathFind(request));
-        return request;
-    }
-
     private bool IsNodeInside(Node n)
     {
         Vector2Int p = n.position;
@@ -164,11 +186,24 @@ public class PathFinder : MonoBehaviour
     {
         if (!DebugEnabled || !loaded) return;
 
-        for (int x = 0; x < Grid.x; x++)
-            for (int y = 0; y < Grid.y; y++)
+        if(CollisionMapDebug)
+            for (int x = 0; x < Grid.x; x++)
+                for (int y = 0; y < Grid.y; y++)
+                {
+                    Gizmos.color = walkable[PosToArray(x, y)] ? Color.white : Color.red;
+                    Gizmos.DrawCube(new Vector3(Size * x, Height, Size * y), Vector3.one * Size);
+                }
+
+        if (LastPathDebug != null)
+        {
+            Gizmos.color = Color.blue;
+            Path clone = (Path) LastPathDebug.Clone();
+            while (clone.HasNext())
             {
-                Gizmos.color = walkable[PosToArray(x, y)] ? Color.white : Color.red;
-                Gizmos.DrawCube(new Vector3(Size * x, Height, Size * y), Vector3.one * Size);
+                Vector2Int pos = clone.Current().position;
+                Gizmos.DrawCube(new Vector3(pos.x * Size, 0, pos.y * Size), Vector3.one * Size);
+                clone.Next();
             }
+        }
     }
 }

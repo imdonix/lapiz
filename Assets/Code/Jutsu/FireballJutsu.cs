@@ -15,6 +15,8 @@ public class FireballJutsu : Jutsu
         object[] args = new object[2] { direction, Range };
         Fireball fire = PhotonNetwork.Instantiate(Fireball.name, from, Quaternion.identity, 0, args).GetComponent<Fireball>();
         fire.DoDamage(caster, Range, direction, damage, burnTime);
+
+        
     }
 }
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-
-public class Path
+public class Path : ICloneable
 {
     private readonly List<Node> path;
     private int i;
@@ -27,6 +27,11 @@ public class Path
     public void Next()
     {
         i++;
+    }
+
+    public object Clone()
+    {
+        return new Path(path);
     }
 }
 

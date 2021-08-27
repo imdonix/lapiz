@@ -16,6 +16,7 @@ public class Player : Ninja
         if(photonView.IsMine)
         {
             Claim();
+            DebugPath();
         }
     }
 
@@ -53,6 +54,14 @@ public class Player : Ninja
     }
 
     #endregion
+
+    private void DebugPath()
+    {
+        PathFinder finder = World.Loaded.GetPathFinder();
+        Vector2Int start = finder.GetGridPosition(transform.position);
+        Vector2Int end = finder.GetGridPosition(new Vector3(98, 0, 75));
+        PathFindRequest req = finder.Request(start, end);
+    }
 
     private void ReadInputs()
     {
