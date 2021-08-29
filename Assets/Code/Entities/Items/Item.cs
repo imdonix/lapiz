@@ -1,59 +1,126 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 
-[RequireComponent(typeof(Rigidbody))]
 public abstract class Item : Entity, IInteractable
 {
-    protected float lifeTime;
+    [Header("Item")]
 
-    private Rigidbody rigid;
+    protected Rigidbody rigid;
+    protected Collider colider;
 
-    #region PRIVATE
+    protected float lifeTime = 0;
+    [SerializeField] protected bool pickedUp = false;
+
+    #region UNITY
 
     protected override void Awake()
     {
         base.Awake();
 
         rigid = GetComponent<Rigidbody>();
-        if (!PhotonNetwork.IsMasterClient) Destroy(rigid);
+        colider = GetComponent<Collider>();
     }
 
     protected override void Update()
     {
         base.Awake();
 
-        if (PhotonNetwork.IsMasterClient) 
+        if (photonView.IsMine)
         {
             if (GetLifeTime() < lifeTime)
                 DestroyItem();
 
             lifeTime += Time.deltaTime;
         }
+        else
+        {
+            rigid.isKinematic = true;
+        }
     }
 
     #endregion
 
-    #region PRIVATE
-    
+    private void GhostItem() 
+    {
+        rigid.isKinematic = true;
+        colider.enabled = false;
+        pickedUp = true;
+    }
+
+    private void Materialize()
+    {
+        rigid.isKinematic = false;
+        colider.enabled = true;
+        pickedUp = false;
+    }
+
     private void DestroyItem()
     {
         PhotonNetwork.Destroy(photonView);
     }
 
-    #endregion
+    public virtual bool CanInteract()
+    {
+        return true;
+    }
 
-    #region ABSTRACT
+    public virtual string GetInteractionDescription()
+    {
+        return Manager.Instance.GetLanguage().PickUp;
+    }
 
-    public abstract void Iteract(Player source);
+    public virtual void Interact(Ninja source) 
+    {
+        if (photonView.IsMine)
+        {
+            Debug.Log("Local Item pickup");
+
+            GhostItem();
+            source.PickUpItem(this);
+        }
+        else
+        {
+            Debug.Log("Other Item pickup");
+            if (!pickedUp) 
+            {
+                GhostItem();
+                source.PickUpItem(this);
+                photonView.RequestOwnership();
+            }
+        }
+    }
+
+    public void ThrowAway(Vector3 force)
+    {
+        Materialize();
+        rigid.AddForce(force);
+    }
+
+    public void PutDown(Vector3 position)
+    {
+        Materialize();
+        transform.position = position;
+    }
 
     protected abstract float GetLifeTime();
 
+
+    #region PHOTON
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsReading)
+        {
+            pickedUp = (bool)stream.ReceiveNext();
+        }
+        else
+        {
+            stream.SendNext(pickedUp);
+        }
+    }
 
     #endregion
 

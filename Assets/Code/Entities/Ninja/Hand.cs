@@ -7,7 +7,10 @@ public class Hand : MonoBehaviour
 
     [Header("Hand")]
     // We to only the end of the roatation coz it can be used with items in hand
-    [SerializeField] private Vector3[] SealsRotation; 
+    [SerializeField] private Vector3[] SealsRotation;
+    [SerializeField] private Vector3 ItemRotation;
+
+    [SerializeField] private Transform ItemHolder;
 
     private Vector3 start;
     private Vector3 target;
@@ -56,6 +59,16 @@ public class Hand : MonoBehaviour
     public Vector3 GetSealRotation(HandSeal seal)
     {
         return SealsRotation[(int) seal];
+    }
+
+    public Vector3 GetHandItemRotation()
+    {
+        return ItemRotation;
+    }
+
+    public Transform GetItemHolder()
+    {
+        return ItemHolder;
     }
 
 }

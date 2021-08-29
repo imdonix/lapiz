@@ -1,6 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections;
 
 public class Manager : MonoBehaviourPunCallbacks
 {
@@ -8,23 +10,25 @@ public class Manager : MonoBehaviourPunCallbacks
 
     public static Manager Instance;
    
-
     [Header("Components")]
     [SerializeField] public FreeCam FreeCamera;
 
     [Header("Prefhabs")]
-    [SerializeField] public Player PlayerPref;
+    [SerializeField] public NPlayer PlayerPref;
     [SerializeField] public Chunin ChuninPref;
 
     [Header("Settings")]
     [SerializeField] public Vector3 StartPosition;
 
-    private Player CurrentPlayerObject;
+    private NPlayer CurrentPlayerObject;
+    private ILanguage language;
 
+    #region UNITY
     private void Awake()
     {
         Instance = this;
         DontDestroyOnLoad(transform.parent.gameObject);
+        SetupLanguage();
     }
 
     private void Start()
@@ -32,10 +36,26 @@ public class Manager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    private void Update()
+    #endregion
+
+    public ILanguage GetLanguage()
     {
+        return language;
     }
 
+    private void SetupLanguage()
+    {
+        language = English.I;
+    }
+
+    private IEnumerator SpawnEnemy()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            PhotonNetwork.InstantiateRoomObject(ChuninPref.name, StartPosition + Vector3.up * 3, Quaternion.identity);
+            yield return new WaitForSeconds(10);
+        }
+    }
 
     #region PHOTON
 
@@ -50,11 +70,11 @@ public class Manager : MonoBehaviourPunCallbacks
     {
         Debug.Log(string.Format("[PUN] Connected to room ({0})", PhotonNetwork.CurrentRoom.PlayerCount));
 
-        Player myself = PhotonNetwork.Instantiate(PlayerPref.name, StartPosition, Quaternion.identity).GetComponent<Player>();
+        NPlayer myself = PhotonNetwork.Instantiate(PlayerPref.name, StartPosition, Quaternion.identity).GetComponent<NPlayer>();
         myself.TakeControll();
         CurrentPlayerObject = myself;
 
-        PhotonNetwork.InstantiateRoomObject(ChuninPref.name, StartPosition + Vector3.up * 3, Quaternion.identity);
+        StartCoroutine(SpawnEnemy());
     }
 
 

@@ -7,5 +7,9 @@ using System.Threading.Tasks;
 
 public interface IInteractable
 {
-    public void Iteract(Player source);
+    public void Interact(Ninja source);
+
+    public bool CanInteract();
+
+    public string GetInteractionDescription();
 }

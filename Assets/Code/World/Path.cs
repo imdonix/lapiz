@@ -10,8 +10,12 @@ public class Path : ICloneable
     public Path(List<Node> path)
     {
         this.path = path;
-        this.path.Reverse();
         this.i = 0;
+    }
+
+    public int GetLenght()
+    {
+        return path.Count;
     }
 
     public bool HasNext()
@@ -21,7 +25,7 @@ public class Path : ICloneable
 
     public Node Current()
     {
-        return path[i];
+        return path[path.Count - 1 - i];
     }
 
     public void Next()

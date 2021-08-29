@@ -10,7 +10,8 @@ public abstract class Projectile : Entity
 {
     private const float LIFE_TIME = 10F;
 
-    protected float timer;
+    protected float timer = 0;
+    protected bool impacted = false;
 
     #region UNITY
 
@@ -21,15 +22,15 @@ public abstract class Projectile : Entity
         if (!photonView.IsMine) return;
 
         if (timer > LIFE_TIME)
-            DestroyItem();
+            DestroyProjectile();
 
         timer += Time.deltaTime;
     }
 
     #endregion
 
-    private void DestroyItem()
+    protected void DestroyProjectile()
     {
-        PhotonNetwork.Destroy(photonView);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

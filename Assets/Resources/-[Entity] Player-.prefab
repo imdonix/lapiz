@@ -1000,6 +1000,8 @@ MonoBehaviour:
   - {x: 7, y: -23, z: 90}
   - {x: -7, y: -23, z: 90}
   - {x: 0, y: -15, z: 0}
+  ItemRotation: {x: 0, y: -25, z: 0}
+  ItemHolder: {fileID: 5484192233287164866}
 --- !u!1 &3140741080658545281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,7 +1263,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e50fb4e8edcc454b999c7e06d213340, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1348,6 +1350,8 @@ MonoBehaviour:
   - {x: -7, y: 23, z: -90}
   - {x: 7, y: 23, z: -90}
   - {x: 0, y: 15, z: 0}
+  ItemRotation: {x: 0, y: 25, z: 0}
+  ItemHolder: {fileID: 781057570024516195}
 --- !u!1 &5215435363691185752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1710,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e50fb4e8edcc454b999c7e06d213340, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2112,11 +2116,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7339506198694719187}
+  - component: {fileID: 5620984850394426500}
+  - component: {fileID: 1665056949496591414}
   - component: {fileID: 1471309053464273715}
   - component: {fileID: 5451641715369263002}
   - component: {fileID: 5276872302500959299}
-  - component: {fileID: 5620984850394426500}
-  - component: {fileID: 1665056949496591414}
   m_Layer: 0
   m_Name: -[Entity] Player-
   m_TagString: Untagged
@@ -2142,73 +2146,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1471309053464273715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6817891055122107045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 5451641715369263002}
-  - {fileID: 5276872302500959299}
-  - {fileID: 5947054797040979719}
-  - {fileID: 224511839}
-  - {fileID: 374597482}
-  - {fileID: 735194240}
-  - {fileID: 1388145301}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &5451641715369263002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6817891055122107045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
---- !u!114 &5276872302500959299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6817891055122107045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7c5d221af61d1845a36d453eed06001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxChakra: 100
-  health: 100
-  chakra: 100
-  healthRegen: 1.25
-  chakraRegen: 7.5
-  Speed: 5
-  JumpTime: 0.75
-  JumpSpeed: 20
-  Sensitivity: 2
 --- !u!82 &5620984850394426500
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2323,6 +2260,73 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &1471309053464273715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6817891055122107045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5451641715369263002}
+  - {fileID: 5276872302500959299}
+  - {fileID: 5947054797040979719}
+  - {fileID: 224511839}
+  - {fileID: 374597482}
+  - {fileID: 735194240}
+  - {fileID: 1388145301}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5451641715369263002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6817891055122107045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &5276872302500959299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6817891055122107045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c5d221af61d1845a36d453eed06001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxChakra: 100
+  health: 100
+  chakra: 100
+  healthRegen: 1.25
+  chakraRegen: 7.5
+  Speed: 5
+  JumpTime: 0.75
+  JumpSpeed: 20
+  Sensitivity: 2
 --- !u!1 &7134497506063181609
 GameObject:
   m_ObjectHideFlags: 0

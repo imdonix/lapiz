@@ -8,7 +8,7 @@ public abstract class Invader : Ninja
 
     private const float CHECK_ENEMY = 2.5F;
     private const float CHECK_PATH = 5F;
-    private const float REACH = 1.5F;
+    private const float REACH = 0.25F;
     private const float GOFORIT = 8.5F;
     private const float TOOH = 5F;
 
@@ -72,7 +72,9 @@ public abstract class Invader : Ninja
 
             if (airDistance < GOFORIT || ReferenceEquals(path, null) || heightDistance > TOOH)
             {
-                if (airDistance > REACH)
+                path = null;
+
+                if (airDistance > REACH * 6F)
                     MoveTorwards(direction);
                 else
                     MoveTorwards(Vector3.zero);
@@ -109,11 +111,12 @@ public abstract class Invader : Ninja
         if(!direction.AlmostEquals(Vector3.zero, 0.05F))
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         characterController.Move(((direction * (sprint ? 1.35F : 1) * Speed) + (Physics.gravity)) * Time.deltaTime);
+        legs.Forward(direction.magnitude * Speed * Time.deltaTime, sprint, characterController.isGrounded);
     }
 
     private void SetTargetLook(Vector3 target)
     {
-        head.transform.localRotation = Quaternion.LookRotation(target - transform.position);
+        head.transform.rotation = Quaternion.LookRotation(target - transform.position);
     }
 
     private void SetIdleLook()
@@ -136,7 +139,7 @@ public abstract class Invader : Ninja
                     continue;
                 }
            
-                if (GetInvaderDistance(target) < GetInvaderDistance(enemy))
+                if (GetInvaderDistance(target) > GetInvaderDistance(enemy))
                 {
                     target = enemy;
                     pathFindTimer = 0;
@@ -193,7 +196,7 @@ public abstract class Invader : Ninja
         for (int i = 0; i < LootTable.Count; i++)
             for (int y = 0; y < LootAmount[i]; y++)
                 if (Random.Range(0, 1F) < LootChance[i])
-                    PhotonNetwork.InstantiateRoomObject(LootTable[i].name, GetRandomDropLocation(), Quaternion.identity);
+                    PhotonNetwork.Instantiate(LootTable[i].name, GetRandomDropLocation(), Quaternion.identity);
     }
 
     private Vector3 GetRandomDropLocation()
@@ -216,6 +219,7 @@ public abstract class Invader : Ninja
     protected override void Die()
     {
         GenerateLoot();
+        PhotonNetwork.Destroy(photonView);
     }
 
     #endregion

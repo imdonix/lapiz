@@ -7,6 +7,7 @@ public class Arms : MonoBehaviour
 {
     private const float SEAL_TIME = .15F;
     private const float PUTAWAY_TIME = .35F;
+    private const float THROW_FORCE = 400F;
 
     [Header("Property")]
     [SerializeField] private Vector3 IdlePosition;
@@ -24,17 +25,18 @@ public class Arms : MonoBehaviour
     [SerializeField] private int slot = -1;
     [SerializeField] private float Cooldown = 0;
 
-    private Player owner;
+    private Ninja owner;
     private SealStorage storage;
 
     private bool idle = false;
     private bool isMine = false;
+    private Item item = null;
 
     #region UNITY
 
     private void Awake()
     {
-        owner = gameObject.GetComponentInParent<Player>();
+        owner = gameObject.GetComponentInParent<Ninja>();
         storage = new SealStorage();
     }
 
@@ -51,8 +53,9 @@ public class Arms : MonoBehaviour
         if (isMine)
         {
             Cooldown -= Time.deltaTime;
-            if (Cooldown < -3F && !idle)
+            if (Cooldown < -3.5F && !idle)
                 Idle();
+            PositionItem();
         }
     }
 
@@ -80,6 +83,7 @@ public class Arms : MonoBehaviour
     {
         if (Cooldown > 0) return;
 
+        ThrowAway();
         Weapon weapon = next < 0 ? null : GetSlot(next);
         Cooldown = PUTAWAY_TIME + .05F + (weapon != null ? weapon.GetEquipTime() : 0);
         StartCoroutine(Continue());
@@ -112,6 +116,7 @@ public class Arms : MonoBehaviour
         Cooldown = SEAL_TIME;
         Left.MoveTo(Left.GetSealRotation(seal), SEAL_TIME);
         Right.MoveTo(Right.GetSealRotation(seal), SEAL_TIME);
+        idle = false;
 
         storage.Store(seal);
     }
@@ -137,6 +142,29 @@ public class Arms : MonoBehaviour
                 Idle();
             }
         }
+    }
+
+    public void PickUpItem(Item item)
+    {
+        ThrowAway();
+
+        SetSlot(-1);
+        Left.MoveTo(Left.GetHandItemRotation(), SEAL_TIME);
+        Right.MoveTo(Right.GetHandItemRotation(), SEAL_TIME);
+        Cooldown = SEAL_TIME;
+        idle = false;
+
+        this.item = item;
+    }
+
+    public void ThrowAway()
+    {
+        if (ReferenceEquals(this.item, null)) return;
+
+        item.ThrowAway(owner.GetHead().transform.forward * THROW_FORCE + owner.GetVelocity());
+        this.item = null;
+
+        Idle();
     }
 
     public void SetSlot(int next)
@@ -189,7 +217,13 @@ public class Arms : MonoBehaviour
                 (item.GetValue(this) as Weapon).gameObject.SetActive(false);
                 Debug.Log((item.GetValue(this) as Weapon));
             }
+    }
 
+    private void PositionItem()
+    {
+        if (ReferenceEquals(item, null)) return;
+
+        item.transform.position = Right.GetItemHolder().position;
     }
 
     #endregion

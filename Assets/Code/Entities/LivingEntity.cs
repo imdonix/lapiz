@@ -66,10 +66,23 @@ public abstract class LivingEntity : Entity, IDamagable
         transform.position = position;
     }
 
+    /// <summary>
+    /// Is Entity a aly type
+    /// </summary>
+    /// <returns></returns>
     public abstract bool IsAlly();
 
+
+    /// <summary>
+    /// Is Entity a villager type
+    /// </summary>
+    /// <returns></returns>
     public abstract bool IsVillager();
 
+
+    /// <summary>
+    /// Only the owner called
+    /// </summary>
     protected abstract void Die();
 
     #region SERIALIZATION

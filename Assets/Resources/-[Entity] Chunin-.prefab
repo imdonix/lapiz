@@ -838,6 +838,8 @@ MonoBehaviour:
   - {x: 7, y: -23, z: 90}
   - {x: -7, y: -23, z: 90}
   - {x: 0, y: -15, z: 0}
+  ItemRotation: {x: 0, y: -25, z: 0}
+  ItemHolder: {fileID: 5101064898730831928}
 --- !u!1 &2398021560615573883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,7 +1459,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e50fb4e8edcc454b999c7e06d213340, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1544,6 +1546,8 @@ MonoBehaviour:
   - {x: -7, y: 23, z: -90}
   - {x: 7, y: 23, z: -90}
   - {x: 0, y: 15, z: 0}
+  ItemRotation: {x: 0, y: 25, z: 0}
+  ItemHolder: {fileID: 2114364793026969}
 --- !u!1 &5975333780297077907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1607,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8e50fb4e8edcc454b999c7e06d213340, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1925,15 +1929,15 @@ MonoBehaviour:
   chakra: 20
   healthRegen: 2
   chakraRegen: 1
-  Speed: 0.1
-  JumpTime: 1
-  JumpSpeed: 1
+  Speed: 4
+  JumpTime: 0.75
+  JumpSpeed: 30
   Sensitivity: 0
   LootTable:
   - {fileID: 1192620510575588020, guid: c3ce28200bcfe5841a29af9a7fee17b7, type: 3}
-  LootAmount: 01000000
+  LootAmount: 02000000
   LootChance:
-  - 0.3
+  - 1
   target: {fileID: 0}
   enemyFindTimer: 0
   pathFindTimer: 0

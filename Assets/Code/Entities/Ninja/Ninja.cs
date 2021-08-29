@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -90,6 +91,11 @@ public abstract class Ninja : LivingEntity
         return head.transform.forward;
     }
 
+    public Vector3 GetVelocity()
+    {
+        return characterController.velocity;
+    }
+
     public void Cast(Jutsu jutsu)
     {
         Jutsu casted = PhotonNetwork.Instantiate(jutsu.name, Vector3.zero, Quaternion.identity).GetComponent<Jutsu>();
@@ -99,6 +105,11 @@ public abstract class Ninja : LivingEntity
     public override void Teleport(Vector3 position)
     {
         characterController.Move(position - transform.position);
+    }
+
+    public void PickUpItem(Item item)
+    {
+        arms.PickUpItem(item);
     }
 
     protected void Move()

@@ -72,5 +72,5 @@ MonoBehaviour:
   Activation: 000000000200000000000000
   damage: 65
   burnTime: 3
-  Range: 3
+  Range: 6
   Fireball: {fileID: 5105152898656840157, guid: c5d8ac287ec18a5468ed043614430cfc, type: 3}

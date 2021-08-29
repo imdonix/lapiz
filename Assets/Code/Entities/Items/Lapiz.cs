@@ -3,16 +3,11 @@
 
 public class Lapiz : Item
 {
-    public override void Iteract(Player source)
-    {
-        //Pickup
-    }
+    private const float LIFE_TIME = 60 * 5; 
 
     protected override float GetLifeTime()
     {
-        return 60F;
+        return LIFE_TIME;
     }
-
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
 
 }

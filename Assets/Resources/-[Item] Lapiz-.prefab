@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1192620510575588023}
   - component: {fileID: 1192620510575588021}
   - component: {fileID: 1192620510575588020}
+  - component: {fileID: -9195963308667611499}
   m_Layer: 0
   m_Name: -[Item] Lapiz-
   m_TagString: Untagged
@@ -131,10 +132,11 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1192620510575588020}
+  - {fileID: -9195963308667611499}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -150,3 +152,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15cfb12edd8c8849922e7d9739cb440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickedUp: 0
+--- !u!114 &-9195963308667611499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192620510575588022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

@@ -1,11 +1,13 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class Player : Ninja
+public class NPlayer : Ninja
 {
 
     private Vector3 camRot = Vector3.zero;
     private Vector2 mouse = Vector2.zero;
+    private bool interact = false;
+    private bool throwAway = false;
 
     #region UNITY
 
@@ -66,17 +68,23 @@ public class Player : Ninja
     private void ReadInputs()
     {
         direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
-        jump = Input.GetKey(KeyCode.Space);
-        sprint = Input.GetKey(KeyCode.LeftShift);
+        jump = Input.GetKey(Settings.Instance.Jump);
+        sprint = Input.GetKey(Settings.Instance.Sprint);
         mouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         attack = Input.GetMouseButton(0);
-        cast = Input.GetKeyDown(KeyCode.E);
+        cast = Input.GetKeyDown(Settings.Instance.Cast);
+        interact = Input.GetKeyDown(Settings.Instance.Interact);
+        throwAway = Input.GetKeyDown(Settings.Instance.Throw);
         for (int i = 0; i < SLOTS; i++) slots[i] = Input.GetKeyDown(KeyCode.Alpha0 + i);
         for (int i = 0; i < HANDSEALS; i++) seals[i] = Input.GetKeyDown(KeyCode.F1 + i);
     }
 
     private void PassInteraction()
     {
+        if (interact) head.Interact();
+
+        if (throwAway) arms.ThrowAway();
+
         if (cast) arms.CastJutsu();
 
         for (int i = 0; i < SLOTS; i++)

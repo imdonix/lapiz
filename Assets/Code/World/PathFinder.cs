@@ -6,6 +6,7 @@ using UnityEngine;
 public class PathFinder : MonoBehaviour
 {
     private const int MIPU = 500;
+    private const int RAN_MP = 4;
 
     [Header("World")]
     [SerializeField] private Vector2Int Grid;
@@ -36,7 +37,7 @@ public class PathFinder : MonoBehaviour
     /// </summary>
     public Vector2Int GetGridPosition(Vector3 realPos)
     {
-        return new Vector2Int(Mathf.FloorToInt(realPos.x / Size), Mathf.FloorToInt(realPos.z / Size));
+        return new Vector2Int(Mathf.RoundToInt(realPos.x / Size), Mathf.RoundToInt(realPos.z / Size));
     }
 
 
@@ -138,22 +139,34 @@ public class PathFinder : MonoBehaviour
 
     private Node[] Neighbour(Node from, Vector2Int target)
     {
-        Node[] tmp = new Node[4];
+        Node[] tmp = new Node[8];
+        int random = Random.Range(-RAN_MP, RAN_MP);
+
         Vector2Int up = from.position + Vector2Int.up;
-        tmp[0] = new Node(up, from.position, Manhattan(up, target), from.G + 1, Size);
         Vector2Int down = from.position + Vector2Int.down;
-        tmp[1] = new Node(down, from.position, Manhattan(down, target), from.G + 1, Size);
         Vector2Int left = from.position + Vector2Int.left;
-        tmp[2] = new Node(left, from.position, Manhattan(left, target), from.G + 1, Size);
         Vector2Int right = from.position + Vector2Int.right;
-        tmp[3] = new Node(right, from.position, Manhattan(right, target), from.G + 1, Size);
+        Vector2Int leftUp = from.position + Vector2Int.left + Vector2Int.up;
+        Vector2Int leftDown = from.position + Vector2Int.left + Vector2Int.down;
+        Vector2Int rightUp = from.position + Vector2Int.right + Vector2Int.up;
+        Vector2Int rightDown = from.position + Vector2Int.right + Vector2Int.down;
+
+        tmp[0] = new Node(up, from.position, Manhattan(up, target), from.G + 10 + random, Size);
+        tmp[1] = new Node(down, from.position, Manhattan(down, target), from.G + 10 + random, Size);
+        tmp[2] = new Node(left, from.position, Manhattan(left, target), from.G + 10 + random, Size);
+        tmp[3] = new Node(right, from.position, Manhattan(right, target), from.G + 10 + random, Size);
+        tmp[4] = new Node(leftUp, from.position, Manhattan(right, target), from.G + 14 + random, Size);
+        tmp[5] = new Node(leftDown, from.position, Manhattan(right, target), from.G + 14 + random, Size);
+        tmp[6] = new Node(rightUp, from.position, Manhattan(right, target), from.G + 14 + random, Size);
+        tmp[7] = new Node(rightDown, from.position, Manhattan(right, target), from.G + 14 + random, Size);
+
         return tmp;
     }
 
     private Path CreatePath(Node node, Node[,] map)
     {
         List<Node> nodes = new List<Node>();
-        nodes.Add(map[node.position.x, node.position.y]);
+        nodes.Add(node);
 
         while (!node.startNode)
         {
@@ -191,23 +204,26 @@ public class PathFinder : MonoBehaviour
                 for (int y = 0; y < Grid.y; y++)
                 {
                     Gizmos.color = walkable[PosToArray(x, y)] ? Color.white : Color.red;
-                    Gizmos.DrawCube(new Vector3(Size * x, Height, Size * y), Vector3.one * Size);
+                    Gizmos.DrawCube(new Vector3(Size * x, Height, Size * y), Vector3.one * Size / 1.25F);
                 }
 
         if (LastPathDebug != null)
         {
             Gizmos.color = Color.blue;
             Path clone = (Path) LastPathDebug.Clone();
+
+            float i = .25F;
+            float inc = .75F / clone.GetLenght();
             while (clone.HasNext())
             {
-                Vector2Int pos = clone.Current().position;
-                Gizmos.DrawCube(new Vector3(pos.x * Size - Size/2, 0, pos.y * Size - Size/2), Vector3.one / 4 );
+                Vector3 pos = clone.Current().GetRealPos();
+                Gizmos.DrawCube(pos, Vector3.one * i );
                 clone.Next();
+                i += inc;
             }
 
             Gizmos.color = Color.red;
-            Vector3 p = LastPathDebug.Current().GetRealPos();
-            Gizmos.DrawCube(p, Vector3.one * 2);
+            Gizmos.DrawCube(LastPathDebug.Current().GetRealPos(), Vector3.one * 2);
         }
     }
 }

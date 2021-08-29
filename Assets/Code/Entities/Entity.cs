@@ -18,6 +18,5 @@ public abstract class Entity : MonoBehaviourPun, IPunObservable
 
     #endregion
 
-
     public abstract void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info);
 }

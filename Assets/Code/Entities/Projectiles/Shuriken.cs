@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Shuriken : Projectile
 {
     private float damage;
@@ -15,7 +16,6 @@ public class Shuriken : Projectile
     private Rigidbody rigid;
 
     private float rotStatus = 0;
-    private bool impacted = false;
 
     #region UNITY
 
@@ -38,12 +38,16 @@ public class Shuriken : Projectile
         rotStatus += Time.deltaTime * 360;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
 
-        IDamagable target = collision.collider.GetComponent<IDamagable>();
-        if (!ReferenceEquals(target, null)) target.Damage(owner, damage);
+        IDamagable target = other.GetComponent<IDamagable>();
+        if (!ReferenceEquals(target, null)) 
+        {
+            target.Damage(owner, damage);
+            DestroyProjectile();
+        } 
 
         impacted = true;
         Destroy(rigid);
