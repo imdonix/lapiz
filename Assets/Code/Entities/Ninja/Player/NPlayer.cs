@@ -8,6 +8,7 @@ public class NPlayer : Ninja
     private Vector2 mouse = Vector2.zero;
     private bool interact = false;
     private bool throwAway = false;
+    private bool consume = false;
 
     #region UNITY
 
@@ -31,6 +32,7 @@ public class NPlayer : Ninja
             ReadInputs();
             PassInteraction();
             MoveCamera();
+            UpdateGUI();
         }
     }
 
@@ -75,15 +77,18 @@ public class NPlayer : Ninja
         cast = Input.GetKeyDown(Settings.Instance.Cast);
         interact = Input.GetKeyDown(Settings.Instance.Interact);
         throwAway = Input.GetKeyDown(Settings.Instance.Throw);
+        consume = Input.GetKeyDown(Settings.Instance.Consume);
         for (int i = 0; i < SLOTS; i++) slots[i] = Input.GetKeyDown(KeyCode.Alpha0 + i);
         for (int i = 0; i < HANDSEALS; i++) seals[i] = Input.GetKeyDown(KeyCode.F1 + i);
     }
 
     private void PassInteraction()
     {
-        if (interact) head.Interact();
+        head.Interact(interact);
 
-        if (throwAway) arms.ThrowAway();
+        if (consume) arms.Consume();
+
+        if(throwAway) arms.ThrowAway();
 
         if (cast) arms.CastJutsu();
 
@@ -102,6 +107,11 @@ public class NPlayer : Ninja
             }
 
         if (attack) arms.Attack();
+    }
+
+    private void UpdateGUI()
+    {
+        HUD.Instance.Show(head.GetCurrentInteractable(), arms.GetItemInHand());
     }
 
     private void MaskBodyParts()

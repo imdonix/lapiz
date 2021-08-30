@@ -167,6 +167,19 @@ public class Arms : MonoBehaviour
         Idle();
     }
 
+    public void Consume()
+    {
+        if (ReferenceEquals(this.item, null)) return;
+        if (this.item is IConsumable)
+        {
+            IConsumable consumable = this.item as IConsumable;
+            consumable.Consume(owner);
+            this.item = null;
+        }
+
+        Idle();
+    }
+
     public void SetSlot(int next)
     {
         if (slot == next) return;
@@ -179,6 +192,11 @@ public class Arms : MonoBehaviour
     public int GetSlot()
     {
         return slot;
+    }
+
+    public Item GetItemInHand()
+    {
+        return item;
     }
 
     public void Claim()
@@ -224,6 +242,7 @@ public class Arms : MonoBehaviour
         if (ReferenceEquals(item, null)) return;
 
         item.transform.position = Right.GetItemHolder().position;
+        item.transform.rotation = owner.transform.rotation;
     }
 
     #endregion

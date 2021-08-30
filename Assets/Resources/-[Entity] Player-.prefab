@@ -2318,11 +2318,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  maxChakra: 100
+  maxChakra: 30
   health: 100
-  chakra: 100
-  healthRegen: 1.25
-  chakraRegen: 7.5
+  chakra: 30
+  healthRegen: 2
+  chakraRegen: 2.5
   Speed: 5
   JumpTime: 0.75
   JumpSpeed: 20

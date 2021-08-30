@@ -66,6 +66,18 @@ public abstract class LivingEntity : Entity, IDamagable
         transform.position = position;
     }
 
+    public void IncreaseMaxChakra(float amount)
+    {
+        maxChakra += amount;
+        chakra += amount;
+    }
+
+    public void IncreaseMaxHP(float amount)
+    {
+        maxHealth += amount;
+        health += amount;
+    }
+
     /// <summary>
     /// Is Entity a aly type
     /// </summary>

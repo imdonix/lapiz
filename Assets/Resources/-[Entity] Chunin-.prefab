@@ -1923,8 +1923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f189ef2f965ef745b03136d7996e267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxChakra: 20
+  maxHealth: 125
+  maxChakra: 0
   health: 100
   chakra: 20
   healthRegen: 2
@@ -1935,9 +1935,9 @@ MonoBehaviour:
   Sensitivity: 0
   LootTable:
   - {fileID: 1192620510575588020, guid: c3ce28200bcfe5841a29af9a7fee17b7, type: 3}
-  LootAmount: 02000000
+  LootAmount: 01000000
   LootChance:
-  - 1
+  - 0.1
   target: {fileID: 0}
   enemyFindTimer: 0
   pathFindTimer: 0

@@ -431,7 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8db311729d1ef4ca5f9eca3e0c2574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FreeCamera: {fileID: 0}
   PlayerPref: {fileID: 5276872302500959299, guid: c0f8e4abfbb5fd8498e7253c31c168ee, type: 3}
   ChuninPref: {fileID: 6075179368022595934, guid: fb63d753093404f4eadb9fa605362466, type: 3}
   StartPosition: {x: 16, y: 3, z: 30}
@@ -2230,6 +2229,7 @@ MonoBehaviour:
   Cast: 101
   Interact: 102
   Throw: 113
+  Consume: 99
 --- !u!1 &1457444885
 GameObject:
   m_ObjectHideFlags: 0

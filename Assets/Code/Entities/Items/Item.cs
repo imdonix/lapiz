@@ -57,7 +57,7 @@ public abstract class Item : Entity, IInteractable
         pickedUp = false;
     }
 
-    private void DestroyItem()
+    protected void DestroyItem()
     {
         PhotonNetwork.Destroy(photonView);
     }
@@ -67,9 +67,9 @@ public abstract class Item : Entity, IInteractable
         return true;
     }
 
-    public virtual string GetInteractionDescription()
+    public virtual string GetDescription()
     {
-        return Manager.Instance.GetLanguage().PickUp;
+        return string.Format("{0} {1}", Manager.Instance.GetLanguage().PickUp, GetName());
     }
 
     public virtual void Interact(Ninja source) 
@@ -105,8 +105,9 @@ public abstract class Item : Entity, IInteractable
         transform.position = position;
     }
 
-    protected abstract float GetLifeTime();
+    public abstract string GetName();
 
+    protected abstract float GetLifeTime();
 
     #region PHOTON
 

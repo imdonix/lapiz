@@ -9,8 +9,10 @@ public class Settings : MonoBehaviour
     [SerializeField] public KeyCode Cast;
     [SerializeField] public KeyCode Interact;
     [SerializeField] public KeyCode Throw;
+    [SerializeField] public KeyCode Consume;
 
     public static Settings Instance;
+
 
     private void Awake()
     {

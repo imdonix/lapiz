@@ -62,6 +62,7 @@ public class Manager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("[PUN] Connected to master");
+        
         PhotonNetwork.JoinOrCreateRoom(ROOM, GetDefault(), TypedLobby.Default);
     }
 
@@ -70,7 +71,7 @@ public class Manager : MonoBehaviourPunCallbacks
         Debug.Log(string.Format("[PUN] Connected to room ({0})", PhotonNetwork.CurrentRoom.PlayerCount));
 
         //TODO
-        SceneManager.LoadScene("Main", LoadSceneMode.Single);
+        PhotonNetwork.LoadLevel("Main");
     }
 
 

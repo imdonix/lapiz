@@ -11,5 +11,5 @@ public interface IInteractable
 
     public bool CanInteract();
 
-    public string GetInteractionDescription();
+    public string GetDescription();
 }

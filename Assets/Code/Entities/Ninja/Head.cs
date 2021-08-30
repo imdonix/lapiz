@@ -13,6 +13,8 @@ public class Head : MonoBehaviour
     private Camera cam = null;
     private Village badge = Village.None;
 
+    private IInteractable currentInteractable = null;
+
     public Camera AttachCamera()
     {
         cam = cameraContainer.AddComponent<Camera>();
@@ -24,6 +26,11 @@ public class Head : MonoBehaviour
     public Village GetBadge()
     {
         return badge;
+    }
+
+    public IInteractable GetCurrentInteractable()
+    {
+        return currentInteractable;
     }
 
     public void SetBadge(Village badge)
@@ -40,30 +47,33 @@ public class Head : MonoBehaviour
         this.badge = badge;
     }
 
-    public void Interact()
+    public void Interact(bool interact)
     {
         if (ReferenceEquals(cam, null)) return;
-        IInteractable interactable;
-        if (GetCameraTarget(out interactable))
-            if (interactable.CanInteract())
+        IInteractable interactable = null;
+        if (GetCameraTarget(ref interactable))
+        {
+            currentInteractable = interactable;
+            if (interact && interactable.CanInteract())
                 interactable.Interact(GetComponentInParent<NPlayer>());
+        }
+        else
+            currentInteractable = null;
     }
 
-    public bool GetCameraTarget(out IInteractable hit)
+    public bool GetCameraTarget<T>(ref T hit)
     {
         Ray ray = cam.ViewportPointToRay(Vector3.one * .5F);
         RaycastHit rayHit;
         if (Physics.Raycast(ray, out rayHit))
         {
-            IInteractable interactable = rayHit.collider.GetComponent<IInteractable>();
-            if (!ReferenceEquals(interactable, null))
+            T component = rayHit.collider.GetComponent<T>();
+            if (!ReferenceEquals(component, null))
             {
-                hit = interactable;
+                hit = component;
                 return true;
             }
         }
-
-        hit = null;
         return false;
     }
 

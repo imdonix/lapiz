@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class World : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class World : MonoBehaviour
 
     private void Start()
     {
+        if (AssertEditor()) return;
         InitPlayer();
         StartCoroutine(SpawnEnemy());
     }
@@ -42,11 +43,22 @@ public class World : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 15; i++)
         {
+            yield return new WaitForSeconds(5);
             PhotonNetwork.InstantiateRoomObject(Manager.Instance.ChuninPref.name, PlayerStartPosition + Vector3.up * 3, Quaternion.identity);
-            yield return new WaitForSeconds(10);
+
         }
+    }
+
+    private bool AssertEditor()
+    {
+        if (ReferenceEquals(Manager.Instance, null))
+        {
+            SceneManager.LoadScene("Start");
+            return true;
+        }
+        return false;            
     }
 
 }
