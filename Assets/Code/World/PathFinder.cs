@@ -94,6 +94,12 @@ public class PathFinder : MonoBehaviour
         Vector2Int from = req.GetStart();
         Vector2Int to = req.GetEnd();
 
+        if (from.x < 0 || from.y < 0 || from.x >= Size || from.y >= Size) 
+        {
+            req.FinalizePath();
+            yield break;
+        } 
+
         int iterations = 0;
         Node endNode = null;
 
