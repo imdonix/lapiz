@@ -10,13 +10,11 @@ public class Settings : MonoBehaviour
     [SerializeField] public KeyCode Interact;
     [SerializeField] public KeyCode Throw;
 
-
     public static Settings Instance;
 
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
 }

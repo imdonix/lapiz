@@ -9,12 +9,11 @@ public class JutsuLibrary : MonoBehaviour
     [Header("JutsuList")]
     [SerializeField] private List<Jutsu> Jutsus;
 
-    #region PRIVATE
+    #region UNITY
 
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(transform.parent.gameObject);
     }
 
     #endregion

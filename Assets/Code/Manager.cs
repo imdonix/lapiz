@@ -3,15 +3,13 @@ using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviourPunCallbacks
 {
     public const string ROOM = "lapiz";
 
     public static Manager Instance;
-   
-    [Header("Components")]
-    [SerializeField] public FreeCam FreeCamera;
 
     [Header("Prefhabs")]
     [SerializeField] public NPlayer PlayerPref;
@@ -20,7 +18,7 @@ public class Manager : MonoBehaviourPunCallbacks
     [Header("Settings")]
     [SerializeField] public Vector3 StartPosition;
 
-    private NPlayer CurrentPlayerObject;
+    private World world;
     private ILanguage language;
 
     #region UNITY
@@ -33,10 +31,21 @@ public class Manager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        StartMatchmaking();
     }
 
     #endregion
+
+    public World GetWorld()
+    {
+        return world;
+    }    
+
+    public void StartMatchmaking()
+    {
+        //TODO
+        PhotonNetwork.ConnectUsingSettings();
+    }
 
     public ILanguage GetLanguage()
     {
@@ -48,33 +57,20 @@ public class Manager : MonoBehaviourPunCallbacks
         language = English.I;
     }
 
-    private IEnumerator SpawnEnemy()
-    {
-        for (int i = 0; i < 50; i++)
-        {
-            PhotonNetwork.InstantiateRoomObject(ChuninPref.name, StartPosition + Vector3.up * 3, Quaternion.identity);
-            yield return new WaitForSeconds(10);
-        }
-    }
-
     #region PHOTON
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("[PUN] Connected to master");
         PhotonNetwork.JoinOrCreateRoom(ROOM, GetDefault(), TypedLobby.Default);
-        Manager.Instance.FreeCamera.EnableFreeCam();
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log(string.Format("[PUN] Connected to room ({0})", PhotonNetwork.CurrentRoom.PlayerCount));
 
-        NPlayer myself = PhotonNetwork.Instantiate(PlayerPref.name, StartPosition, Quaternion.identity).GetComponent<NPlayer>();
-        myself.TakeControll();
-        CurrentPlayerObject = myself;
-
-        StartCoroutine(SpawnEnemy());
+        //TODO
+        SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
 

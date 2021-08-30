@@ -483,39 +483,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4025704486191332, guid: 3a33ce58c20826a4ea7253f84444654b, type: 3}
   m_PrefabInstance: {fileID: 82245296}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &107338667
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 107338668}
-  m_Layer: 0
-  m_Name: '[Core]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &107338668
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107338667}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2118190310}
-  - {fileID: 1552225585}
-  - {fileID: 2122628338}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &114930252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6228,7 +6195,7 @@ Transform:
   - {fileID: 1596278889}
   - {fileID: 963194228}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1233208482
 MonoBehaviour:
@@ -6259,6 +6226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd8c31624d632e4e84a17e337a65674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerStartPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &1243858331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7333,55 +7301,6 @@ Transform:
   m_Father: {fileID: 448229718}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 111.93, z: 0}
---- !u!1 &1552225584
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1552225585}
-  - component: {fileID: 1552225586}
-  m_Layer: 0
-  m_Name: '[Settings]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1552225585
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552225584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 107338668}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1552225586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552225584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84826c5abaa1bb44c9a59c774b4a127d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FOV: 80
-  Jump: 32
-  Sprint: 304
-  Cast: 101
-  Interact: 102
-  Throw: 113
 --- !u!4 &1552361579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413230, guid: e3b574df61478154292ea5daf500cdee, type: 3}
@@ -10773,99 +10692,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4456754640281814, guid: 1a6a34cedc83b654099dbb403ec40524, type: 3}
   m_PrefabInstance: {fileID: 2107302502}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2118190309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2118190310}
-  - component: {fileID: 2118190311}
-  m_Layer: 0
-  m_Name: '[Manager]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2118190310
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118190309}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.1503, y: 12.695179, z: 14.633137}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 107338668}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2118190311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118190309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f8db311729d1ef4ca5f9eca3e0c2574, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FreeCamera: {fileID: 963194226}
-  PlayerPref: {fileID: 5276872302500959299, guid: c0f8e4abfbb5fd8498e7253c31c168ee, type: 3}
-  ChuninPref: {fileID: 6075179368022595934, guid: fb63d753093404f4eadb9fa605362466, type: 3}
-  StartPosition: {x: 16, y: 3, z: 30}
---- !u!1 &2122628337
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2122628338}
-  - component: {fileID: 2122628339}
-  m_Layer: 0
-  m_Name: '[JutsuLibrary]'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2122628338
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122628337}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 107338668}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2122628339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122628337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e8de4b99d1d9cb4a89e544b8a8db974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Jutsus:
-  - {fileID: 6662818574035037809, guid: 688722cf2e35ab24b9b3488facd4695f, type: 3}
-  - {fileID: 7944121758979285289, guid: 633562beaa89a444b9ef3ae82f04d7ce, type: 3}
 --- !u!1 &2126813332
 GameObject:
   m_ObjectHideFlags: 0

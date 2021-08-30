@@ -10,4 +10,8 @@ public class Lapiz : Item
         return LIFE_TIME;
     }
 
+    public override string GetInteractionDescription()
+    {
+        return string.Format("{0} {1}", base.GetInteractionDescription(), Manager.Instance.GetLanguage().Lapiz);
+    }
 }

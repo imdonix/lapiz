@@ -130,7 +130,6 @@ public class NPlayer : Ninja
     protected override void Die()
     {
         PhotonNetwork.Destroy(photonView);
-        Manager.Instance.FreeCamera.EnableFreeCam();
     }
 
 }

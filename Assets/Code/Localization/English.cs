@@ -10,5 +10,7 @@ public class English : MonoBehaviour, ILanguage
     public static English I = new English();
 
     public string PickUp => "Pick up";
+
+    public string Lapiz => "Lapiz Crystal";
 }
 
