@@ -14,9 +14,29 @@ public abstract class Entity : MonoBehaviourPun, IPunObservable
 
     protected virtual void Update() {}
 
-    protected virtual void FixedUpdate() {}
+    protected virtual void FixedUpdate()
+    {
+        if (photonView.IsMine)
+        {
+            CheckOutOffBound();
+        }
+    }
 
     #endregion
+
+
+    public virtual void Teleport(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+    private void CheckOutOffBound()
+    {
+        if (transform.position.y < World.BOTTOM)
+        {
+            Teleport(World.Loaded.GetPlayerSpawnPoint());
+        }
+    }
 
     public abstract void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info);
 }

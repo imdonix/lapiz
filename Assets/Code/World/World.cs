@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class World : MonoBehaviour
 {
+    public const int BOTTOM = -5;
+
+
     [Header("World")]
     [SerializeField] private Vector3 PlayerStartPosition;
 
@@ -29,6 +32,11 @@ public class World : MonoBehaviour
     }
 
     #endregion
+
+    public Vector3 GetPlayerSpawnPoint()
+    {
+        return PlayerStartPosition;
+    }
 
     public PathFinder GetPathFinder()
     {

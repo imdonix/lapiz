@@ -36,7 +36,7 @@ public class HandSword : Weapon
             LivingEntity entity = hit.collider.GetComponentInParent<LivingEntity>();
             if (!ReferenceEquals(entity, null))
                 if(entity != owner)
-                    entity.Damage(owner, Damage);
+                    entity.Damage(owner, Damage);           
         }
     }
 }

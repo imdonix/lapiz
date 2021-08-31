@@ -32,6 +32,11 @@ public class PathFinder : MonoBehaviour
 
     #endregion
 
+    public bool IsInsideGridPosition(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.y >= 0 && pos.x < Grid.x && pos.y < Grid.y;
+    }
+
     /// <summary>
     /// Convert world position into grid position.
     /// </summary>
@@ -40,12 +45,6 @@ public class PathFinder : MonoBehaviour
         return new Vector2Int(Mathf.RoundToInt(realPos.x / Size), Mathf.RoundToInt(realPos.z / Size));
     }
 
-
-    /// <summary>
-    /// Request a path find
-    /// </summary>
-    /// <param name="from">Start in GRID position</param>
-    /// <param name="to">End in GRID position</param>
     public PathFindRequest Request(Vector2Int from, Vector2Int to)
     {
         PathFindRequest request = new PathFindRequest(from, to);
@@ -94,7 +93,7 @@ public class PathFinder : MonoBehaviour
         Vector2Int from = req.GetStart();
         Vector2Int to = req.GetEnd();
 
-        if (from.x < 0 || from.y < 0 || from.x >= Size || from.y >= Size) 
+        if (!IsInsideGridPosition(from))
         {
             req.FinalizePath();
             yield break;

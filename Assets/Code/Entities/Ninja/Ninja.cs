@@ -104,7 +104,9 @@ public abstract class Ninja : LivingEntity
 
     public override void Teleport(Vector3 position)
     {
-        characterController.Move(position - transform.position);
+        characterController.enabled = false;
+        transform.position = position;
+        characterController.enabled = true;
     }
 
     public void PickUpItem(Item item)

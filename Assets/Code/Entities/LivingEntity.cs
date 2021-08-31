@@ -61,11 +61,6 @@ public abstract class LivingEntity : Entity, IDamagable
         if (chakra > maxChakra) chakra = maxChakra;
     }
 
-    public virtual void Teleport(Vector3 position)
-    {
-        transform.position = position;
-    }
-
     public void IncreaseMaxChakra(float amount)
     {
         maxChakra += amount;
