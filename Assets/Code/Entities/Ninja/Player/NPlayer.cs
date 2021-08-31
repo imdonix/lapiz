@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class NPlayer : Ninja
 {
-
     private Vector3 camRot = Vector3.zero;
     private Vector2 mouse = Vector2.zero;
     private bool interact = false;
@@ -141,6 +140,5 @@ public class NPlayer : Ninja
     {
         PhotonNetwork.Destroy(photonView);
     }
-
 }
 

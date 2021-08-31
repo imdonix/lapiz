@@ -15,9 +15,6 @@ public class Manager : MonoBehaviourPunCallbacks
     [SerializeField] public NPlayer PlayerPref;
     [SerializeField] public Chunin ChuninPref;
 
-    [Header("Settings")]
-    [SerializeField] public Vector3 StartPosition;
-
     private World world;
     private ILanguage language;
 
