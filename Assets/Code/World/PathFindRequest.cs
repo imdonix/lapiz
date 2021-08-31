@@ -37,21 +37,30 @@ public class PathFindRequest
 
     public bool IsDone()
     {
-        return finished;
+        lock (this)
+        {
+            return finished;
+        }
     }
 
-    public void FinalizePath(Path path)
+    public  void FinalizePath(Path path)
     {
-        this.finished = true;
-        this.successful = true;
-        this.path = path;
+        lock (this)
+        {
+            this.finished = true;
+            this.successful = true;
+            this.path = path;
+        }
     }
 
     public void FinalizePath()
     {
-        this.finished = true;
-        this.successful = false;
-        this.path = null;
+        lock (this)
+        {
+            this.finished = true;
+            this.successful = false;
+            this.path = null;
+        }
     }
 }
 

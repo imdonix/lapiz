@@ -7,7 +7,6 @@ public class World : MonoBehaviour
 {
     public const int BOTTOM = -5;
 
-
     [Header("World")]
     [SerializeField] private Vector3 PlayerStartPosition;
 
@@ -28,6 +27,8 @@ public class World : MonoBehaviour
     {
         if (AssertEditor()) return;
         InitPlayer();
+        
+        
         StartCoroutine(SpawnEnemy());
     }
 
@@ -51,9 +52,9 @@ public class World : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 50; i++)
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
             PhotonNetwork.InstantiateRoomObject(Manager.Instance.ChuninPref.name, PlayerStartPosition + Vector3.up * 3, Quaternion.identity);
 
         }
