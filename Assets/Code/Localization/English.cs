@@ -15,5 +15,6 @@ public class English : MonoBehaviour, ILanguage
     public string ThrowAway => "Throw away";
     public string Chakra => "Chakra";
     public string Consume => "Consume";
+    public string IronOre => "Iron ore";
 }
 

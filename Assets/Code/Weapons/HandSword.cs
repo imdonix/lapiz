@@ -33,7 +33,7 @@ public class HandSword : Weapon
         RaycastHit[] hits = Physics.BoxCastAll(hitPos, Vector3.one / 2, body.transform.forward, Quaternion.identity, 0.75F);
         foreach (RaycastHit hit in hits)
         {
-            LivingEntity entity = hit.collider.GetComponentInParent<LivingEntity>();
+            IDamagable entity = hit.collider.GetComponentInParent<IDamagable>();
             if (!ReferenceEquals(entity, null))
                 if(entity != owner)
                     entity.Damage(owner, Damage);           

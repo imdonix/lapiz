@@ -101,7 +101,7 @@ public class PathFindJob
     }
 
     private static int Manhattan(Vector2Int pos, Vector2Int target)
-    {
+    {   
         return Mathf.Abs(pos.x - target.x) + Mathf.Abs(pos.y - target.y);
     }
 

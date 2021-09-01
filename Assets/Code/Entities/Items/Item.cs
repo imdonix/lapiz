@@ -3,7 +3,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public abstract class Item : Entity, IInteractable
 {
     [Header("Item")]
@@ -70,6 +71,11 @@ public abstract class Item : Entity, IInteractable
     public virtual string GetDescription()
     {
         return string.Format("{0} {1}", Manager.Instance.GetLanguage().PickUp, GetName());
+    }
+
+    public bool IsPickUp()
+    {
+        return pickedUp;
     }
 
     public virtual void Interact(Ninja source) 

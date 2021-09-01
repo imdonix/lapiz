@@ -16,6 +16,13 @@ public class Chunin : Invader
         head.SetBadge(Village.Kerth);
     }
 
+    protected override void SetupLootTable()
+    {
+        LootTable.Add(ItemLibrary.Instance.LapizPref);
+        LootChance.Add(0.15F);
+        LootAmount.Add(1);
+    }
+
     #endregion
 
 }

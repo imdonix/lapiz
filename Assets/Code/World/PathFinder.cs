@@ -29,10 +29,17 @@ public class PathFinder : MonoBehaviour
     private void Awake()
     {
         Init();
-        StartCoroutine(LoadPathFindTerrain());
     }
 
     #endregion
+
+    /// <summary>
+    /// Reload the collision map for pathfinding.
+    /// </summary>
+    public void ReloadTerrain()
+    {
+        StartCoroutine(LoadPathFindTerrain());
+    }
 
     /// <summary>
     /// Convert world position into grid position.
@@ -42,6 +49,23 @@ public class PathFinder : MonoBehaviour
         return new Vector2Int(Mathf.RoundToInt(realPos.x / Size), Mathf.RoundToInt(realPos.z / Size));
     }
 
+    /// <summary>
+    /// Get a walkable pos around a object. DUMMY alg use only for WorldObjects. Return the same pos if not found.
+    /// </summary>
+    public Vector2Int GetNearestWalkablePosition(Vector2Int pos)
+    {
+        Vector2Int dir = Vector2Int.up;
+        Vector2Int it = pos;
+        for (int i = 0; i < 8; i++)
+        { 
+            if (walkable[PosToArray(Grid, it.x, it.y)]) 
+                return it;
+            it += dir;
+        }
+        return pos;
+    }
+
+
     public PathFindRequest Request(Vector2Int from, Vector2Int to)
     {
         PathFindRequest request = new PathFindRequest(from, to);
@@ -49,8 +73,8 @@ public class PathFinder : MonoBehaviour
         object[] args = new object[4] { request, walkable, Grid, Size };
         Thread finder = new Thread(PathFindJob.PathFind);
         finder.Start(args);
-        lastRequest = request;
 
+        lastRequest = request;
         return request;
     }
 

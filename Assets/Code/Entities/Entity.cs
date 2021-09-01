@@ -30,6 +30,11 @@ public abstract class Entity : MonoBehaviourPun, IPunObservable
         transform.position = position;
     }
 
+    public float GetDistance(Entity entity)
+    {
+        return Vector3.Distance(transform.position, entity.transform.position);
+    }
+
     private void CheckOutOffBound()
     {
         if (transform.position.y < World.BOTTOM)

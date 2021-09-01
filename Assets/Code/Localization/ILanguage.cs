@@ -5,5 +5,6 @@
     string ThrowAway { get; }
     string Chakra { get; }
     string Consume { get; }
+    string IronOre { get; }
 }
 

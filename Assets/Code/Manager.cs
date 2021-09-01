@@ -67,10 +67,18 @@ public class Manager : MonoBehaviourPunCallbacks
     {
         Debug.Log(string.Format("[PUN] Connected to room ({0})", PhotonNetwork.CurrentRoom.PlayerCount));
 
-        //TODO
+        DisableCursor();
         PhotonNetwork.LoadLevel("Main");
     }
 
+    private void DisableCursor()
+    {
+#if UNITY_EDITOR
+#else
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+#endif
+    }
 
     private static RoomOptions GetDefault()
     {

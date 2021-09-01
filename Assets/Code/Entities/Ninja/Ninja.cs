@@ -42,6 +42,12 @@ public abstract class Ninja : LivingEntity
         arms = GetComponentInChildren<Arms>();
         body = GetComponentInChildren<Body>();
         legs = GetComponentInChildren<Legs>();
+
+        if (photonView.IsMine)
+        {
+            arms.Claim();
+            legs.Claim();
+        }
     }
 
     protected override void Update()
@@ -122,6 +128,24 @@ public abstract class Ninja : LivingEntity
         Vector3 realDirection = (body.transform.rotation * new Vector3(direction.x, 0, direction.y));
 
         characterController.Move(((jumpForce * JumpSpeed) + (realDirection * (sprint ? 1.35F : 1) * Speed) + (Physics.gravity)) * Time.deltaTime);
+    }
+
+    public void MoveTorwards(Vector3 direction)
+    {
+        if (!direction.AlmostEquals(Vector3.zero, 0.05F))
+            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        characterController.Move(((direction * (sprint ? 1.35F : 1) * Speed) + (Physics.gravity)) * Time.deltaTime);
+        legs.Forward(direction.magnitude * Speed * Time.deltaTime, sprint, characterController.isGrounded);
+    }
+
+    public void SetTargetLook(Vector3 target)
+    {
+        head.transform.rotation = Quaternion.LookRotation(target - transform.position);
+    }
+
+    public void SetIdleLook()
+    {
+        head.transform.localRotation = Quaternion.identity;
     }
 
     private void UpdateTimers()

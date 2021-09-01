@@ -122,8 +122,6 @@ public class NPlayer : Ninja
 
     private void Claim()
     {
-        legs.Claim();
-        arms.Claim();
         head.SetBadge(Village.Mater);
     }
 

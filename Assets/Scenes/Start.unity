@@ -433,7 +433,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPref: {fileID: 5276872302500959299, guid: c0f8e4abfbb5fd8498e7253c31c168ee, type: 3}
   ChuninPref: {fileID: 6075179368022595934, guid: fb63d753093404f4eadb9fa605362466, type: 3}
-  StartPosition: {x: 16, y: 3, z: 30}
 --- !u!1 &397899409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,6 +1673,7 @@ Transform:
   - {fileID: 380355651}
   - {fileID: 1432516729}
   - {fileID: 1099295692}
+  - {fileID: 1912499433}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3136,6 +3136,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891239009}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1912499432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912499433}
+  - component: {fileID: 1912499434}
+  m_Layer: 0
+  m_Name: '[ItemLibrary]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912499433
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912499432}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1146825698}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1912499434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912499432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c94f59c2f2804fa0548e7e24d85e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LapizPref: {fileID: 1192620510575588020, guid: c3ce28200bcfe5841a29af9a7fee17b7, type: 3}
+  IronOrePref: {fileID: 5969408470616490762, guid: 7719c858426515c40bf72132f58a2df9, type: 3}
 --- !u!1 &1950872095
 GameObject:
   m_ObjectHideFlags: 0
