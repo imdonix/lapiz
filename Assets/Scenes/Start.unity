@@ -3181,6 +3181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LapizPref: {fileID: 1192620510575588020, guid: c3ce28200bcfe5841a29af9a7fee17b7, type: 3}
   IronOrePref: {fileID: 5969408470616490762, guid: 7719c858426515c40bf72132f58a2df9, type: 3}
+  IronIngotPref: {fileID: 3843817555708104469, guid: e43e9742817695f49a0693d4bd2cc88c, type: 3}
+  LapizIngotPref: {fileID: 4041381744801279746, guid: b8f9db78366720741ac3dfd6a7d2d0ab, type: 3}
 --- !u!1 &1950872095
 GameObject:
   m_ObjectHideFlags: 0

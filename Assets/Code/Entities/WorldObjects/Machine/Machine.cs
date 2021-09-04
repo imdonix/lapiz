@@ -27,6 +27,7 @@ public abstract class Machine : WorldObject
 
     public void ReadInput()
     {
+        ResetInput();
         Collider[] colliders = Physics.OverlapBox(transform.position + inputLocalPosition, inputSize / 2, Quaternion.identity);
         foreach (Collider collider in colliders)
         {
@@ -34,12 +35,21 @@ public abstract class Machine : WorldObject
             if (!ReferenceEquals(item, null))
             {
                 if (!item.IsPickUp())
-                    Process(item);
+                {
+                    item.TakeControll();
+                    Store(item);
+                }
+
             }
         }
+        Process();
     }
 
-    protected abstract void Process(Item item);
+    protected abstract void ResetInput();
+
+    protected abstract void Store(Item item);
+
+    protected abstract void Process();
 
     protected Vector3 GetOutputLocation()
     {

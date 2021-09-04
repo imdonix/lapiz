@@ -17,7 +17,7 @@ public class IronOreVain : Harvestable
 
     protected override int GetRate()
     {
-        return 8;
+        return 2;
     }
 
     protected override Item GetReward()

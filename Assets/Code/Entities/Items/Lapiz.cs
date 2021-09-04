@@ -1,19 +1,18 @@
 ﻿using Photon.Pun;
 
-
 public class Lapiz : Item, IConsumable
 {
-    private const float LIFE_TIME = 60 * 5;
+    private const string ID = "lapiz";
     private const int CHAKRA_AMOUNT = 10;
-
-    protected override float GetLifeTime()
-    {
-        return LIFE_TIME;
-    }
 
     public override string GetName()
     {
         return Manager.Instance.GetLanguage().Lapiz;
+    }
+
+    public string GetReward()
+    {
+        return Manager.Instance.GetLanguage().Chakra;
     }
 
     public void Consume(Ninja source)
@@ -22,8 +21,8 @@ public class Lapiz : Item, IConsumable
         DestroyItem();
     }
 
-    public string GetReward()
+    public override string GetID()
     {
-        return Manager.Instance.GetLanguage().Chakra;
+        return ID;
     }
 }

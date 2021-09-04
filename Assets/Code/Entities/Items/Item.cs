@@ -5,8 +5,10 @@ using Photon.Realtime;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public abstract class Item : Entity, IInteractable
+public abstract class Item : Entity, IInteractable, IEquatable<Item>
 {
+    private const float DEFAULT_LIFETIME = 60F * 5;
+
     [Header("Item")]
 
     protected Rigidbody rigid;
@@ -78,6 +80,11 @@ public abstract class Item : Entity, IInteractable
         return pickedUp;
     }
 
+    public void TakeControll()
+    {
+        photonView.RequestOwnership();
+    }
+
     public virtual void Interact(Ninja source) 
     {
         if (photonView.IsMine)
@@ -94,7 +101,7 @@ public abstract class Item : Entity, IInteractable
             {
                 GhostItem();
                 source.PickUpItem(this);
-                photonView.RequestOwnership();
+                TakeControll();
             }
         }
     }
@@ -111,9 +118,14 @@ public abstract class Item : Entity, IInteractable
         transform.position = position;
     }
 
+    public abstract string GetID();
+
     public abstract string GetName();
 
-    protected abstract float GetLifeTime();
+    protected virtual float GetLifeTime()
+    {
+        return DEFAULT_LIFETIME;
+    }
 
     #region PHOTON
 
@@ -127,6 +139,11 @@ public abstract class Item : Entity, IInteractable
         {
             stream.SendNext(pickedUp);
         }
+    }
+
+    public bool Equals(Item other)
+    {
+        return GetID() == other.GetID();
     }
 
     #endregion

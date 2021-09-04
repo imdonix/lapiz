@@ -10,9 +10,14 @@ public class Thrower : Machine
 {
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}
 
-    protected override void Process(Item item)
+    protected override void Store(Item item)
     {
         item.transform.position = GetOutputLocation();
         item.ThrowAway((Vector3.up + Vector3.right) * 1600);
     }
+
+    protected override void Process(){}
+
+    protected override void ResetInput(){}
+
 }

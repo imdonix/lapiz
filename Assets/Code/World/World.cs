@@ -19,7 +19,8 @@ public class World : MonoBehaviour
 
     [Header("Machines")]
     [SerializeField] public Thrower ThrowerPref;
-    
+    [SerializeField] public Furnace FurcanePref;
+
 
     public static World Loaded;
 
@@ -54,7 +55,10 @@ public class World : MonoBehaviour
 
     private void Update()
     {
-        UpdateMachines();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UpdateMachines();
+        }    
     }
 
     #endregion
@@ -114,7 +118,10 @@ public class World : MonoBehaviour
         //TEST
 
         PhotonNetwork.InstantiateRoomObject(ThrowerPref.name, new Vector3(43, 1, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(FurcanePref.name, new Vector3(53, 1, 43), Quaternion.identity);
 
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.LapizPref.name, new Vector3(53, 2, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.LapizPref.name, new Vector3(53, 2, 43), Quaternion.identity);
         //StartCoroutine(SpawnEnemy());
     }
 

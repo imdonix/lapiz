@@ -16,5 +16,8 @@ public class English : MonoBehaviour, ILanguage
     public string Chakra => "Chakra";
     public string Consume => "Consume";
     public string IronOre => "Iron ore";
+    public string IronIngot => "Iron ingot";
+    public string Furnace => "Furnace";
+    public string LapizIngot => "Lapiz ingot";
 }
 

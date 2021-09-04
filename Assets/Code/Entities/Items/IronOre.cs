@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 public class IronOre : Item
 {
+    private const string ID = "ore_iron";
+
+    public override string GetID()
+    {
+        return ID;
+    }
+
     public override string GetName()
     {
         return Manager.Instance.GetLanguage().IronOre;
     }
-
-    protected override float GetLifeTime()
-    {
-        return 60F * 5;
-    }
 }
+
 

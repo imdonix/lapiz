@@ -6,5 +6,8 @@
     string Chakra { get; }
     string Consume { get; }
     string IronOre { get; }
+    string IronIngot { get; }
+    string Furnace { get; }
+    string LapizIngot { get; }
 }
 

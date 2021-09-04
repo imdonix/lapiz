@@ -12,7 +12,6 @@ public abstract class Harvestable : WorldObject, IDamagable
 
     public bool Harvest(LivingEntity harvester, out Item reward)
     {
-        Debug.Log("hit");
         this.state++;
 
         if (state >= GetRate())
