@@ -8,7 +8,7 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
 {
 
     protected List<ICraftable> craftables = new List<ICraftable>();
-    protected List<Pair<Item, byte>> storage = new List<Pair<Item, byte>>();
+    protected List<ItemStack> storage = new List<ItemStack>();
     protected List<Item> raw = new List<Item>();
 
     #region UNITY
@@ -31,12 +31,13 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
     {
         AccumulateItems();
 
-
         foreach (ICraftable craftable in craftables)
         {
             Recipe recipe = craftable.GetRecipe();
-            if (recipe.IsMatch(storage))
+            List<ItemStack> consumable;
+            if (recipe.TryCraft(storage, out consumable))
             {
+                ConsumeInput(consumable);
                 Spawn(craftable);
                 return;
             }
@@ -53,24 +54,31 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
     {
         foreach (Item item in raw)
         {
-            Pair<Item, byte> found = Pair<Item, byte>.NULL;
+            ItemStack found = null;
             foreach (var pair in storage)
-                if (pair.key.Equals(item))
+                if (pair.Prefab.Equals(item))
                 {
                     found = pair;
                     break;
                 }
 
-            if (ReferenceEquals(found, Pair<Item, byte>.NULL))
-                storage.Add(new Pair<Item, byte>(item, 1));
+            if (ReferenceEquals(found, null))
+                storage.Add(new ItemStack(item.GetItemPref(), item));
             else
-                found.value++;
+                found.AddItem(item);
         }
+    }
+
+
+    private void ConsumeInput(List<ItemStack> items)
+    {
+        foreach (ItemStack stack in items)
+            foreach (Item item in stack.Items)
+                PhotonNetwork.Destroy(item.photonView);
     }
 
     private void Spawn(ICraftable craftable)
     {
-        foreach (Item item in raw) PhotonNetwork.Destroy(item.photonView);
         PhotonNetwork.InstantiateRoomObject(craftable.GetItemPref().name, GetOutputLocation(), Quaternion.identity);
     }
 

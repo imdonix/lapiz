@@ -18,6 +18,11 @@ public class IronOre : Item
     {
         return Manager.Instance.GetLanguage().IronOre;
     }
+
+    public override Item GetItemPref()
+    {
+        return ItemLibrary.Instance.IronOrePref;
+    }
 }
 
 

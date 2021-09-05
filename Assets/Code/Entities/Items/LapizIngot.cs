@@ -32,7 +32,7 @@ public class LapizIngot : Item, ICraftable
         return World.Loaded.FurcanePref;
     }
 
-    public Item GetItemPref()
+    public override Item GetItemPref()
     {
         return ItemLibrary.Instance.LapizIngotPref;
     }

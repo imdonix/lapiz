@@ -122,6 +122,8 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>
 
     public abstract string GetName();
 
+    public abstract Item GetItemPref();
+
     protected virtual float GetLifeTime()
     {
         return DEFAULT_LIFETIME;

@@ -25,4 +25,9 @@ public class Lapiz : Item, IConsumable
     {
         return ID;
     }
+
+    public override Item GetItemPref()
+    {
+        return ItemLibrary.Instance.LapizPref;
+    }
 }

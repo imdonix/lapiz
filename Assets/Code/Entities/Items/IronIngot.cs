@@ -31,7 +31,7 @@ public class IronIngot : Item, ICraftable
         return World.Loaded.FurcanePref;
     }
 
-    public Item GetItemPref()
+    public override Item GetItemPref()
     {
         return ItemLibrary.Instance.IronIngotPref;
     }
