@@ -9,10 +9,28 @@ using UnityEngine;
 public class Furnace : Crafter
 {
 
+    [Header("Furnace")]
+    [SerializeField] private GameObject Flame;
+
     private const string ID = "furnace";
 
+    private bool isWorking = false;
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {}
+    #region UNITY
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (photonView.IsMine)
+        {
+            isWorking = IsCrafting();
+        }
+
+        Flame.SetActive(isWorking);
+    }
+
+    #endregion
 
     protected override void RegisterCraftables()
     {
@@ -31,5 +49,21 @@ public class Furnace : Crafter
     {
         return Manager.Instance.GetLanguage().Furnace;
     }
+
+    #region SERIALIZATION
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsReading)
+        {
+            isWorking = (bool)stream.ReceiveNext();
+        }
+        else
+        {
+            stream.SendNext(isWorking);
+        }
+    }
+
+    #endregion
 }
 

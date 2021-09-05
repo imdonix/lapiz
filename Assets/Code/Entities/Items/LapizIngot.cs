@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 public class LapizIngot : Item, ICraftable
 {
     private const string ID = "ingot_lapiz";
+    private const float CRAFT_TIME = 15;
 
     public override string GetID()
     {
@@ -35,6 +36,11 @@ public class LapizIngot : Item, ICraftable
     public override Item GetItemPref()
     {
         return ItemLibrary.Instance.LapizIngotPref;
+    }
+
+    public float GetTime()
+    {
+        return CRAFT_TIME;
     }
 }
 

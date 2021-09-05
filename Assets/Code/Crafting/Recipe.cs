@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Recipe
 {
@@ -13,6 +14,9 @@ public class Recipe
 
     public void Add(Item ingredient, int amount)
     {
+        if (i >= ingredients.Length) 
+            throw new Exception("You cant add mote ingredient to this Recipe");
+
         ingredients[i++] = new Pair<Item, int>(ingredient, amount);
     }
 

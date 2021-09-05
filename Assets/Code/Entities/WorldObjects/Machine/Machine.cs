@@ -36,12 +36,15 @@ public abstract class Machine : WorldObject
             {
                 if (!item.IsPickUp())
                 {
-                    item.TakeControll();
-                    Store(item);
+                    if(item.photonView.IsMine)
+                        Store(item);
+                    else
+                        item.TakeControll();
                 }
 
             }
         }
+
         Process();
     }
 

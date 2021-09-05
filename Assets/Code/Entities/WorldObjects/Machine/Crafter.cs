@@ -6,10 +6,10 @@ using UnityEngine;
 
 public abstract class Crafter : Machine, IEquatable<Crafter>
 {
-
     protected List<ICraftable> craftables = new List<ICraftable>();
-    protected List<ItemStack> storage = new List<ItemStack>();
-    protected List<Item> raw = new List<Item>();
+    private List<ItemStack> storage = new List<ItemStack>();
+    private List<Item> raw = new List<Item>();
+    private List<Craft> pending = new List<Craft>();
 
     #region UNITY
 
@@ -18,6 +18,14 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
         base.Awake();
         this.craftables = new List<ICraftable>();
         RegisterCraftables();
+    }
+
+    protected override void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UpdateCrafts();
+        }
     }
 
     #endregion
@@ -38,7 +46,7 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
             if (recipe.TryCraft(storage, out consumable))
             {
                 ConsumeInput(consumable);
-                Spawn(craftable);
+                pending.Add(Craft.Start(craftable, this));
                 return;
             }
         }
@@ -48,6 +56,11 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
     {
         raw.Clear();
         storage.Clear();
+    }
+
+    public bool IsCrafting() 
+    {
+        return pending.Count > 0;
     }
 
     private void AccumulateItems()
@@ -69,7 +82,6 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
         }
     }
 
-
     private void ConsumeInput(List<ItemStack> items)
     {
         foreach (ItemStack stack in items)
@@ -80,6 +92,24 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
     private void Spawn(ICraftable craftable)
     {
         PhotonNetwork.InstantiateRoomObject(craftable.GetItemPref().name, GetOutputLocation(), Quaternion.identity);
+    }
+
+    private void UpdateCrafts()
+    {
+        List<Craft> done = new List<Craft>();
+        foreach (Craft craft in pending)
+        {
+            craft.Update();
+            if (craft.IsDone())
+            {
+                craft.End();
+                done.Add(craft);
+                Spawn(craft.Craftable);
+            }
+        }
+
+        foreach (Craft craft in done)
+            pending.Remove(craft);
     }
 
     protected abstract void RegisterCraftables();
