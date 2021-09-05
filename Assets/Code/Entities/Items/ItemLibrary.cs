@@ -20,6 +20,14 @@ public class ItemLibrary : MonoBehaviour
     [SerializeField] public IronOre IronOrePref;
     [SerializeField] public IronIngot IronIngotPref;
     [SerializeField] public LapizIngot LapizIngotPref;
+    [SerializeField] public ChakraMoon ChakraMoonPref;
+    [SerializeField] public HighBlade HighBladePref;
+    [SerializeField] public NatureSword NatureSwordPref;
+    [SerializeField] public ShurikenItem ShurikenPref;
+    [SerializeField] public BaseSword SwordPref;
+    [SerializeField] public Axe AxePref;
+    [SerializeField] public PickAxe PickaxePref;
+
 
 
     public List<ICraftable> GetCraftablePrefs(Crafter crafter) 

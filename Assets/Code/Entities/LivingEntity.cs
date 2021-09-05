@@ -17,10 +17,6 @@ public abstract class LivingEntity : Entity, IDamagable
     [SerializeField] protected float chakraRegen;
 
 
-    public static int SLOTS = 3;
-    public static int HANDSEALS = 3;
-
-
     #region UNITY
 
     protected override void Awake()

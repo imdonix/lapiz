@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public abstract class Ninja : LivingEntity
 {
+    public static int SLOTS = 4;
+    public static int HANDSEALS = 3;
 
     [Header("Ninja")]
     [SerializeField] public float Speed;

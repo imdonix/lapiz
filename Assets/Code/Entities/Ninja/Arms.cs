@@ -17,13 +17,23 @@ public class Arms : MonoBehaviour
     [SerializeField] private Hand Left;
     [SerializeField] private Hand Right;
 
-    [Header("Weapons")]
-    [SerializeField] private HandSword Sword;
-    [SerializeField] private HandShuriken Shuriken;
+    [Header("Equipments")]
+    [Header("Weapon")]
+    [SerializeField] public HandSword BaseSword;
+    [SerializeField] public HandShuriken Shuriken;
+    [SerializeField] public HandChakraMoon ChakraMoon;
+    [SerializeField] public HandHighBlade HighBlade;
+    [SerializeField] public HandNatureSword NatureSword;
+
+    [Header("Tool")]
+    [SerializeField] public HandAxe Axe;
+    [SerializeField] public HandPickaxe Pickaxe;
 
     [Header("Debug")]
     [SerializeField] private int slot = -1;
     [SerializeField] private float Cooldown = 0;
+
+    private Weapon[] WeaponSlots;
 
     private Ninja owner;
     private SealStorage storage;
@@ -38,6 +48,7 @@ public class Arms : MonoBehaviour
     {
         owner = gameObject.GetComponentInParent<Ninja>();
         storage = new SealStorage();
+        LoadSlots();
     }
 
     private void Start()
@@ -159,12 +170,14 @@ public class Arms : MonoBehaviour
 
     public void ThrowAway()
     {
-        if (ReferenceEquals(this.item, null)) return;
+        if (!ReferenceEquals(this.item, null)) 
+        {
+            item.ThrowAway(owner.GetHead().transform.forward * THROW_FORCE + owner.GetVelocity());
+            this.item = null;
+            Idle();
+        }
 
-        item.ThrowAway(owner.GetHead().transform.forward * THROW_FORCE + owner.GetVelocity());
-        this.item = null;
 
-        Idle();
     }
 
     public void Consume()
@@ -215,26 +228,9 @@ public class Arms : MonoBehaviour
         idle = true;
     }
 
-
     private Weapon GetSlot(int slot)
     {
-        switch (slot)
-        {
-            case 0: return Sword;
-            case 1: return Shuriken;
-        }
-
-        return Sword;
-    }
-
-    private void DisableAllWeapon()
-    {
-        foreach (PropertyInfo item in typeof(Arms).GetProperties())
-            if (ReferenceEquals(item.GetType().BaseType, typeof(Weapon)))
-            {
-                (item.GetValue(this) as Weapon).gameObject.SetActive(false);
-                Debug.Log((item.GetValue(this) as Weapon));
-            }
+        return WeaponSlots[slot];
     }
 
     private void PositionItem()
@@ -243,6 +239,19 @@ public class Arms : MonoBehaviour
 
         item.transform.position = Right.GetItemHolder().position;
         item.transform.rotation = owner.transform.rotation;
+    }
+
+    private void LoadSlots()
+    {
+        List<Weapon> weapons = new List<Weapon>();
+        foreach (FieldInfo info in typeof(Arms).GetFields())
+        {
+            Debug.Log(info.ToString());
+            object obj = info.GetValue(this);
+            if (obj is Weapon) weapons.Add((Weapon) obj);
+        }
+
+        WeaponSlots = weapons.ToArray();
     }
 
     #endregion

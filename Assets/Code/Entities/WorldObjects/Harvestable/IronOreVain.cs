@@ -1,10 +1,4 @@
 ﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 public class IronOreVain : Harvestable
 {
@@ -12,17 +6,22 @@ public class IronOreVain : Harvestable
 
     protected override float GetDropDistacne()
     {
-        return 4.5F;
+        return 2F;
     }
 
     protected override int GetRate()
     {
-        return 2;
+        return 5;
     }
 
     protected override Item GetReward()
     {
         return ItemLibrary.Instance.IronOrePref;
+    }
+
+    protected override bool IsCorrectTool(HandTool tool)
+    {
+        return tool.GetType().Equals(typeof(HandPickaxe));
     }
 }
 

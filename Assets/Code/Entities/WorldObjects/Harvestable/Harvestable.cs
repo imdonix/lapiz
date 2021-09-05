@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class Harvestable : WorldObject, IDamagable
+public abstract class Harvestable : WorldObject, IHarvestable
 {
     private int state = 0;
 
-    public bool Harvest(LivingEntity harvester, out Item reward)
+    public bool Harvest(LivingEntity harvester, HandTool tool, out Item reward)
     {
+        reward = null;
+        if (!IsCorrectTool(tool)) return false;
+
         this.state++;
 
         if (state >= GetRate())
@@ -21,7 +24,6 @@ public abstract class Harvestable : WorldObject, IDamagable
             this.state = 0;
             return true;
         }
-        reward = null;
         return false;
     }
 
@@ -31,15 +33,11 @@ public abstract class Harvestable : WorldObject, IDamagable
         return PhotonNetwork.Instantiate(pref.name, pos, Quaternion.identity).GetComponent<Item>();
     }
 
-    public void Damage(LivingEntity source, float damage)
-    {
-        Item tmp;
-        Harvest(source, out tmp);
-    }
-
     protected abstract Item GetReward();
 
     protected abstract int GetRate();
+
+    protected abstract bool IsCorrectTool(HandTool tool);
 
     protected abstract float GetDropDistacne();
 

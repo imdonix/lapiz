@@ -18,7 +18,6 @@ public class NPlayer : Ninja
         if(photonView.IsMine)
         {
             Claim();
-            DebugPath();
         }
     }
 
@@ -58,14 +57,6 @@ public class NPlayer : Ninja
 
     #endregion
 
-    private void DebugPath()
-    {
-        PathFinder finder = World.Loaded.GetPathFinder();
-        Vector2Int start = finder.GetGridPosition(transform.position);
-        Vector2Int end = finder.GetGridPosition(new Vector3(98, 0, 75));
-        PathFindRequest req = finder.Request(start, end);
-    }
-
     private void ReadInputs()
     {
         direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
@@ -87,7 +78,7 @@ public class NPlayer : Ninja
 
         if (consume) arms.Consume();
 
-        if(throwAway) arms.ThrowAway();
+        if (throwAway) arms.ThrowAway();
 
         if (cast) arms.CastJutsu();
 

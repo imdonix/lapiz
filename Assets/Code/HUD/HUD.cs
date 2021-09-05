@@ -53,7 +53,7 @@ public class HUD : MonoBehaviour
             if(hand is IConsumable)
                 builder.Append(string.Format("[{0}] {1} (for {2})\n",
                     Settings.Instance.Consume.ToString(),
-                    Manager.Instance.GetLanguage().Consume,
+                    Manager.Instance.GetLanguage().Use,
                     (hand as IConsumable).GetReward()));
 
         }

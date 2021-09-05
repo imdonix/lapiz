@@ -4,10 +4,18 @@
     string Lapiz { get; }
     string ThrowAway { get; }
     string Chakra { get; }
-    string Consume { get; }
+    string Use { get; }
     string IronOre { get; }
     string IronIngot { get; }
     string Furnace { get; }
     string LapizIngot { get; }
+    string ChakraMoon { get; }
+    string Equipment { get; }
+    string HighBlade { get; }
+    string NatureSword { get; }
+    string Shuriken { get; }
+    string Sword { get; }
+    string Axe { get; }
+    string PickAxe { get; }
 }
 
