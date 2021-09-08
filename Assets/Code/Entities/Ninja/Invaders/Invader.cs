@@ -87,6 +87,7 @@ public abstract class Invader : NPC
 
     protected abstract void SetupLootTable();
 
+
     #region NINJA
 
     public override bool IsAlly()

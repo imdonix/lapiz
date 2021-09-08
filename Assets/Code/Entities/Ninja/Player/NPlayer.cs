@@ -85,7 +85,8 @@ public class NPlayer : Ninja
         for (int i = 0; i < SLOTS; i++)
             if (slots[i])
             {
-                arms.Swap(i - 1);
+                if (i == 0) arms.Swap(-1);
+                Swap((ToolType)i - 1);
                 return;
             }
 
@@ -128,6 +129,17 @@ public class NPlayer : Ninja
     protected override void Die()
     {
         PhotonNetwork.Destroy(photonView);
+    }
+
+    public override void Equip(Tool item)
+    {
+        Tool old;
+        if (inventory.Equip(item, out old))
+        {
+            Item spawned = PhotonNetwork.Instantiate(old.name, transform.position + transform.forward, Quaternion.identity).GetComponent<Item>();
+            arms.ThrowAway(spawned);
+        }
+        Swap(item.GetToolType());
     }
 }
 

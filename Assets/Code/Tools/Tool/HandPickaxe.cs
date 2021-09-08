@@ -11,5 +11,10 @@ public class HandPickaxe : HandTool
     {
         return 0.75F;
     }
+
+    public override Item GetItemPref()
+    {
+        return ItemLibrary.Instance.PickaxePref;
+    }
 }
 

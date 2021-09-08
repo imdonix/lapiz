@@ -11,7 +11,8 @@ public abstract class Tool : Item, IConsumable
 
     public void Consume(Ninja source)
     {
-        throw new NotImplementedException();
+        source.Equip(this);
+        DestroyItem();
     }
 
     public string GetReward()
@@ -23,5 +24,7 @@ public abstract class Tool : Item, IConsumable
     {
         return LIFETIME;
     }
+
+    public abstract ToolType GetToolType();
 }
 

@@ -21,6 +21,7 @@ public abstract class Ninja : LivingEntity
     protected Arms arms;
     protected Legs legs;
     protected Body body;
+    protected Inventory inventory;
 
     protected Vector2 direction = Vector2.zero;
     protected bool jump = false;
@@ -44,6 +45,7 @@ public abstract class Ninja : LivingEntity
         arms = GetComponentInChildren<Arms>();
         body = GetComponentInChildren<Body>();
         legs = GetComponentInChildren<Legs>();
+        inventory = new Inventory();
 
         if (photonView.IsMine)
         {
@@ -122,6 +124,24 @@ public abstract class Ninja : LivingEntity
         arms.PickUpItem(item);
     }
 
+    public void Swap(ToolType type)
+    {
+        Tool tool = inventory.GetTool(type);
+        if (ReferenceEquals(tool, null))
+        {
+            arms.Swap(-1);
+            return;
+        }
+
+        Weapon[] weapons = arms.GetEquipmentSlots();
+        for (int i = 0; i < weapons.Length; i++)
+            if (weapons[i].GetItemPref().Equals(tool))
+            {
+                arms.Swap(i);
+                return;
+            }
+    }
+
     protected void Move()
     {
         if (characterController.isGrounded && jump) jumpTimer = JumpTime;
@@ -159,6 +179,8 @@ public abstract class Ninja : LivingEntity
     {
         legs.Forward(direction.y * Speed * Time.deltaTime, sprint, characterController.isGrounded);
     }
+
+    public abstract void Equip(Tool item);
 
     #region SERIALIZATION
 

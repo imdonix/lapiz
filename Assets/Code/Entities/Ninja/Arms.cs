@@ -176,8 +176,16 @@ public class Arms : MonoBehaviour
             this.item = null;
             Idle();
         }
+    }
 
-
+    public void ThrowAway(Item item)
+    {
+        if (!ReferenceEquals(this.item, null))
+        {
+            item.ThrowAway(owner.GetHead().transform.forward * THROW_FORCE + owner.GetVelocity());
+            this.item = null;
+            Idle();
+        }
     }
 
     public void Consume()
@@ -217,6 +225,11 @@ public class Arms : MonoBehaviour
         isMine = true;
         Right.Claim();
         Left.Claim();
+    }
+
+    public Weapon[] GetEquipmentSlots()
+    {
+        return WeaponSlots;
     }
 
     #region PRIVATE

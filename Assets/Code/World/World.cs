@@ -120,13 +120,24 @@ public class World : MonoBehaviour
         PhotonNetwork.InstantiateRoomObject(ThrowerPref.name, new Vector3(43, 1, 43), Quaternion.identity);
         PhotonNetwork.InstantiateRoomObject(FurcanePref.name, new Vector3(53, 1, 43), Quaternion.identity);
 
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, new Vector3(53, 1, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, new Vector3(53, 1, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, new Vector3(53, 1, 43), Quaternion.identity);
+
+
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.AxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
+
+        /*
         for (int i = 0; i < 6; i++)
             PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.LapizPref.name, new Vector3(53, 3+i, 43), Quaternion.identity);
         for (int i = 0; i < 45; i++)
             PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.IronOrePref.name, new Vector3(53, 10+i, 43), Quaternion.identity);
+        */
 
-
-        //StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
     }
 
     private void CreateHarvestables()

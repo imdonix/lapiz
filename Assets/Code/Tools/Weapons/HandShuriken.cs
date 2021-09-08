@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 
 public class HandShuriken : Throwable
@@ -16,5 +11,10 @@ public class HandShuriken : Throwable
         Shuriken projctile = PhotonNetwork.Instantiate(ShurikenPref.name, transform.position, Quaternion.identity).GetComponent<Shuriken>();
         projctile.AttachProperties(owner, Damage, ProjectileSpeed);
         projctile.Shoot(look);
+    }
+
+    public override Item GetItemPref()
+    {
+        return ItemLibrary.Instance.ShurikenPref;
     }
 }

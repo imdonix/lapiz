@@ -23,5 +23,10 @@ public class PickAxe : Tool
     {
         return Manager.Instance.GetLanguage().PickAxe;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Tool;
+    }
 }
 

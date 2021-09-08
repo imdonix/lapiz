@@ -23,5 +23,10 @@ public class BaseSword : Tool
     {
         return Manager.Instance.GetLanguage().Sword;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Sword;
+    }
 }
 

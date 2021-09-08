@@ -8,5 +8,10 @@ public class HandAxe : HandTool
     {
         return 1F;
     }
+
+    public override Item GetItemPref()
+    {
+        return ItemLibrary.Instance.AxePref;
+    }
 }
 

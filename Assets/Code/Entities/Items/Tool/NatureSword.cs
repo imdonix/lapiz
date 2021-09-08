@@ -23,5 +23,10 @@ public class NatureSword : Tool
     {
         return Manager.Instance.GetLanguage().NatureSword;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Sword;
+    }
 }
 

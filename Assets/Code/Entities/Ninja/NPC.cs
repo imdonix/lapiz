@@ -51,5 +51,7 @@ public abstract class NPC : Ninja
         this.job = job;
     }
 
+    public override void Equip(Tool item){}
+
 }
 

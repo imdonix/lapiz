@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour, IItemable
 {
     [Header("Weapon")]
     [SerializeField] protected float Damage;
@@ -64,6 +64,7 @@ public abstract class Weapon : MonoBehaviour
     /// <returns></returns>
     public abstract void Attack(Ninja owner, Vector3 look);
 
+    public abstract Item GetItemPref();
 
     #region PRIVATE
 

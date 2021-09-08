@@ -23,5 +23,10 @@ public class ShurikenItem : Tool
     {
         return Manager.Instance.GetLanguage().Shuriken;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Throwable;
+    }
 }
 

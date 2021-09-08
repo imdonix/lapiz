@@ -1,9 +1,7 @@
 ﻿
-public interface ICraftable
+public interface ICraftable : IItemable
 {
     public Recipe GetRecipe();
-
-    public Item GetItemPref();
 
     public Crafter GetCrafterPrefhab();
 

@@ -23,5 +23,10 @@ public class HighBlade : Tool
     {
         return Manager.Instance.GetLanguage().HighBlade;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Sword;
+    }
 }
 

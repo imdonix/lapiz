@@ -41,5 +41,10 @@ public class ChakraMoon : Tool, ICraftable
     {
         return 30F;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Sword;
+    }
 }
 

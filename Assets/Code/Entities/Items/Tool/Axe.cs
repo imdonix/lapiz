@@ -23,5 +23,10 @@ public class Axe : Tool
     {
         return Manager.Instance.GetLanguage().Axe;
     }
+
+    public override ToolType GetToolType()
+    {
+        return ToolType.Tool;
+    }
 }
 

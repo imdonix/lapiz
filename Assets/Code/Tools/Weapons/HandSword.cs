@@ -2,6 +2,7 @@
 
 
 public class HandSword : Weapon
+
 {
     [Header("Properties")]
 
@@ -37,5 +38,10 @@ public class HandSword : Weapon
                 if(entity != owner)
                     entity.Damage(owner, Damage);           
         }
+    }
+
+    public override Item GetItemPref()
+    {
+        return ItemLibrary.Instance.SwordPref;
     }
 }
