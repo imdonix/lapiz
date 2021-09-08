@@ -76,10 +76,6 @@ public abstract class Invader : NPC
                     PhotonNetwork.Instantiate(LootTable[i].name, GetRandomDropLocation(), Quaternion.identity);
     }
 
-    private Vector3 GetRandomDropLocation()
-    {
-        return transform.position + new Vector3(Random.Range(-1F, 1F), 1F, Random.Range(-1F, 1F));
-    }
 
     private void InitLootTable()
     {

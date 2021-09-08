@@ -128,6 +128,8 @@ public class NPlayer : Ninja
 
     protected override void Die()
     {
+        DropInventoryItems();
+
         PhotonNetwork.Destroy(photonView);
     }
 

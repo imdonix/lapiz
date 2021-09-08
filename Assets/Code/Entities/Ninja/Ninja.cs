@@ -195,6 +195,22 @@ public abstract class Ninja : LivingEntity
 
     public abstract void Equip(Tool item);
 
+    protected Vector3 GetRandomDropLocation()
+    {
+        return transform.position + new Vector3(UnityEngine.Random.Range(-1.5F, 11.5F), 1F, UnityEngine.Random.Range(-1.5F, 1.5F));
+    }
+
+    protected void DropInventoryItems()
+    {
+        Item item = arms.GetItemInHand();
+        if (!ReferenceEquals(item, null))
+            PhotonNetwork.Instantiate(item.GetItemPref().name, GetRandomDropLocation(), Quaternion.identity);
+
+        foreach (Tool tool in inventory.GetAll())
+            if(!ReferenceEquals(tool, null))
+                PhotonNetwork.Instantiate(tool.name, GetRandomDropLocation(), Quaternion.identity);
+    }
+
     #region SERIALIZATION
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

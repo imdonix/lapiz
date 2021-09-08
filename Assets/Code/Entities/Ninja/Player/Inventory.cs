@@ -36,5 +36,10 @@ public class Inventory
     {
         return equipments[(int)type];
     }
+
+    public Tool[] GetAll()
+    {
+        return equipments;
+    }
 }
 
