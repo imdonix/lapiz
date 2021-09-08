@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using UnityEngine;
 
 public class Chunin : Invader 
 {
-
     #region UNITY
 
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    #endregion
+
+    protected override void SetupInventory()
+    {
         head.SetBadge(Village.Kerth);
+
+        inventory.Equip(ItemLibrary.Instance.SwordPref);
     }
 
     protected override void SetupLootTable()
@@ -22,8 +29,5 @@ public class Chunin : Invader
         LootChance.Add(0.15F);
         LootAmount.Add(1);
     }
-
-    #endregion
-
 }
 

@@ -14,6 +14,13 @@ public class Inventory
         int toolTypes = Enum.GetNames(typeof(ToolType)).Length;
         this.equipments = new Tool[toolTypes]; 
     }
+
+    public void Equip(Tool item)
+    {
+        Tool tmp;
+        Equip(item, out tmp);
+    }
+
     /// <summary>
     /// Equip the item. If the item slot is used return true and the old tool, otherwise return false
     /// </summary>

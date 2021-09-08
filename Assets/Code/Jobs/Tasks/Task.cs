@@ -2,12 +2,20 @@
 {
     private bool isDone = false;
     private bool isInited = false;
+    private bool isFailed = false;
+
+    protected readonly Ninja owner;
+
+    protected Task(Ninja owner)
+    {
+        this.owner = owner;
+    }
 
     public void Update()
     {
         if (!isDone)
         {
-            if (isInited)
+            if (!isInited)
             {
                 DoInit();
                 isInited = true;
@@ -33,9 +41,16 @@
         this.isDone = false;
     }
 
-    protected void Finish()
+    protected void Succeed()
     {
         isDone = true;
+        isFailed = false;
+    }
+
+    protected void Fail()
+    {
+        isDone = true;
+        isFailed = false;
     }
 
     public bool IsDone()
@@ -43,10 +58,15 @@
         return isDone;
     }
 
-    protected abstract void DoInit();
+    public bool IsFailed()
+    {
+        return isFailed;
+    }
 
-    protected abstract void DoUpdate();
+    protected virtual void DoInit() {}
 
-    protected abstract void DoFixed();
+    protected virtual void DoUpdate() {}
+
+    protected virtual void DoFixed() {}
 }
 

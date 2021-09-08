@@ -18,8 +18,7 @@ public abstract class NPC : Ninja
     {
         base.Start();
 
-        if (ReferenceEquals(job, null))
-            job = FindJob();
+
     }
 
     protected override void Update()
@@ -27,8 +26,11 @@ public abstract class NPC : Ninja
         base.Update();
 
         if (PhotonNetwork.IsMasterClient)
-        { 
-            job.Update();
+        {
+            if (ReferenceEquals(job, null) || job.IsOver())
+                job = FindJob();
+            else
+                job.Update();
         }
     }
 
@@ -38,7 +40,8 @@ public abstract class NPC : Ninja
 
         if (PhotonNetwork.IsMasterClient)
         {
-            job.FixedUpdate();
+            if (!ReferenceEquals(job, null) && !job.IsOver())
+                job.FixedUpdate();
         }
     }
 

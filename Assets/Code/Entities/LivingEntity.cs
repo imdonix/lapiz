@@ -85,6 +85,11 @@ public abstract class LivingEntity : Entity, IDamagable
     /// </summary>
     protected abstract void Die();
 
+    /// <summary>
+    /// Return the position where the hunter will look, word pos
+    /// </summary>
+    public abstract Vector3 GetTargetedLookPosition();
+
     #region SERIALIZATION
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

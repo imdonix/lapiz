@@ -91,7 +91,7 @@ public class World : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 1; i++)
         {
             yield return new WaitForSeconds(2);
             PhotonNetwork.InstantiateRoomObject(Manager.Instance.ChuninPref.name, PlayerStartPosition + Vector3.up * 3, Quaternion.identity);

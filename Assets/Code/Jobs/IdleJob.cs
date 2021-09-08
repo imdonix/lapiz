@@ -11,7 +11,7 @@ public class IdleJob : Job
 
     protected override void BuildRoutine()
     {
-        routine.Add(new IdleTask());
+        routine.Add(new IdleTask(owner));
     }
 }
 

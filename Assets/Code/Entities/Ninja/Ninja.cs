@@ -85,6 +85,11 @@ public abstract class Ninja : LivingEntity
         return head;
     }
 
+    public Arms GetArms()
+    {
+        return arms;
+    }
+
     public float GetChakra()
     {
         return chakra;
@@ -137,6 +142,9 @@ public abstract class Ninja : LivingEntity
         for (int i = 0; i < weapons.Length; i++)
             if (weapons[i].GetItemPref().Equals(tool))
             {
+                if (arms.GetSlot() == i)
+                    return;
+
                 arms.Swap(i);
                 return;
             }
@@ -168,6 +176,11 @@ public abstract class Ninja : LivingEntity
     public void SetIdleLook()
     {
         head.transform.localRotation = Quaternion.identity;
+    }
+
+    public override Vector3 GetTargetedLookPosition()
+    {
+        return body.transform.position;
     }
 
     private void UpdateTimers()

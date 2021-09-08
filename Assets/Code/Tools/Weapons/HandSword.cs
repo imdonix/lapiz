@@ -35,7 +35,7 @@ public class HandSword : Weapon
         {
             IDamagable entity = hit.collider.GetComponentInParent<IDamagable>();
             if (!ReferenceEquals(entity, null))
-                if(entity != owner)
+                if(entity != (IDamagable) owner)
                     entity.Damage(owner, Damage);           
         }
     }

@@ -220,6 +220,11 @@ public class Arms : MonoBehaviour
         return item;
     }
 
+    public Weapon GetWeaponInHand()
+    {
+        return GetSlot(slot);
+    }
+
     public void Claim()
     {
         isMine = true;
@@ -243,7 +248,10 @@ public class Arms : MonoBehaviour
 
     private Weapon GetSlot(int slot)
     {
-        return WeaponSlots[slot];
+        if (slot >= 0)
+            return WeaponSlots[slot];
+        else
+            return null;
     }
 
     private void PositionItem()
@@ -259,7 +267,6 @@ public class Arms : MonoBehaviour
         List<Weapon> weapons = new List<Weapon>();
         foreach (FieldInfo info in typeof(Arms).GetFields())
         {
-            Debug.Log(info.ToString());
             object obj = info.GetValue(this);
             if (obj is Weapon) weapons.Add((Weapon) obj);
         }

@@ -5,35 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FollowTask : Task
+public class FollowTask : TargetedTask
 {
     private const float CHECK_PATH = 5F;
     private const float REACH = 0.25F;
     private const float SIMPLE = 5.5F;
     private const float TO_HIGH = 6.5F;
 
-    private readonly Ninja owner;
-    private readonly LivingEntity target;
-
     private Path path = null;
     private PathFindRequest request = null;
     private float pathFindTimer = CHECK_PATH + 1;
 
-    public FollowTask(Ninja owner, LivingEntity target)
-    {
-        this.owner = owner;
-        this.target = target;
-    }
-
-    protected override void DoInit() {}
+    public FollowTask(Ninja owner, LivingEntity target) : base(owner, target) {}
 
     protected override void DoUpdate()
     {
-        if (ReferenceEquals(target.gameObject, null))
-        {
-            Finish();
-            return;
-        }
+        if (CheckDead()) return;
 
         if (!ReferenceEquals(request, null))
         {
@@ -67,6 +54,10 @@ public class FollowTask : Task
 
     protected override void DoFixed()
     {
+        base.DoFixed();
+
+        if (CheckDead()) return;
+
         Vector3 highlessMe = new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
         Vector3 highlessTarget = new Vector3(target.transform.position.x, 0, target.transform.position.z);
         Vector3 direction = (highlessTarget - highlessMe).normalized;
@@ -74,14 +65,12 @@ public class FollowTask : Task
         float heightDistance = Mathf.Abs(owner.transform.position.y - target.transform.position.y);
         float airDistance = Vector3.Distance(highlessTarget, highlessMe);
 
-        owner.SetTargetLook(target.transform.position);
-
         if (ReferenceEquals(path, null) || airDistance < SIMPLE || heightDistance > TO_HIGH)
         {
             if (airDistance > REACH * 6F)
                 owner.MoveTorwards(direction);
             else
-                Finish();
+                Succeed();
         }
         else
         {

@@ -5,18 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class IdleTask : Task
+public class IdleTask : Task
 {
-    protected override void DoInit()
-    {
-    }
-
-    protected override void DoFixed()
-    {
-    }
-
-    protected override void DoUpdate()
-    {
-    }
+    public IdleTask(Ninja owner) : base(owner){}
 }
 

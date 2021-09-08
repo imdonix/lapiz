@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPref: {fileID: 5276872302500959299, guid: c0f8e4abfbb5fd8498e7253c31c168ee, type: 3}
-  ChuninPref: {fileID: 6075179368022595934, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+  ChuninPref: {fileID: 7131834839262189618, guid: fb63d753093404f4eadb9fa605362466, type: 3}
 --- !u!1 &397899409
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,3 +3482,64 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069580769}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &6665821461601192152
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2885820014091989415, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -88.616905
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 30.028244
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 279.26996
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466174878236965959, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131834839262189617, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+      propertyPath: m_Name
+      value: -[Entity] Chunin-
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fb63d753093404f4eadb9fa605362466, type: 3}

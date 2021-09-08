@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Job
 {
     protected readonly Ninja owner;
     protected readonly List<Task> routine;
-    private int step;
+    private int index;
     private bool init;
+    private bool finished;
 
     protected Job(Ninja owner)
     {
         this.owner = owner;
-        this.step = 0;
         this.routine = new List<Task>();
-        this.init = false;
+        this.index = 0;
+        this.init = this.finished = false;
     }
 
     protected abstract void BuildRoutine();
@@ -21,31 +24,52 @@ public abstract class Job
 
     public void Update()
     {
-        if (!init) 
+        if (finished) return;
+
+        Init();
+
+        Task rt = routine[index];
+        if (rt.IsDone())
         {
-            BuildRoutine();
-            init = true;
+
+            if (rt.IsFailed())
+            {
+                finished = true;
+            }
+            else
+            {
+                if (index < routine.Count - 1)
+                {
+                    index++;
+                }
+                else
+                {
+                    finished = true;
+                }
+            }
         }
-
-        if (routine[step].IsDone())
-        {
-            step = (step + 1) % routine.Count;
-
-            if (step == 0)
-                foreach (Task task in routine)
-                    task.Reset();
-        }
-
-        routine[step].Update();
+        else
+            rt.Update();
     }
 
     public void FixedUpdate()
     {
-        if(init)
-            routine[step].FixedUpdate();
+        if(init && !routine[index].IsDone())
+            routine[index].FixedUpdate();
     }
 
     #endregion
 
+    public bool IsOver()
+    {
+        return finished;
+    }
+
+    private void Init()
+    {
+        if (init) return;
+        BuildRoutine();
+        init = true;
+    }
 }
 

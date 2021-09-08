@@ -17,8 +17,11 @@ public abstract class Invader : NPC
     protected override void Awake()
     {
         base.Awake();
+
         InitLootTable();
         SetupLootTable();
+        SetupInventory();
+
         CheckLootTable();
     }
 
@@ -86,6 +89,8 @@ public abstract class Invader : NPC
     }
 
     protected abstract void SetupLootTable();
+
+    protected abstract void SetupInventory();
 
 
     #region NINJA
