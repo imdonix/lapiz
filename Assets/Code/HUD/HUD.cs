@@ -10,6 +10,7 @@ public class HUD : MonoBehaviour
     public static HUD Instance;
 
     [Header("Components")]
+    [SerializeField] private LiveStateDisplay LiveState;
     [SerializeField] private Text ActionText;
 
     private IInteractable interactable;
@@ -23,6 +24,11 @@ public class HUD : MonoBehaviour
     }
 
     #endregion
+
+    public void UpdateStatus(float hp, float hpMax, float chakra, float chakraMax)
+    {
+        LiveState.UpdateStatus(hp, hpMax, chakra, chakraMax);
+    }
 
     public void Show(IInteractable interactable, Item hand)
     {

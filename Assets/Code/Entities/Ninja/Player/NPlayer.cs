@@ -34,6 +34,15 @@ public class NPlayer : Ninja
         }
     }
 
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (photonView.IsMine)
+            Move();
+    }
+    
+
+
     #endregion
 
     #region PUBLIC
@@ -56,6 +65,16 @@ public class NPlayer : Ninja
     }
 
     #endregion
+
+    protected void Move()
+    {
+        if (characterController.isGrounded && jump) jumpTimer = JumpTime;
+
+        Vector3 jumpForce = (jumpTimer > 0) ? transform.up * (Mathf.Cos((jumpTimer / JumpTime) * Mathf.PI + Mathf.PI) + 1) / 2 : Vector3.zero;
+        Vector3 realDirection = (body.transform.rotation * new Vector3(direction.x, 0, direction.y));
+
+        characterController.Move(((jumpForce * JumpSpeed) + (realDirection * (sprint ? 1.35F : 1) * Speed) + (Physics.gravity)) * Time.deltaTime);
+    }
 
     private void ReadInputs()
     {
@@ -103,6 +122,7 @@ public class NPlayer : Ninja
     private void UpdateGUI()
     {
         HUD.Instance.Show(head.GetCurrentInteractable(), arms.GetItemInHand());
+        HUD.Instance.UpdateStatus(health, maxHealth, chakra, maxChakra);
     }
 
     private void MaskBodyParts()

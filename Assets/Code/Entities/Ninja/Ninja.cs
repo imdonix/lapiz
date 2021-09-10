@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public abstract class Ninja : LivingEntity
 {
+    private const float ROTATION = 90 * 2.5F;
+
     public static int SLOTS = 4;
     public static int HANDSEALS = 3;
 
@@ -31,7 +33,7 @@ public abstract class Ninja : LivingEntity
     protected bool attack = false;
     protected bool cast = false;
 
-    private float jumpTimer = 0;
+    protected    float jumpTimer = 0;
 
     #region UNITY
 
@@ -63,14 +65,6 @@ public abstract class Ninja : LivingEntity
             UpdateTimers();
             MoveLegs();
         }
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        if (photonView.IsMine)
-            Move();
     }
 
     #endregion
@@ -150,32 +144,40 @@ public abstract class Ninja : LivingEntity
             }
     }
 
-    protected void Move()
-    {
-        if (characterController.isGrounded && jump) jumpTimer = JumpTime;
-
-        Vector3 jumpForce = (jumpTimer > 0) ? transform.up * (Mathf.Cos((jumpTimer / JumpTime) * Mathf.PI + Mathf.PI) + 1) / 2 : Vector3.zero;
-        Vector3 realDirection = (body.transform.rotation * new Vector3(direction.x, 0, direction.y));
-
-        characterController.Move(((jumpForce * JumpSpeed) + (realDirection * (sprint ? 1.35F : 1) * Speed) + (Physics.gravity)) * Time.deltaTime);
-    }
-
     public void MoveTorwards(Vector3 direction)
     {
-        if (!direction.AlmostEquals(Vector3.zero, 0.05F))
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        MoveBodyOnly(direction);
         characterController.Move(((direction * (sprint ? 1.35F : 1) * Speed) + (Physics.gravity)) * Time.deltaTime);
         legs.Forward(direction.magnitude * Speed * Time.deltaTime, sprint, characterController.isGrounded);
     }
 
+    public void MoveBodyOnly(Vector3 direction)
+    {
+        if (!direction.AlmostEquals(Vector3.zero, 0.05F))
+            SetBodyLook(Quaternion.LookRotation(direction, Vector3.up));
+    }
+
     public void SetTargetLook(Vector3 target)
     {
-        head.transform.rotation = Quaternion.LookRotation(target - transform.position);
+        Quaternion tar = Quaternion.LookRotation(target - head.transform.position);
+        SetHeadLook(tar);
     }
 
     public void SetIdleLook()
     {
-        head.transform.localRotation = Quaternion.identity;
+        SetHeadLook(Quaternion.identity);
+    }
+
+    private void SetHeadLook(Quaternion tar)
+    {
+        Quaternion cur = head.transform.rotation;
+        head.transform.rotation = Quaternion.RotateTowards(cur, tar, ROTATION * 2 * Time.deltaTime);
+    }
+
+    private void SetBodyLook(Quaternion tar)
+    {
+        Quaternion cur = body.transform.rotation;
+        body.transform.rotation = Quaternion.RotateTowards(cur, tar, ROTATION * Time.deltaTime);
     }
 
     public override Vector3 GetTargetedLookPosition()

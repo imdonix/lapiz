@@ -44,6 +44,11 @@ public class AttackTask : TargetedTask
         if (stay < 0)
             Succeed();
 
+        Vector3 highlessMe = new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
+        Vector3 highlessTarget = new Vector3(target.transform.position.x, 0, target.transform.position.z);
+        Vector3 direction = (highlessTarget - highlessMe).normalized;
+
+        owner.MoveBodyOnly(direction);
     }
 }
 
