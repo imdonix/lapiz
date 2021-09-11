@@ -149,8 +149,9 @@ public class NPlayer : Ninja
     protected override void Die()
     {
         DropInventoryItems();
-
         PhotonNetwork.Destroy(photonView);
+
+        World.Loaded.TakeFreeCam();
     }
 
     public override void Equip(Tool item)

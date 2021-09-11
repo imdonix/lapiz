@@ -6,15 +6,17 @@ using UnityEngine;
 public class FreeCam : MonoBehaviour
 {
 
-    private float movementSpeed = 20f;
-    private float fastMovementSpeed = 50f;
-    private float freeLookSensitivity = 3f;
-    private float zoomSensitivity = 10f;
-    private float fastZoomSensitivity = 50f;
-    private bool looking = false;
+    private const float movementSpeed = 20f;
+    private const float fastMovementSpeed = 50f;
+    private const float freeLookSensitivity = 3f;
+    private const float zoomSensitivity = 10f;
+    private const float fastZoomSensitivity = 50f;
+
     private bool active;
 
     private Camera cam;
+
+    #region UNITY
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class FreeCam : MonoBehaviour
         if (!active) return;
 
         bool fastMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        float movementSpeed = fastMode ? this.fastMovementSpeed : this.movementSpeed;
+        float movementSpeed = fastMode ? FreeCam.fastMovementSpeed : FreeCam.movementSpeed;
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             transform.position = transform.position + (-transform.right * movementSpeed * Time.deltaTime);
@@ -41,50 +43,32 @@ public class FreeCam : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
             transform.position = transform.position + (-transform.up * movementSpeed * Time.deltaTime);
 
-        if (looking)
-        {
-            float newRotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * freeLookSensitivity;
-            float newRotationY = transform.localEulerAngles.x - Input.GetAxis("Mouse Y") * freeLookSensitivity;
-            transform.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
-        }
+
+        float newRotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * freeLookSensitivity;
+        float newRotationY = transform.localEulerAngles.x - Input.GetAxis("Mouse Y") * freeLookSensitivity;
+        transform.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
+
 
         float axis = Input.GetAxis("Mouse ScrollWheel");
         if (axis != 0)
         {
-            var zoomSensitivity = fastMode ? this.fastZoomSensitivity : this.zoomSensitivity;
+            var zoomSensitivity = fastMode ? FreeCam.fastZoomSensitivity : FreeCam.zoomSensitivity;
             transform.position = transform.position + transform.forward * axis * zoomSensitivity;
         }
     }
 
-    private void StartLooking()
-    {
-        looking = true;
+    #endregion
 
-#if (UNITY_EDITOR)
-#else
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-#endif
-    }
-
-    private void StopLooking()
-    {
-        looking = false;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-    }
 
     public void EnableFreeCam()
     {
         Camera.SetupCurrent(cam);
-        StartLooking();
         active = true;
 
     }
 
     public void DisableFreeCam()
     {
-        StopLooking();
         active = false;
     }
 }

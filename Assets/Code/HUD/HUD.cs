@@ -66,4 +66,14 @@ public class HUD : MonoBehaviour
 
         ActionText.text = builder.ToString();
     }
+
+    public void SwitchPlayerOverlay()
+    {
+
+    }
+
+    public void SwitchFreecamOverlay()
+    {
+
+    }
 }

@@ -10,10 +10,11 @@ public class World : MonoBehaviour
     public const int BOTTOM = -5;
     public const float MACHINE_UPDATE = 3F;
 
+    public static World Loaded;
+
     [Header("World")]
     [SerializeField] private Vector3 PlayerStartPosition;
     [SerializeField] private List<Vector3> IronOreVainPositions;
-
 
     [Header("Resources")]
     [SerializeField] public IronOreVain IronOreVainPref;
@@ -23,10 +24,10 @@ public class World : MonoBehaviour
     [SerializeField] public Furnace FurcanePref;
 
 
-    public static World Loaded;
-
     private PathFinder pathFinder;
     private List<Machine> machines;
+
+    private FreeCam freeCam;
 
     private float machineUpdateTimer = 0;
 
@@ -36,6 +37,7 @@ public class World : MonoBehaviour
     {
         this.pathFinder = GetComponent<PathFinder>();
         this.machines = new List<Machine>();
+        this.freeCam = GetComponentInChildren<FreeCam>();
 
         Loaded = this;
     }
@@ -43,15 +45,14 @@ public class World : MonoBehaviour
     private void Start()
     {
         if (AssertEditor()) return;
-        InitPlayer();
-
-
         if (PhotonNetwork.IsMasterClient)
         {
             CreateWorld();
         }
 
         pathFinder.ReloadTerrain();
+
+        InitPlayer();
     }
 
     private void Update()
@@ -84,20 +85,24 @@ public class World : MonoBehaviour
         return pathFinder;
     }
 
-    public void InitPlayer()
+  
+
+    public void TakeControll(NPlayer player)
+    {
+        HUD.Instance.SwitchPlayerOverlay();
+        player.TakeControll();
+    }
+
+    public void TakeFreeCam()
+    {
+        HUD.Instance.SwitchFreecamOverlay();
+        freeCam.EnableFreeCam();
+    }
+
+    private void InitPlayer()
     {
         NPlayer myself = PhotonNetwork.Instantiate(Manager.Instance.PlayerPref.name, PlayerStartPosition, Quaternion.identity).GetComponent<NPlayer>();
         myself.TakeControll();
-    }
-
-    private IEnumerator SpawnEnemy()
-    {
-        for (int i = 0; i < 1; i++)
-        {
-            yield return new WaitForSeconds(2);
-            PhotonNetwork.InstantiateRoomObject(Manager.Instance.ChuninPref.name, PlayerStartPosition + Vector3.up * 3, Quaternion.identity);
-
-        }
     }
 
     private void UpdateMachines()
@@ -116,29 +121,9 @@ public class World : MonoBehaviour
     {
         CreateHarvestables();
 
-        //TEST
+        //DEBUG
 
-        PhotonNetwork.InstantiateRoomObject(ThrowerPref.name, new Vector3(43, 1, 43), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(FurcanePref.name, new Vector3(53, 1, 43), Quaternion.identity);
-
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, new Vector3(53, 1, 43), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, new Vector3(53, 1, 43), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, new Vector3(53, 1, 43), Quaternion.identity);
-
-
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.AxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, new Vector3(53, 1, 43), Quaternion.identity);
-
-        
-        for (int i = 0; i < 6; i++)
-            PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.LapizPref.name, new Vector3(53, 3+i, 43), Quaternion.identity);
-        for (int i = 0; i < 45; i++)
-            PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.IronOrePref.name, new Vector3(53, 10+i, 43), Quaternion.identity);
-        
-
-        StartCoroutine(SpawnEnemy());
+        PhotonNetwork.InstantiateRoomObject(Manager.Instance.ChuninPref.name, PlayerStartPosition, Quaternion.identity);
     }
 
     private void CreateHarvestables()
