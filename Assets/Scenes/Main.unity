@@ -6869,14 +6869,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233208480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4091f91c1ff38d408283707b6bee7e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e699df6d79fc284ca72844b8470049d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {x: 100, y: 95}
-  Size: 1.5
-  Height: 1
+  Grid: {x: 100, y: 115}
+  Size: 1
+  Height: 0
   DebugEnabled: 1
-  CollisionMapDebug: 0
+  CollisionMapDebug: 1
 --- !u!114 &1233208483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6890,6 +6890,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStartPosition: {x: 42, y: 2, z: 42}
+  EnemyStartPositions:
+  - {x: 82, y: 5, z: 75}
+  - {x: 87, y: 5, z: 57}
+  - {x: 9, y: 5, z: 85}
+  - {x: 32, y: 5, z: 89}
+  - {x: 83, y: 37, z: 37}
+  - {x: 71, y: 30, z: 65}
   IronOreVainPositions:
   - {x: 16, y: 1, z: 65}
   - {x: 26, y: 1.5, z: 70}

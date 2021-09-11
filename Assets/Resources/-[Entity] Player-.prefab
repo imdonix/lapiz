@@ -2661,8 +2661,7 @@ MonoBehaviour:
   maxChakra: 30
   health: 100
   chakra: 30
-  healthRegen: 2
-  chakraRegen: 2.5
+  level: 0
   Speed: 5
   JumpTime: 0.75
   JumpSpeed: 20

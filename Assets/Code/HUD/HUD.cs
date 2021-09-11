@@ -67,6 +67,11 @@ public class HUD : MonoBehaviour
         ActionText.text = builder.ToString();
     }
 
+    internal void UpdateStory(bool attacking, float countDown, int remaining)
+    {
+        Debug.Log(string.Format("{0}{1}{2}", attacking, countDown, remaining));
+    }
+
     public void SwitchPlayerOverlay()
     {
 

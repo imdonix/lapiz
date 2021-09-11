@@ -1,9 +1,17 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class LivingEntity : Entity, IDamagable
 {
+
+    private const float CHAKRA_REGEN_SEC = 10F;
+    private const float HEALTH_REGEN_SEC = 60F;
+
+    private const float HEALTH_INC_LEVEL = 1.35F;
+    private const float CHAKRA_INC_LEVEL = 2F;
+
 
     private static List<LivingEntity> Allies = new List<LivingEntity>();
     private static List<LivingEntity> Enemies = new List<LivingEntity>();
@@ -11,10 +19,13 @@ public abstract class LivingEntity : Entity, IDamagable
     [Header("LivingEntity")]
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float maxChakra;
+
+    [Header("View")]
     [SerializeField] protected float health;
     [SerializeField] protected float chakra;
-    [SerializeField] protected float healthRegen;
-    [SerializeField] protected float chakraRegen;
+    [SerializeField] protected float level;
+
+
 
 
     #region UNITY
@@ -22,6 +33,8 @@ public abstract class LivingEntity : Entity, IDamagable
     protected override void Awake()
     {
         base.Awake();
+
+        InitStats();
 
         if (IsAlly())
             Allies.Add(this);
@@ -47,11 +60,17 @@ public abstract class LivingEntity : Entity, IDamagable
 
     private void UpdateStats()
     {
-        health += healthRegen * Time.deltaTime;
-        chakra += chakraRegen * Time.deltaTime;
+        health += (maxHealth / HEALTH_REGEN_SEC) * Time.deltaTime;
+        chakra += (maxChakra / CHAKRA_REGEN_SEC) * Time.deltaTime;
 
         if (health > maxHealth) health = maxHealth;
         if (chakra > maxChakra) chakra = maxChakra;
+    }
+
+    private void InitStats()
+    {
+        this.health = maxHealth;
+        this.chakra = maxChakra;
     }
 
     public void IncreaseMaxChakra(float amount)
@@ -64,6 +83,15 @@ public abstract class LivingEntity : Entity, IDamagable
     {
         maxHealth += amount;
         health += amount;
+    }
+
+    public virtual void LevelUp(int level)
+    {
+        int corrected = level + 1;
+        this.maxHealth *= HEALTH_INC_LEVEL * corrected;
+        this.maxChakra *= CHAKRA_INC_LEVEL * corrected;
+        this.level = corrected;
+        InitStats();
     }
 
     /// <summary>

@@ -88,7 +88,7 @@ public class PathFinder : MonoBehaviour
     {
         int terrainMask = ~(1 << 7);
         int check = 0;
-
+      
         for (int x = 0; x < Grid.x; x++)
             for (int y = 0; y < Grid.y; y++)
             {

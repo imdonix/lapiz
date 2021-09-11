@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 public abstract class WorldObject : Entity
 {
-
     private World world;
 
     #region UNITY
@@ -18,7 +17,6 @@ public abstract class WorldObject : Entity
         base.Awake();
         this.world = FindObjectOfType<World>();
         this.transform.SetParent(world.transform);
-        this.world.GetPathFinder().ReloadTerrain();
     }
 
     #endregion

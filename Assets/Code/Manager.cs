@@ -11,9 +11,9 @@ public class Manager : MonoBehaviourPunCallbacks
 
     public static Manager Instance;
 
-    [Header("Prefhabs")]
+    [Header("Core")]
     [SerializeField] public NPlayer PlayerPref;
-    [SerializeField] public Chunin ChuninPref;
+    [SerializeField] public Story Story;
 
     private World world;
     private ILanguage language;

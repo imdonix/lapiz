@@ -14,6 +14,7 @@ public class World : MonoBehaviour
 
     [Header("World")]
     [SerializeField] private Vector3 PlayerStartPosition;
+    [SerializeField] private Vector3[] EnemyStartPositions;
     [SerializeField] private List<Vector3> IronOreVainPositions;
 
     [Header("Resources")]
@@ -48,9 +49,9 @@ public class World : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             CreateWorld();
+            CreateStory();
+            pathFinder.ReloadTerrain();
         }
-
-        pathFinder.ReloadTerrain();
 
         InitPlayer();
     }
@@ -85,7 +86,10 @@ public class World : MonoBehaviour
         return pathFinder;
     }
 
-  
+    public Vector3 GetAEnemySpawnPosition()
+    {
+        return EnemyStartPositions[UnityEngine.Random.Range(0, EnemyStartPositions.Length)];
+    }
 
     public void TakeControll(NPlayer player)
     {
@@ -97,6 +101,11 @@ public class World : MonoBehaviour
     {
         HUD.Instance.SwitchFreecamOverlay();
         freeCam.EnableFreeCam();
+    }
+
+    private void CreateStory()
+    {
+        PhotonNetwork.InstantiateRoomObject(Manager.Instance.Story.name, Vector3.zero, Quaternion.identity);
     }
 
     private void InitPlayer()
@@ -120,10 +129,6 @@ public class World : MonoBehaviour
     private void CreateWorld()
     {
         CreateHarvestables();
-
-        //DEBUG
-
-        PhotonNetwork.InstantiateRoomObject(Manager.Instance.ChuninPref.name, PlayerStartPosition, Quaternion.identity);
     }
 
     private void CreateHarvestables()

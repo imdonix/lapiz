@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPref: {fileID: 5276872302500959299, guid: c0f8e4abfbb5fd8498e7253c31c168ee, type: 3}
-  ChuninPref: {fileID: 7131834839262189618, guid: fb63d753093404f4eadb9fa605362466, type: 3}
+  Story: {fileID: 5945791607412644935, guid: 2c87130d4658c134da9875ee838249fd, type: 3}
 --- !u!1 &397899409
 GameObject:
   m_ObjectHideFlags: 0
