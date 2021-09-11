@@ -40,6 +40,8 @@ public class AttackTask : TargetedTask
     {
         base.DoUpdate();
 
+        if (CheckDead()) return;
+
         stay -= Time.deltaTime;
         if (stay < 0)
             Succeed();

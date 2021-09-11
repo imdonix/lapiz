@@ -17,7 +17,8 @@ public abstract class WorldObject : Entity
     {
         base.Awake();
         this.world = FindObjectOfType<World>();
-        transform.SetParent(world.transform);
+        this.transform.SetParent(world.transform);
+        this.world.GetPathFinder().ReloadTerrain();
     }
 
     #endregion

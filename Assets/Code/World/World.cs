@@ -14,6 +14,7 @@ public class World : MonoBehaviour
     [SerializeField] private Vector3 PlayerStartPosition;
     [SerializeField] private List<Vector3> IronOreVainPositions;
 
+
     [Header("Resources")]
     [SerializeField] public IronOreVain IronOreVainPref;
 
