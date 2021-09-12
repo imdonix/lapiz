@@ -2428,6 +2428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 45
   maxChakra: 20
+  blood: {fileID: 5177525309246145219, guid: f5760f434c1ab9f468cd84ba3294df31, type: 3}
   health: 75
   chakra: 20
   level: 0

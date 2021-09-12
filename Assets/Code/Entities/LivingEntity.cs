@@ -16,9 +16,14 @@ public abstract class LivingEntity : Entity, IDamagable
     private static List<LivingEntity> Allies = new List<LivingEntity>();
     private static List<LivingEntity> Enemies = new List<LivingEntity>();
 
+
+
     [Header("LivingEntity")]
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float maxChakra;
+
+    [Header("Properties")]
+    [SerializeField] protected GameObject blood;
 
     [Header("View")]
     [SerializeField] protected float health;
@@ -119,6 +124,7 @@ public abstract class LivingEntity : Entity, IDamagable
 
     public virtual void OnDamage(LivingEntity source, float damage)
     {
+        SplashBlood();
         health -= damage;
         if (health < 0) Die();
     }
@@ -150,10 +156,22 @@ public abstract class LivingEntity : Entity, IDamagable
         photonView.RPC("OnDamageRPC", photonView.Owner, source.photonView.ViewID, damage);
     }
 
+
+    public void SplashBlood()
+    {
+        photonView.RPC("OnSplashBlood", RpcTarget.All);
+    }
+
     [PunRPC]
     public void OnDamageRPC(int id, float damage)
     {
         OnDamage(LivingEntity.Get(id), damage);
+    }
+
+    [PunRPC]
+    public void OnSplashBlood()
+    {
+        Instantiate(blood, transform.position + Vector3.up, Quaternion.identity);
     }
 
     #endregion

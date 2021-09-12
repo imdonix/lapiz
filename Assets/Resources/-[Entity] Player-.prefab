@@ -2623,7 +2623,6 @@ MonoBehaviour:
   - {fileID: 5451641715369263002}
   - {fileID: 5276872302500959299}
   - {fileID: 5947054797040979719}
-  - {fileID: 0}
   - {fileID: 224511839}
   - {fileID: 374597482}
   - {fileID: 735194240}
@@ -2661,6 +2660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   maxChakra: 30
+  blood: {fileID: 5177525309246145219, guid: f5760f434c1ab9f468cd84ba3294df31, type: 3}
   health: 100
   chakra: 30
   level: 0
