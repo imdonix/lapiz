@@ -11,10 +11,8 @@ public class HUD : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private LiveStateDisplay LiveState;
-    [SerializeField] private Text ActionText;
-
-    private IInteractable interactable;
-    private Item hand;
+    [SerializeField] private ActionDisplay Action;
+    [SerializeField] private StoryDisplay Story;
 
     #region UNITY
 
@@ -32,44 +30,12 @@ public class HUD : MonoBehaviour
 
     public void Show(IInteractable interactable, Item hand)
     {
-        this.interactable = interactable;
-        this.hand = hand;
-
-        ShowActionText();
+        Action.Show(interactable, hand);
     }
 
-    private void ShowActionText()
+    public void UpdateStory(bool attacking, float countDown, int remaining, bool ready)
     {
-
-
-        StringBuilder builder = new StringBuilder();
-        if(!ReferenceEquals(interactable, null)) 
-            if(interactable.CanInteract())
-                builder.Append(string.Format("[{0}] {1}\n", 
-                    Settings.Instance.Interact.ToString(), 
-                    interactable.GetDescription()));
-
-        if (!ReferenceEquals(hand, null))
-        {
-            builder.Append(string.Format("[{0}] {1} {2}\n",
-                Settings.Instance.Throw.ToString(),
-                Manager.Instance.GetLanguage().ThrowAway,
-                hand.GetName()));
-
-            if(hand is IConsumable)
-                builder.Append(string.Format("[{0}] {1} (for {2})\n",
-                    Settings.Instance.Consume.ToString(),
-                    Manager.Instance.GetLanguage().Use,
-                    (hand as IConsumable).GetReward()));
-
-        }
-
-        ActionText.text = builder.ToString();
-    }
-
-    internal void UpdateStory(bool attacking, float countDown, int remaining)
-    {
-        Debug.Log(string.Format("{0}{1}{2}", attacking, countDown, remaining));
+        Story.Show(attacking, countDown, remaining, ready);
     }
 
     public void SwitchPlayerOverlay()

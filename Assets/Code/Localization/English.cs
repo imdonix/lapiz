@@ -13,7 +13,7 @@ public class English : ILanguage
     public string Lapiz => "Lapiz Crystal";
     public string ThrowAway => "Throw away";
     public string Chakra => "Chakra";
-    public string Use => "Consume";
+    public string Use => "Use";
     public string IronOre => "Iron ore";
     public string IronIngot => "Iron ingot";
     public string Furnace => "Furnace";
@@ -26,5 +26,7 @@ public class English : ILanguage
     public string Sword => "Sword";
     public string Axe => "Axe";
     public string PickAxe => "Pickaxe";
+    public string Attackers => "Attackers";
+    public string Ready => "Ready";
 }
 

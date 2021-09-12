@@ -129,6 +129,8 @@ public class World : MonoBehaviour
     private void CreateWorld()
     {
         CreateHarvestables();
+
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, PlayerStartPosition, Quaternion.identity);
     }
 
     private void CreateHarvestables()

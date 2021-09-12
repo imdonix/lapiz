@@ -13,12 +13,19 @@ public class Story : MonoBehaviourPun, IPunObservable
     [SerializeField] private float countDown = 0;
     [SerializeField] private int remaining = 0;
 
+    private int readyCounter = 0;
+
     private int index = 0;
+    private bool ready = false;
+
+    public static Story Loaded;
 
     #region UNITY
 
     private void Awake()
     {
+        Loaded = this;
+
         if (PhotonNetwork.IsMasterClient)
         {
             StartGame();
@@ -29,7 +36,7 @@ public class Story : MonoBehaviourPun, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            remaining = LivingEntity.GetEnemies().Count;
+            remaining = attacking ? LivingEntity.GetEnemies().Count : readyCounter;
             countDown -= Time.deltaTime;
 
             if (countDown < 0 || ((remaining == 0) && attacking))
@@ -39,6 +46,8 @@ public class Story : MonoBehaviourPun, IPunObservable
                 else
                     AttackPhase();
             }
+
+            HUD.Instance.UpdateStory(attacking, countDown, remaining, ready);
         }
     }
 
@@ -68,6 +77,8 @@ public class Story : MonoBehaviourPun, IPunObservable
 
     private void AttackPhase()
     {
+        readyCounter = 0;
+        ready = false;
         countDown = attackPhaseTime;
         attacking = true;
         SpawnNextWave();
@@ -78,13 +89,17 @@ public class Story : MonoBehaviourPun, IPunObservable
         IdlePhase();
     }
 
+    #region SERIALIZATION
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsReading)
         {
             this.countDown = (float)stream.ReceiveNext();
-            this.attacking = (bool) stream.ReceiveNext();
+            this.attacking = (bool)stream.ReceiveNext();
             this.remaining = (int)stream.ReceiveNext();
+            this.ready = attacking ? false : this.ready;
+            HUD.Instance.UpdateStory(attacking, countDown, remaining, ready);
         }
         else
         {
@@ -92,7 +107,29 @@ public class Story : MonoBehaviourPun, IPunObservable
             stream.SendNext(attacking);
             stream.SendNext(remaining);
         }
-
-        HUD.Instance.UpdateStory(attacking, countDown, remaining);
     }
+
+    #endregion
+
+    #region PUN
+
+    [PunRPC]
+    public void OnReady(bool ready)
+    {
+        if (attacking) return;
+
+        readyCounter += ready ? 1 : -1;
+        if (readyCounter >= PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            AttackPhase();
+        }
+    }
+
+    public void SendReady()
+    {
+        ready = !ready;
+        photonView.RPC("OnReady", RpcTarget.MasterClient, ready);
+    }
+
+    #endregion
 }

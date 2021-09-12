@@ -8,6 +8,7 @@ public class NPlayer : Ninja
     private bool interact = false;
     private bool throwAway = false;
     private bool consume = false;
+    private bool ready = false;
 
     #region UNITY
 
@@ -87,6 +88,7 @@ public class NPlayer : Ninja
         interact = Input.GetKeyDown(Settings.Instance.Interact);
         throwAway = Input.GetKeyDown(Settings.Instance.Throw);
         consume = Input.GetKeyDown(Settings.Instance.Consume);
+        ready = Input.GetKeyDown(Settings.Instance.Ready);
         for (int i = 0; i < SLOTS; i++) slots[i] = Input.GetKeyDown(KeyCode.Alpha0 + i);
         for (int i = 0; i < HANDSEALS; i++) seals[i] = Input.GetKeyDown(KeyCode.F1 + i);
     }
@@ -100,6 +102,8 @@ public class NPlayer : Ninja
         if (throwAway) arms.ThrowAway();
 
         if (cast) arms.CastJutsu();
+
+        if (ready) Story.Loaded.SendReady();
 
         for (int i = 0; i < SLOTS; i++)
             if (slots[i])

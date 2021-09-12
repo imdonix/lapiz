@@ -10,6 +10,7 @@ public class Settings : MonoBehaviour
     [SerializeField] public KeyCode Interact;
     [SerializeField] public KeyCode Throw;
     [SerializeField] public KeyCode Consume;
+    [SerializeField] public KeyCode Ready;
 
     public static Settings Instance;
 

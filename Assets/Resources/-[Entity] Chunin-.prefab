@@ -1298,13 +1298,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817c21a6805ca074fb27cf09033e7f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 35
+  Damage: 15
   AttackRotations:
   - {x: -25, y: 30, z: -35}
   - {x: 52, y: -75, z: -40}
   - {x: 0, y: -43, z: 68}
   - {x: 0, y: 90, z: 68}
-  Speed: 0.75
+  Speed: 0.85
   DamageApplied: 0.75
   Equip: 0.5
 --- !u!1 &5147631437545264991
@@ -1500,6 +1500,7 @@ GameObject:
   - component: {fileID: 3520995321427311120}
   - component: {fileID: 4993553670078086177}
   - component: {fileID: 6313142123150387777}
+  - component: {fileID: 8173232570645657405}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1584,6 +1585,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b601c555006bf74db7ecfa7beb0ad88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8173232570645657405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447601063788550030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5980257935973465229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2372,6 +2389,7 @@ MonoBehaviour:
   - {fileID: 8633192176407194894}
   - {fileID: 7131834839262189618}
   - {fileID: 7993734438612540819}
+  - {fileID: 8173232570645657405}
   - {fileID: 4352550690166822347}
   - {fileID: 4352550689750414846}
   - {fileID: 4352550689675001364}
@@ -2392,7 +2410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
+  m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
   m_UseLocal: 1
 --- !u!114 &7131834839262189618

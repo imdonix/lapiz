@@ -67,8 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8bd1ef69b828c4bab2cc638656383a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idlePhaseTime: 10
-  attackPhaseTime: 30
+  idlePhaseTime: 120
+  attackPhaseTime: 180
   Waves:
   - {fileID: 11400000, guid: 2554dd7a2eedcf246a8d89e60a54802c, type: 2}
   attacking: 0

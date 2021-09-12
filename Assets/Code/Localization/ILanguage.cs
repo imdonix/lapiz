@@ -17,5 +17,7 @@
     string Sword { get; }
     string Axe { get; }
     string PickAxe { get; }
+    string Attackers { get; }
+    string Ready { get; }
 }
 
