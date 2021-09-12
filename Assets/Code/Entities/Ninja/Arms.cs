@@ -12,6 +12,7 @@ public class Arms : MonoBehaviour
     [Header("Property")]
     [SerializeField] private Vector3 IdlePosition;
     [SerializeField] private Vector3 PutAwayPosition;
+    [SerializeField] private Vector3 DefendPosition;
 
     [Header("Components")]
     [SerializeField] private Hand Left;
@@ -88,6 +89,17 @@ public class Arms : MonoBehaviour
             weapon.Attack(owner, owner.GetLookDirection());
             idle = false;
         }
+    }
+
+    public void Defend(bool active)
+    {
+        if (Cooldown > 0) return;
+        if (slot < 0) return;
+        if (!active) return;
+
+        Weapon weapon = GetSlot(slot);
+        Right.Set(DefendPosition);
+        idle = false;
     }
 
     public void Swap(int next)

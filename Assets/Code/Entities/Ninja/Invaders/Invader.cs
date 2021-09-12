@@ -107,5 +107,12 @@ public abstract class Invader : NPC
         PhotonNetwork.Destroy(photonView);
     }
 
+    public override void OnDamage(LivingEntity source, float damage)
+    {
+        base.OnDamage(source, defend ? damage / 2 : damage);
+    }
+
+
+
     #endregion
 }

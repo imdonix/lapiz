@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdlePosition: {x: 90, y: 0, z: 0}
   PutAwayPosition: {x: 30, y: -56, z: 0}
+  DefendPosition: {x: 0, y: 0, z: 0}
   Left: {fileID: 743329794836835285}
   Right: {fileID: 1422255805512634712}
   BaseSword: {fileID: 242427473391054558}
@@ -2425,9 +2426,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f189ef2f965ef745b03136d7996e267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 80
+  maxHealth: 45
   maxChakra: 20
-  health: 80
+  health: 75
   chakra: 20
   level: 0
   Speed: 3

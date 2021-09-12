@@ -32,8 +32,9 @@ public abstract class Ninja : LivingEntity
     protected bool[] seals = new bool[HANDSEALS];
     protected bool attack = false;
     protected bool cast = false;
+    protected bool defend = false;
 
-    protected    float jumpTimer = 0;
+    protected float jumpTimer = 0;
 
     #region UNITY
 
@@ -64,6 +65,7 @@ public abstract class Ninja : LivingEntity
         {
             UpdateTimers();
             MoveLegs();
+            UpdateDefending();
         }
     }
 
@@ -195,8 +197,6 @@ public abstract class Ninja : LivingEntity
         legs.Forward(direction.y * Speed * Time.deltaTime, sprint, characterController.isGrounded);
     }
 
-    public abstract void Equip(Tool item);
-
     protected Vector3 GetRandomDropLocation()
     {
         return transform.position + new Vector3(UnityEngine.Random.Range(-1.5F, 11.5F), 1F, UnityEngine.Random.Range(-1.5F, 1.5F));
@@ -212,6 +212,14 @@ public abstract class Ninja : LivingEntity
             if(!ReferenceEquals(tool, null))
                 PhotonNetwork.Instantiate(tool.name, GetRandomDropLocation(), Quaternion.identity);
     }
+
+    private void UpdateDefending()
+    {
+        arms.Defend(defend);
+    }
+
+
+    public abstract void Equip(Tool item);
 
     #region SERIALIZATION
 

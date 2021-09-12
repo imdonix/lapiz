@@ -30,7 +30,7 @@ public class HandSword : Weapon
     {
         Body body = owner.GetBody();
         Vector3 hitPos = body.transform.position + body.transform.forward;
-        RaycastHit[] hits = Physics.BoxCastAll(hitPos, Vector3.one / 2, body.transform.forward, Quaternion.identity, 0.75F);
+        RaycastHit[] hits = Physics.BoxCastAll(hitPos, Vector3.one / 2, body.transform.forward * 1.5F, Quaternion.identity, 0.75F);
         foreach (RaycastHit hit in hits)
         {
             IDamagable entity = hit.collider.GetComponentInParent<IDamagable>();

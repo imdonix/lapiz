@@ -84,6 +84,7 @@ public class NPlayer : Ninja
         sprint = Input.GetKey(Settings.Instance.Sprint);
         mouse = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         attack = Input.GetMouseButton(0);
+        defend = Input.GetMouseButton(1);
         cast = Input.GetKeyDown(Settings.Instance.Cast);
         interact = Input.GetKeyDown(Settings.Instance.Interact);
         throwAway = Input.GetKeyDown(Settings.Instance.Throw);
@@ -120,7 +121,7 @@ public class NPlayer : Ninja
                 return;
             }
 
-        if (attack) arms.Attack();
+        if (attack && !defend) arms.Attack();
     }
 
     private void UpdateGUI()
@@ -167,6 +168,13 @@ public class NPlayer : Ninja
             arms.ThrowAway(spawned);
         }
         Swap(item.GetToolType());
+    }
+
+    public override void OnDamage(LivingEntity source, float damage)
+    {
+        if (defend) return;
+
+        base.OnDamage(source, damage);
     }
 }
 

@@ -27,7 +27,6 @@ public abstract class LivingEntity : Entity, IDamagable
 
 
 
-
     #region UNITY
 
     protected override void Awake()
@@ -118,6 +117,12 @@ public abstract class LivingEntity : Entity, IDamagable
     /// </summary>
     public abstract Vector3 GetTargetedLookPosition();
 
+    public virtual void OnDamage(LivingEntity source, float damage)
+    {
+        health -= damage;
+        if (health < 0) Die();
+    }
+
     #region SERIALIZATION
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -142,14 +147,13 @@ public abstract class LivingEntity : Entity, IDamagable
     {
         if ((source.IsAlly() && IsAlly()) || (!source.IsAlly() && !IsAlly())) return;
 
-        photonView.RPC("OnDamage", photonView.Owner, source.photonView.GetInstanceID(), damage);
+        photonView.RPC("OnDamageRPC", photonView.Owner, source.photonView.ViewID, damage);
     }
 
     [PunRPC]
-    public void OnDamage(int id, float damage)
+    public void OnDamageRPC(int id, float damage)
     {
-        health -= damage;
-        if (health < 0) Die();
+        OnDamage(LivingEntity.Get(id), damage);
     }
 
     #endregion
@@ -164,6 +168,17 @@ public abstract class LivingEntity : Entity, IDamagable
     public static List<LivingEntity> GetEnemies()
     {
         return LivingEntity.Enemies;
+    }
+
+    public static LivingEntity Get(int id)
+    {
+        foreach (var item in Allies)
+            if (item.photonView.ViewID == id)
+                return item.GetComponent<LivingEntity>();
+        foreach (var item in Enemies)
+            if (item.photonView.ViewID == id)
+                return item.GetComponent<LivingEntity>();
+        return null;
     }
 
     #endregion
