@@ -19,5 +19,7 @@
     string PickAxe { get; }
     string Attackers { get; }
     string Ready { get; }
+    string TakeItem { get; }
+    string NoItemAvaiable { get; }
 }
 

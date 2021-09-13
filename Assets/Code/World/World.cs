@@ -16,6 +16,7 @@ public class World : MonoBehaviour
     [SerializeField] private Vector3 PlayerStartPosition;
     [SerializeField] private Vector3[] EnemyStartPositions;
     [SerializeField] private List<Vector3> IronOreVainPositions;
+    [SerializeField] private Vector3 StoragePositions;
 
     [Header("Resources")]
     [SerializeField] public IronOreVain IronOreVainPref;
@@ -23,6 +24,7 @@ public class World : MonoBehaviour
     [Header("Machines")]
     [SerializeField] public Thrower ThrowerPref;
     [SerializeField] public Furnace FurcanePref;
+    [SerializeField] public Storage StoragePref;
 
 
     private PathFinder pathFinder;
@@ -129,6 +131,7 @@ public class World : MonoBehaviour
     private void CreateWorld()
     {
         CreateHarvestables();
+        CreateMachines();
 
         PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, PlayerStartPosition, Quaternion.identity);
     }
@@ -137,6 +140,29 @@ public class World : MonoBehaviour
     {
         foreach (Vector3 pos in IronOreVainPositions)
             PhotonNetwork.InstantiateRoomObject(IronOreVainPref.name, pos, Quaternion.identity);
+    }
+
+    private void CreateMachines()
+    {
+        CreateSotrages();
+    }
+
+    private void CreateSotrages()
+    {
+        Item[] storedItems = new Item[] {
+            ItemLibrary.Instance.LapizPref,
+            ItemLibrary.Instance.IronOrePref,
+            ItemLibrary.Instance.IronIngotPref
+        };
+
+        for (int i = 0; i < storedItems.Length; i++)
+        {
+            Storage storage = PhotonNetwork.InstantiateRoomObject(
+                StoragePref.name,
+                StoragePositions + (Vector3.forward * 2 * i),
+                Quaternion.identity).GetComponent<Storage>();
+            storage.InitItem(storedItems[i]);
+        }
     }
 
     private bool AssertEditor()

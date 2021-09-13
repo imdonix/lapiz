@@ -7,11 +7,14 @@ using UnityEngine;
 
 public class ItemLibrary : MonoBehaviour
 {
+
     public static ItemLibrary Instance;
+    private static List<Item> cache;
 
     private void Awake()
     {
         Instance = this;
+        InitItemList();
         DontDestroyOnLoad(transform.parent.gameObject);
     }
 
@@ -28,21 +31,39 @@ public class ItemLibrary : MonoBehaviour
     [SerializeField] public Axe AxePref;
     [SerializeField] public PickAxe PickaxePref;
 
-
+    private void InitItemList()
+    {
+        ItemLibrary.cache = new List<Item>();
+        foreach (var field in typeof(ItemLibrary).GetFields())
+        {
+            object fieldValue = field.GetValue(this);
+            if(fieldValue is Item)
+                ItemLibrary.cache.Add((Item)fieldValue);
+        }            
+    }
 
     public List<ICraftable> GetCraftablePrefs(Crafter crafter) 
     {
         List<ICraftable> craftables = new List<ICraftable>();
-        foreach (var field in typeof(ItemLibrary).GetFields())
+        foreach (Item item in ItemLibrary.cache)
         {
-            if (field.GetValue(this) is ICraftable)
+            if (item is ICraftable)
             {
-                ICraftable craftable = (ICraftable) field.GetValue(this);
+                ICraftable craftable = (ICraftable) item;
                 if(craftable.GetCrafterPrefhab().Equals(crafter))
-                    craftables.Add((ICraftable) field.GetValue(this));
+                    craftables.Add((ICraftable) item);
             }
         }
         return craftables;
+    }
+
+    public Item FindByID(string itemID)
+    {
+        foreach (Item item in ItemLibrary.cache)
+            if (item.GetID().Equals(itemID))
+                return item;
+        Debug.LogWarning(string.Format("Item not found with {0}", itemID));
+        return null;
     }
 
 }

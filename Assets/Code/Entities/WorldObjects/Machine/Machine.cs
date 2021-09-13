@@ -41,7 +41,6 @@ public abstract class Machine : WorldObject
                     else
                         item.TakeControll();
                 }
-
             }
         }
 
