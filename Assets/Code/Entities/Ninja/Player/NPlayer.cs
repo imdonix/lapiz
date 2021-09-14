@@ -161,8 +161,7 @@ public class NPlayer : Ninja
 
     public override void Equip(Tool item)
     {
-        Tool old;
-        if (inventory.Equip(item, out old))
+        if (inventory.Equip(item, out Tool old))
         {
             Item spawned = PhotonNetwork.Instantiate(old.name, transform.position + transform.forward, Quaternion.identity).GetComponent<Item>();
             arms.ThrowAway(spawned);
@@ -172,7 +171,7 @@ public class NPlayer : Ninja
 
     public override void OnDamage(LivingEntity source, float damage)
     {
-        if (defend) return;
+        if (canDefend) return;
 
         base.OnDamage(source, damage);
     }

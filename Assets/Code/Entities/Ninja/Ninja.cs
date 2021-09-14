@@ -35,6 +35,8 @@ public abstract class Ninja : LivingEntity
     protected bool defend = false;
 
     protected float jumpTimer = 0;
+    protected bool canDefend = false;
+
 
     #region UNITY
 
@@ -215,7 +217,7 @@ public abstract class Ninja : LivingEntity
 
     private void UpdateDefending()
     {
-        arms.Defend(defend);
+        canDefend = arms.Defend(defend);
     }
 
 

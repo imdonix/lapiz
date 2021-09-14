@@ -91,15 +91,14 @@ public class Arms : MonoBehaviour
         }
     }
 
-    public void Defend(bool active)
+    public bool Defend(bool active)
     {
-        if (Cooldown > 0) return;
-        if (slot < 0) return;
-        if (!active) return;
+        if (Cooldown > 0 || slot < 0 || !active) return false;
 
         Weapon weapon = GetSlot(slot);
         Right.Set(DefendPosition);
         idle = false;
+        return active;
     }
 
     public void Swap(int next)
@@ -175,7 +174,7 @@ public class Arms : MonoBehaviour
         Left.MoveTo(Left.GetHandItemRotation(), SEAL_TIME);
         Right.MoveTo(Right.GetHandItemRotation(), SEAL_TIME);
         Cooldown = SEAL_TIME;
-        idle = false;
+        idle = true;
 
         this.item = item;
     }
