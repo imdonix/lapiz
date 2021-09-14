@@ -17,14 +17,14 @@ public class Storage : Machine, IInteractable
     public void InitItem(Item item)
     {
         All.Add(this);
-        photonView.RPC("OnItemUpdated", RpcTarget.All, item.GetID());
+        photonView.RPC("OnItemUpdated", RpcTarget.AllBuffered, item.GetID());
     }
 
     public bool TakeOne(out Item item)
     {
         if (count > 0)
         {
-            photonView.RPC("OnItemRecived", RpcTarget.All, count - 1);
+            photonView.RPC("OnItemRecived", RpcTarget.AllBuffered, count - 1);
             item = PhotonNetwork.Instantiate(
                 stack.GetItemPref().name, 
                 GetOutputLocation(), 

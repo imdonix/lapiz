@@ -89,14 +89,11 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>
     {
         if (photonView.IsMine)
         {
-            Debug.Log("Local Item pickup");
-
             GhostItem();
             source.PickUpItem(this);
         }
         else
         {
-            Debug.Log("Other Item pickup");
             if (!pickedUp) 
             {
                 GhostItem();

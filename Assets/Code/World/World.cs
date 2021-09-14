@@ -134,6 +134,8 @@ public class World : MonoBehaviour
         CreateMachines();
 
         PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, PlayerStartPosition, Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.IronIngotPref.name, PlayerStartPosition, Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.IronOrePref.name, PlayerStartPosition, Quaternion.identity);
     }
 
     private void CreateHarvestables()
