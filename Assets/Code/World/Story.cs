@@ -1,9 +1,13 @@
 ﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Story : MonoBehaviourPun, IPunObservable
 {
+    private const float MIN = 0.25F;
+    private const float OPTIMAL_SPAWN = 5;
+
     [Header("Settings")]
     [SerializeField] private float idlePhaseTime;
     [SerializeField] private float attackPhaseTime;
@@ -53,19 +57,21 @@ public class Story : MonoBehaviourPun, IPunObservable
 
     #endregion
 
-    private void SpawnNextWave() 
+    private IEnumerator SpawnNextWave() 
     {
         index++;
         int current = index % Waves.Length;
         int level = index / Waves.Length;
 
         Wave wave = Waves[current];
+        float wait = OPTIMAL_SPAWN / wave.Entities.Length;
         foreach (LivingEntity entity in wave.Entities)
         {
             LivingEntity ent = PhotonNetwork.InstantiateRoomObject(entity.name,
                 World.Loaded.GetAEnemySpawnPosition(),
                 Quaternion.identity).GetComponent<LivingEntity>();
             ent.LevelUp(level);
+            yield return new WaitForSeconds(Mathf.Max(wait, MIN));
         }
     }
 
@@ -81,7 +87,7 @@ public class Story : MonoBehaviourPun, IPunObservable
         ready = false;
         countDown = attackPhaseTime;
         attacking = true;
-        SpawnNextWave();
+        StartCoroutine(SpawnNextWave());
     }
 
     private void StartGame()
@@ -119,6 +125,7 @@ public class Story : MonoBehaviourPun, IPunObservable
         if (attacking) return;
 
         readyCounter += ready ? 1 : -1;
+        readyCounter = Mathf.Min(readyCounter, 0);
         if (readyCounter >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
             AttackPhase();
