@@ -125,7 +125,7 @@ public class Story : MonoBehaviourPun, IPunObservable
         if (attacking) return;
 
         readyCounter += ready ? 1 : -1;
-        readyCounter = Mathf.Min(readyCounter, 0);
+        readyCounter = Mathf.Max(readyCounter, 0);
         if (readyCounter >= PhotonNetwork.CurrentRoom.PlayerCount)
         {
             AttackPhase();
