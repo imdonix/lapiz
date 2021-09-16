@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 
-public class FollowTask : TargetedTask
+
+public class GoTask : Task
 {
     private const float CHECK_PATH = 5F;
     private const float REACH = 0.25F;
@@ -16,12 +13,15 @@ public class FollowTask : TargetedTask
     private PathFindRequest request = null;
     private float pathFindTimer = CHECK_PATH + 1;
 
-    public FollowTask(Ninja owner, LivingEntity target) : base(owner, target) {}
+    protected readonly Vector3 target;
+
+    public GoTask(Ninja owner, Vector3 target) : base(owner)
+    {
+        this.target = target;
+    }
 
     protected override void DoUpdate()
     {
-        if (CheckDead()) return;
-
         if (!ReferenceEquals(request, null))
         {
             if (request.IsDone())
@@ -43,7 +43,7 @@ public class FollowTask : TargetedTask
                 PathFinder finder = World.Loaded.GetPathFinder();
 
                 Vector2Int from = finder.GetGridPosition(owner.transform.position);
-                Vector2Int to = finder.GetGridPosition(target.transform.position);
+                Vector2Int to = finder.GetGridPosition(target);
 
                 request = finder.Request(from, to);
             }
@@ -56,13 +56,11 @@ public class FollowTask : TargetedTask
     {
         base.DoFixed();
 
-        if (CheckDead()) return;
-
         Vector3 highlessMe = new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
-        Vector3 highlessTarget = new Vector3(target.transform.position.x, 0, target.transform.position.z);
+        Vector3 highlessTarget = new Vector3(target.x, 0, target.z);
         Vector3 direction = (highlessTarget - highlessMe).normalized;
 
-        float heightDistance = Mathf.Abs(owner.transform.position.y - target.transform.position.y);
+        float heightDistance = Mathf.Abs(owner.transform.position.y - target.y);
         float airDistance = Vector3.Distance(highlessTarget, highlessMe);
 
         if (ReferenceEquals(path, null) || airDistance < SIMPLE || heightDistance > TO_HIGH)
@@ -93,4 +91,3 @@ public class FollowTask : TargetedTask
         }
     }
 }
-

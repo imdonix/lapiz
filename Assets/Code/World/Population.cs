@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class Population
 {
+    private const int MANGEKYO_TRIGGER = 5;
+
     private readonly List<NPlayer> players;
     private readonly List<Villager> villagers;
     private readonly Story story;
 
     private int maxPopulation = 0;
+    private bool hasPopulated = false;
 
     public Population(Story story)
     {
@@ -27,7 +30,9 @@ public class Population
             villagers.Add((Villager)entity);
         else
             throw new Exception("You can only Populate: Players or Villagers");
+
         maxPopulation = Math.Max(maxPopulation, GetPopulation());
+        hasPopulated = true;
     }
 
     public void RegisterDead(LivingEntity entity)
@@ -45,6 +50,11 @@ public class Population
         return players.Count + villagers.Count;
     }
 
+    public int GetVillagerCount()
+    {
+        return villagers.Count;
+    }
+
     public int GetMaxPopulation()
     {
         return maxPopulation;
@@ -52,7 +62,7 @@ public class Population
 
     public void AwakeMangekyo()
     {
-        if (villagers.Count == 0 && players.Count == 1)
+        if (villagers.Count == 0 && players.Count == 1 && maxPopulation >= MANGEKYO_TRIGGER)
         {
             NPlayer player = players[0];
             if(player.GetHead().HasEye(EyeType.Sharingan))
@@ -61,4 +71,8 @@ public class Population
         }
     }
 
+    public bool IsDead()
+    {
+        return GetPopulation() == 0 && hasPopulated;
+    }
 }

@@ -136,6 +136,11 @@ public abstract class LivingEntity : Entity, IDamagable
     /// </summary>
     public abstract Vector3 GetTargetedLookPosition();
 
+    /// <summary>
+    /// Alert the target to danger.
+    /// </summary>
+    public virtual void Alert(LivingEntity source) {}
+
     public virtual void OnDamage(LivingEntity source, float damage)
     {
         SplashBlood();

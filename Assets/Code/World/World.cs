@@ -14,6 +14,7 @@ public class World : MonoBehaviour
 
     [Header("World")]
     [SerializeField] private Vector3 PlayerStartPosition;
+    [SerializeField] private Vector3 VillagerStartPosition;
     [SerializeField] private Vector3[] EnemyStartPositions;
     [SerializeField] private List<Vector3> IronOreVainPositions;
     [SerializeField] private Vector3 StoragePositions;
@@ -93,6 +94,12 @@ public class World : MonoBehaviour
         return EnemyStartPositions[UnityEngine.Random.Range(0, EnemyStartPositions.Length)];
     }
 
+    public Vector3 GetVillagerSpawnPoint()
+    {
+        return VillagerStartPosition;
+    }
+
+
     public void TakeControll(NPlayer player)
     {
         HUD.Instance.SwitchPlayerOverlay();
@@ -109,6 +116,7 @@ public class World : MonoBehaviour
     {
         PhotonNetwork.InstantiateRoomObject(Manager.Instance.Story.name, Vector3.zero, Quaternion.identity);
     }
+
 
     private void InitPlayer()
     {

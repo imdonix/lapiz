@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 public class IdleTask : Task
 {
+
     public IdleTask(Ninja owner) : base(owner){}
 }
 

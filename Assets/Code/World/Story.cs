@@ -7,6 +7,7 @@ public class Story : MonoBehaviourPun, IPunObservable
 {
     private const float MIN = 0.25F;
     private const float OPTIMAL_SPAWN = 5;
+    private const int MAX_VILLAGER_SPAWN = 2;
 
     [Header("Settings")]
     [SerializeField] private float idlePhaseTime;
@@ -17,10 +18,14 @@ public class Story : MonoBehaviourPun, IPunObservable
     [SerializeField] private float countDown = 0;
     [SerializeField] private int remaining = 0;
 
+    [Header("Village")]
+    [SerializeField] public Villager VillagerPref;
+
     private int readyCounter = 0;
 
     private int index = 0;
     private bool ready = false;
+    private bool end = false;
 
     public static Story Loaded;
     public Population population;
@@ -39,6 +44,8 @@ public class Story : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
+        if (end) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
             remaining = attacking ? LivingEntity.GetEnemies().Count : readyCounter;
@@ -52,13 +59,19 @@ public class Story : MonoBehaviourPun, IPunObservable
                     AttackPhase();
             }
 
-            HUD.Instance.UpdateStory(attacking, countDown, remaining, ready);
+            population.AwakeMangekyo();
+            end = CheckEndConditions();
+
+            if (end)
+                HUD.Instance.SwitchGameOverOverlay();
+            else
+                HUD.Instance.UpdateStory(attacking, countDown, remaining, ready);
         }
     }
 
     #endregion
 
-    private IEnumerator SpawnNextWave() 
+    private IEnumerator SpawnNextWave()
     {
         index++;
         int current = index % Waves.Length;
@@ -73,6 +86,7 @@ public class Story : MonoBehaviourPun, IPunObservable
                 Quaternion.identity).GetComponent<LivingEntity>();
             ent.LevelUp(level);
             yield return new WaitForSeconds(Mathf.Max(wait, MIN));
+            if (end) yield break;
         }
     }
 
@@ -80,6 +94,12 @@ public class Story : MonoBehaviourPun, IPunObservable
     {
         countDown = idlePhaseTime;
         attacking = false;
+
+        int missingVillagers = GetIdealVillagerCount() - population.GetVillagerCount();
+        Debug.Assert(missingVillagers > 0);
+        Debug.LogError(missingVillagers);
+        for (int i = 0; i < missingVillagers && i < MAX_VILLAGER_SPAWN; i++)
+            SpawnVillager();
     }
 
     private void AttackPhase()
@@ -95,6 +115,31 @@ public class Story : MonoBehaviourPun, IPunObservable
     {
         population = new Population(this);
         IdlePhase();
+    }
+
+    private int GetIdealVillagerCount()
+    {
+        return 2 + Mathf.Min((index / 3), 5);
+    }
+
+    public void SpawnVillager()
+    {
+        StartCoroutine(Spawn());
+        IEnumerator Spawn()
+        {
+            yield return new WaitForSeconds(OPTIMAL_SPAWN / 2);
+            if (end) yield break;
+
+            PhotonNetwork.InstantiateRoomObject(
+                VillagerPref.name,
+                World.Loaded.GetVillagerSpawnPoint(),
+                Quaternion.identity);
+        }
+    }
+
+    private bool CheckEndConditions()
+    {
+        return population.IsDead();
     }
 
     #region SERIALIZATION

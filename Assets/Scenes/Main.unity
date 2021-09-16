@@ -6462,6 +6462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStartPosition: {x: 42, y: 2, z: 42}
+  VillagerStartPosition: {x: 29, y: 4, z: 20}
   EnemyStartPositions:
   - {x: 82, y: 5, z: 75}
   - {x: 87, y: 5, z: 57}

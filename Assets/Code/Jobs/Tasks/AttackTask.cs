@@ -20,6 +20,8 @@ public class AttackTask : TargetedTask
     {
         if (CheckDead()) return;
 
+        target.Alert(owner);
+
         Weapon weapon = owner.GetArms().GetWeaponInHand();
         if (ReferenceEquals(weapon, null))
         {

@@ -18,7 +18,6 @@ public class NPlayer : Ninja
 
         if(photonView.IsMine)
         {
-            RequestBadge(Village.Mater);
             Claim();
         }
     }
@@ -140,7 +139,8 @@ public class NPlayer : Ninja
 
     private void Claim()
     {
-        head.SetBadge(Village.Mater);
+        RequestBadge(Village.Mater);
+        Story.Loaded.population.Populate(this);
     }
 
     private void MoveCamera()

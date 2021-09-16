@@ -40,11 +40,16 @@ public class HUD : MonoBehaviour
 
     public void SwitchPlayerOverlay()
     {
-
+        Debug.Log("PlayerHUD");
     }
 
     public void SwitchFreecamOverlay()
     {
+        Debug.Log("FreecamHUD");
+    }
 
+    public void SwitchGameOverOverlay()
+    {
+        Debug.Log("GameoverHUD");
     }
 }
