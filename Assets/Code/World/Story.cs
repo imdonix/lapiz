@@ -23,6 +23,7 @@ public class Story : MonoBehaviourPun, IPunObservable
     private bool ready = false;
 
     public static Story Loaded;
+    public Population population;
 
     #region UNITY
 
@@ -92,6 +93,7 @@ public class Story : MonoBehaviourPun, IPunObservable
 
     private void StartGame()
     {
+        population = new Population(this);
         IdlePhase();
     }
 

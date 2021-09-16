@@ -641,6 +641,14 @@ MonoBehaviour:
   - {fileID: 1725294916571404309}
   - {fileID: 8188738067846731597}
   - {fileID: 448342983853759819}
+  eyes:
+  - {fileID: 7785111242308859826}
+  - {fileID: 8402985435241466965}
+  eyeTypes:
+  - {fileID: 2100000, guid: e2d4c1c1bb499c740aa23dc375c87298, type: 2}
+  - {fileID: 2100000, guid: 76c2dd1ddf0ca394baa7f6df6ed830c3, type: 2}
+  - {fileID: 2100000, guid: 4e04a8ecf4faade4a8fe41a9a7266cd6, type: 2}
+  - {fileID: 2100000, guid: 6139016ebe2af9543a4474c77762630d, type: 2}
 --- !u!1 &2915421748162449629
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class Chunin : Invader
 
     protected override void SetupInventory()
     {
-        head.SetBadge(Village.Kerth);
+        photonView.RPC("SetBadge", Photon.Pun.RpcTarget.AllBuffered, (int)Village.Kerth);
 
         inventory.Equip(ItemLibrary.Instance.SwordPref);
     }

@@ -18,6 +18,7 @@ public class NPlayer : Ninja
 
         if(photonView.IsMine)
         {
+            RequestBadge(Village.Mater);
             Claim();
         }
     }

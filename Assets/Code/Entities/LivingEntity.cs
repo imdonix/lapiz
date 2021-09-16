@@ -30,7 +30,7 @@ public abstract class LivingEntity : Entity, IDamagable
     [SerializeField] protected float chakra;
     [SerializeField] protected float level;
 
-
+    private int dna;
 
     #region UNITY
 
@@ -44,6 +44,9 @@ public abstract class LivingEntity : Entity, IDamagable
             Allies.Add(this);
         else
             Enemies.Add(this);
+
+        if (photonView.IsMine)
+            InitDNA();
     }
 
     protected override void Update()
@@ -77,6 +80,12 @@ public abstract class LivingEntity : Entity, IDamagable
         this.chakra = maxChakra;
     }
 
+    private void InitDNA()
+    {
+        this.dna = DNA.GetRandom();
+        photonView.RPC("ShareDNA", RpcTarget.OthersBuffered, this.dna);
+    }
+
     public void IncreaseMaxChakra(float amount)
     {
         maxChakra += amount;
@@ -97,6 +106,11 @@ public abstract class LivingEntity : Entity, IDamagable
         this.level = corrected;
         InitStats();
     }
+
+    /// <summary>
+    /// Unique DNA for each unit
+    /// </summary>
+    public int GetDNA() { return dna; }
 
     /// <summary>
     /// Is Entity a aly type
@@ -172,6 +186,12 @@ public abstract class LivingEntity : Entity, IDamagable
     public void OnSplashBlood()
     {
         Instantiate(blood, transform.position + Vector3.up, Quaternion.identity);
+    }
+
+    [PunRPC]
+    public void ShareDNA(int dna)
+    {
+        this.dna = dna;
     }
 
     #endregion

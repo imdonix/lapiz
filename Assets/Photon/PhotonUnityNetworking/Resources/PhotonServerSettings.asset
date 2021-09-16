@@ -46,6 +46,10 @@ MonoBehaviour:
   - OnSplashBlood
   - OnItemUpdated
   - OnItemRecived
+  - AwakeEye
+  - ShareDNA
+  - SetEye
+  - SetBadge
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

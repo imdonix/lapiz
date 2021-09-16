@@ -223,7 +223,7 @@ public abstract class Ninja : LivingEntity
 
     public abstract void Equip(Tool item);
 
-    #region SERIALIZATION
+    #region PUN
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -232,13 +232,40 @@ public abstract class Ninja : LivingEntity
         if (stream.IsReading)
         {
             arms.SetSlot((int)stream.ReceiveNext());
-            head.SetBadge((Village)stream.ReceiveNext());
         }
         else
         {
             stream.SendNext(arms.GetSlot());
-            stream.SendNext(head.GetBadge());
         }
+    }
+
+    [PunRPC]
+    public void AwakeEye(int type)
+    {
+        head.AwakeEye((EyeType)type);
+    }
+
+
+    public void RequestEye(EyeType eye)
+    {
+        photonView.RPC("SetEye", RpcTarget.AllBuffered, (int)eye);
+    }
+
+    [PunRPC]
+    public void SetEye(int type)
+    {
+        head.SetEye((EyeType)type);
+    }
+
+    public void RequestBadge(Village village)
+    {
+        photonView.RPC("SetBadge", RpcTarget.AllBuffered, (int) village);
+    }
+
+    [PunRPC]
+    public void SetBadge(int type)
+    {
+        head.SetBadge((Village)type);
     }
 
     #endregion

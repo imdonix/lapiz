@@ -20,7 +20,7 @@ public abstract class HandTool : Weapon
             IHarvestable harvestable = hit.collider.GetComponentInParent<IHarvestable>();
 
             if (!ReferenceEquals(entity, null))
-                if (entity != owner)
+                if (entity != (IDamagable) owner)
                     entity.Damage(owner, Damage);
 
             if (!ReferenceEquals(harvestable, null))

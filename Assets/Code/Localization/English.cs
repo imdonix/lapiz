@@ -28,7 +28,7 @@ public class English : ILanguage
     public string PickAxe => "Pickaxe";
     public string Attackers => "Attackers";
     public string Ready => "Ready";
-    public string TakeItem => "Take item";
-    public string NoItemAvaiable => "No item avaiable";
+    public string TakeItem => "Take";
+    public string NoItemAvaiable => "Empty";
 }
 

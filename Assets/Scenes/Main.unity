@@ -6447,8 +6447,8 @@ MonoBehaviour:
   Grid: {x: 100, y: 115}
   Size: 1
   Height: 0
-  DebugEnabled: 1
-  CollisionMapDebug: 1
+  DebugEnabled: 0
+  CollisionMapDebug: 0
 --- !u!114 &1233208483
 MonoBehaviour:
   m_ObjectHideFlags: 0
