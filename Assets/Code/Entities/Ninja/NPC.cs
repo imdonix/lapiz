@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public abstract class NPC : Ninja
 {
+    protected JobProvider provider;
     protected Job job;
 
     #region UNITY
@@ -56,5 +57,9 @@ public abstract class NPC : Ninja
 
     public override void Equip(Tool item){}
 
+    public JobProvider GetCurrentProvider() 
+    {
+        return provider;
+    }
 }
 

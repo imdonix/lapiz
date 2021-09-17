@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
 
 public class IdleJob : Job
@@ -12,7 +8,7 @@ public class IdleJob : Job
     protected override void BuildRoutine()
     {
         routine.Add(new GoRandomPlaceTask(owner));
-        routine.Add(new IdleTask(owner, 7.5F));
+        routine.Add(new IdleTask(owner, Random.Range(2,5)));
     }
 }
 

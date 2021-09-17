@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,9 +41,19 @@ public class Storage : Machine, IInteractable
         TakeOne(out Item _);
     }
 
+    public Item GetItemType()
+    {
+        return stack.GetItemPref();
+    }
+
     public bool CanInteract()
     {
         return true;
+    }
+
+    public override float GetSize()
+    {
+        return 1.5F;
     }
 
     public string GetDescription()
@@ -63,6 +74,17 @@ public class Storage : Machine, IInteractable
                 PhotonNetwork.Destroy(item.photonView);
                 photonView.RPC("OnItemRecived", RpcTarget.All, count + 1);
             }
+    }
+
+
+    protected override int GetPriority()
+    {
+        return JobProvider.STORAGE;
+    }
+
+    public override Job GetJob(NPC npc)
+    {
+        throw new NotImplementedException();
     }
 
     protected override void ResetInput()

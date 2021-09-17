@@ -20,4 +20,20 @@ public class Thrower : Machine
 
     protected override void ResetInput(){}
 
+    public override float GetSize()
+    {
+        return 2F;
+    }
+
+    protected override int GetPriority()
+    {
+        return JobProvider.THROWER;
+    }
+
+    public override Job GetJob(NPC npc)
+    {
+        throw new NotImplementedException();
+    }
+
+
 }

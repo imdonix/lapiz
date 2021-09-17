@@ -1,6 +1,3 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Body : MonoBehaviour
-{
-}
+public class Body : MonoBehaviour {}

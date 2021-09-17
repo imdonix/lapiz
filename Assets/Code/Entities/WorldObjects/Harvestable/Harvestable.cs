@@ -12,7 +12,7 @@ public abstract class Harvestable : WorldObject, IHarvestable
 
     public bool Harvest(LivingEntity harvester, HandTool tool, out Item reward)
     {
-        reward = null;
+        reward = null;  
         if (!IsCorrectTool(tool)) return false;
 
         this.state++;
@@ -22,6 +22,7 @@ public abstract class Harvestable : WorldObject, IHarvestable
             Vector3 pos = transform.position + Vector3.up + (harvester.transform.position - transform.position).normalized * GetDropDistacne();
             reward = SpawnItem(pos);
             this.state = 0;
+            this.GetProvider().DiscardJob();
             return true;
         }
         return false;
@@ -41,5 +42,16 @@ public abstract class Harvestable : WorldObject, IHarvestable
 
     protected abstract float GetDropDistacne();
 
+    public abstract Tool GetCorrectTool();
+
+    protected override int GetPriority()
+    {
+        return JobProvider.HARVESTABLE;
+    }
+
+    public override Job GetJob(NPC npc)
+    {
+        return new HarvestJob(npc, this);
+    }
 }
 

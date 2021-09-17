@@ -17,8 +17,7 @@ public class Inventory
 
     public void Equip(Tool item)
     {
-        Tool tmp;
-        Equip(item, out tmp);
+        Equip(item, out Tool _);
     }
 
     /// <summary>

@@ -93,6 +93,11 @@ public abstract class Ninja : LivingEntity
         return chakra;
     }
 
+    public Inventory GetInventory()
+    {
+        return inventory;
+    }
+
     public void SpendChakra(float chakra)
     {
         this.chakra -= chakra;

@@ -40,6 +40,11 @@ public abstract class Job
             {
                 if (index < routine.Count - 1)
                 {
+                    if (index > 0)
+                        routine[index + 1].Init(routine[index].GetCarried());
+                    else
+                        routine[index + 1].Init(null);
+
                     index++;
                 }
                 else

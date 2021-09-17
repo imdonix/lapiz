@@ -50,6 +50,11 @@ public class Furnace : Crafter
         return Manager.Instance.GetLanguage().Furnace;
     }
 
+    public override float GetSize()
+    {
+        return 2F;
+    }
+
     #region SERIALIZATION
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

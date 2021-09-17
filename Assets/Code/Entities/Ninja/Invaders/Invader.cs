@@ -11,6 +11,7 @@ public abstract class Invader : NPC
     protected List<float> LootChance;
 
     public float enemyFindTimer = 0;
+    private LivingEntity last;
 
     #region UNITY
 
@@ -25,19 +26,41 @@ public abstract class Invader : NPC
         CheckLootTable();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            enemyFindTimer += Time.deltaTime;
+            if (enemyFindTimer > CHECK_ENEMY)
+            {
+                enemyFindTimer = 0;
+                if (FindTarget(out LivingEntity opportunity))
+                    if (last == null || GetPriority(opportunity) < GetPriority(last))
+                    {
+                        last = opportunity;
+                        OverrideJob(new KillJob(this, opportunity));
+                    }
+            }
+        }
+    }
+
     #endregion
 
     protected override Job FindJob()
     {
         LivingEntity target;
         if (FindTarget(out target))
+        {
+            this.last = target;
             return new KillJob(this, target);
+        }
         return new IdleJob(this);
     }
 
     protected bool FindTarget(out LivingEntity target)
     {
-
         target = null;
         foreach (LivingEntity enemy in LivingEntity.GetAllies())
         {
@@ -47,7 +70,7 @@ public abstract class Invader : NPC
                 continue;
             }
            
-            if (GetPriority(target) > GetDistance(enemy))
+            if (GetPriority(target) > GetPriority(enemy))
             {
                 target = enemy;
             }

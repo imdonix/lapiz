@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine;
 
 
-public class Villager : NPC
+public class Villager : NPC, IInteractable
 {
+
     protected override void Start()
     {
         base.Start();
@@ -18,7 +19,29 @@ public class Villager : NPC
 
     protected override Job FindJob()
     {
-        return new IdleJob(this);
+        var jobs = World.Loaded.GetJobs();
+        JobProvider provider = null;
+        foreach (var job in jobs)
+        {
+            if (job.IsAvailable())
+            {
+                if (ReferenceEquals(provider, null))
+                    provider = job;
+                else if (provider.GetPriority() < job.GetPriority())
+                    provider = job;
+            }
+        }
+
+        if (ReferenceEquals(provider, null))
+        {
+            this.provider = null;
+            return new IdleJob(this);
+        }
+        else
+        {
+            this.provider = provider;
+            return provider.ApplyJob(this); ;
+        }
     }
 
     public override bool IsAlly()
@@ -33,6 +56,7 @@ public class Villager : NPC
 
     public override void Alert(LivingEntity source)
     {
+        this.provider = null;
         OverrideJob(new RunAwayJob(this, source));
     }
 
@@ -42,4 +66,39 @@ public class Villager : NPC
         Story.Loaded.population.RegisterDead(this);
         PhotonNetwork.Destroy(photonView);
     }
+
+    public void Interact(Ninja source)
+    {
+        Scare(source);
+    }
+
+    public bool CanInteract()
+    {
+        return true;
+    }
+
+    public string GetDescription()
+    {
+        return Manager.Instance.GetLanguage().Scare;
+    }
+
+    #region PUN
+
+    [PunRPC]
+    public void OnScare(int id) 
+    {
+        foreach (LivingEntity entity in LivingEntity.GetAllies())
+            if (entity.photonView.ViewID.Equals(id))
+            {
+                Alert(entity);
+                break;
+            }   
+    }
+
+    public void Scare(LivingEntity from)
+    {
+        photonView.RPC("OnScare", photonView.Owner, from.photonView.ViewID);
+    }
+
+    #endregion
 }

@@ -1,14 +1,11 @@
 ﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 
-public abstract class WorldObject : Entity
+public abstract class WorldObject : Entity, IJobProvider
 {
     private World world;
+    private JobProvider provider;
 
     #region UNITY
 
@@ -17,6 +14,11 @@ public abstract class WorldObject : Entity
         base.Awake();
         this.world = FindObjectOfType<World>();
         this.transform.SetParent(world.transform);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            this.provider = new JobProvider(this, GetPriority());
+        }
     }
 
     #endregion
@@ -25,5 +27,16 @@ public abstract class WorldObject : Entity
     {
         return world;
     }
+
+    public JobProvider GetProvider()
+    {
+        return provider;
+    }
+
+    public abstract float GetSize();
+
+    protected abstract int GetPriority();
+
+    public abstract Job GetJob(NPC npc);
 
 }

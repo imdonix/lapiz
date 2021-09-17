@@ -11,7 +11,7 @@ public class IronOreVain : Harvestable
 
     protected override int GetRate()
     {
-        return 5;
+        return 15;
     }
 
     protected override Item GetReward()
@@ -22,6 +22,16 @@ public class IronOreVain : Harvestable
     protected override bool IsCorrectTool(HandTool tool)
     {
         return tool.GetType().Equals(typeof(HandPickaxe));
+    }
+
+    public override Tool GetCorrectTool()
+    {
+        return ItemLibrary.Instance.PickaxePref;
+    }
+
+    public override float GetSize()
+    {
+        return 2.25F;
     }
 }
 

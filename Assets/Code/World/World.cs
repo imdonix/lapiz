@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,7 @@ public class World : MonoBehaviour
     [SerializeField] private Vector3 VillagerStartPosition;
     [SerializeField] private Vector3[] EnemyStartPositions;
     [SerializeField] private List<Vector3> IronOreVainPositions;
+    [SerializeField] private List<Vector3> FurnacePositions;
     [SerializeField] private Vector3 StoragePositions;
 
     [Header("Resources")]
@@ -30,6 +32,7 @@ public class World : MonoBehaviour
 
     private PathFinder pathFinder;
     private List<Machine> machines;
+    private List<IJobProvider> jobs;
 
     private FreeCam freeCam;
 
@@ -41,6 +44,7 @@ public class World : MonoBehaviour
     {
         this.pathFinder = GetComponent<PathFinder>();
         this.machines = new List<Machine>();
+        this.jobs = new List<IJobProvider>();
         this.freeCam = GetComponentInChildren<FreeCam>();
 
         Loaded = this;
@@ -99,6 +103,11 @@ public class World : MonoBehaviour
         return VillagerStartPosition;
     }
 
+    public JobProvider[] GetJobs()
+    {
+        return jobs.Select(j => j.GetProvider()).ToArray();
+    }
+
 
     public void TakeControll(NPlayer player)
     {
@@ -149,12 +158,20 @@ public class World : MonoBehaviour
     private void CreateHarvestables()
     {
         foreach (Vector3 pos in IronOreVainPositions)
-            PhotonNetwork.InstantiateRoomObject(IronOreVainPref.name, pos, Quaternion.identity);
+        {
+            Harvestable harvestable = PhotonNetwork.InstantiateRoomObject(
+                IronOreVainPref.name, 
+                pos, 
+                Quaternion.identity)
+                .GetComponent<Harvestable>();
+            jobs.Add(harvestable);
+        } 
     }
 
     private void CreateMachines()
     {
         CreateSotrages();
+        CreateCrafters();
     }
 
     private void CreateSotrages()
@@ -169,11 +186,23 @@ public class World : MonoBehaviour
         {
             Storage storage = PhotonNetwork.InstantiateRoomObject(
                 StoragePref.name,
-                StoragePositions + (Vector3.forward * 2 * i),
+                StoragePositions + (Vector3.left * 2 * i),
                 Quaternion.identity).GetComponent<Storage>();
             storage.InitItem(storedItems[i]);
         }
     }
+
+    private void CreateCrafters()
+    {
+        foreach (Vector3 pos in FurnacePositions)
+        {
+            Furnace furnace = PhotonNetwork.InstantiateRoomObject(FurcanePref.name, pos, Quaternion.identity)
+                .GetComponent<Furnace>();
+
+        }
+
+    }
+
 
     private bool AssertEditor()
     {

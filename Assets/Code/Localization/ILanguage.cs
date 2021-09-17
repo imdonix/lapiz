@@ -21,5 +21,6 @@
     string Ready { get; }
     string TakeItem { get; }
     string NoItemAvaiable { get; }
+    string Scare { get; }
 }
 

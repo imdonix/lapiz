@@ -91,6 +91,27 @@ public class Arms : MonoBehaviour
         }
     }
 
+    public void Harvest(HarvestTask task)
+    {
+        if (Cooldown > 0) return;
+        if (slot < 0) return;
+        Weapon weapon = GetSlot(slot);
+        Cooldown = weapon.GetSpeed() + .1F;
+        StartCoroutine(Continue());
+
+        IEnumerator Continue()
+        {
+            var next = weapon.GetNext();
+            Right.MoveTo(next.Item1, next.Item2, weapon.GetSpeed());
+            yield return new WaitForSeconds(weapon.GetSpeed() * weapon.GetDamageTime());
+            if (task.GetHarvestable().Harvest(owner,(HandTool) weapon, out Item item))
+            {
+                task.End(item);
+            }
+            idle = false;
+        }
+    }
+
     public bool Defend(bool active)
     {
         if (Cooldown > 0 || slot < 0 || !active) return false;

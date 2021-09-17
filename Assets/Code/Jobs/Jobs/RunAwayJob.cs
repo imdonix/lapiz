@@ -22,6 +22,5 @@ public class RunAwayJob : Job
     {
         Vector3 dir = TTT.Direction(attacker.transform.position, owner.transform.position);
         return owner.transform.position + (-dir * RUN_DISTANCE);
-
     }
 }

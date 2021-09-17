@@ -15,11 +15,14 @@ public abstract class Machine : WorldObject
     [SerializeField] private Vector3 inputSize;
     [SerializeField] private Vector3 outputLocalPosition;
 
+    private List<Item> npcRequested;
+
     #region UNITY
 
     protected override void Awake()
     {
         base.Awake();
+        npcRequested = new List<Item>();
         GetWorld().RegisterMachine(this);
     }
 
@@ -28,6 +31,7 @@ public abstract class Machine : WorldObject
     public void ReadInput()
     {
         ResetInput();
+        
         Collider[] colliders = Physics.OverlapBox(transform.position + inputLocalPosition, inputSize / 2, Quaternion.identity);
         foreach (Collider collider in colliders)
         {
@@ -44,7 +48,18 @@ public abstract class Machine : WorldObject
             }
         }
 
+        foreach (Item item in npcRequested)
+            if (!item.IsPickUp())
+                Store(item);
+        npcRequested.Clear();
+
+
         Process();
+    }
+
+    public void Put(Item item)
+    {
+        npcRequested.Add(item);
     }
 
     protected abstract void ResetInput();

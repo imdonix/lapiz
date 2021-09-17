@@ -122,5 +122,15 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
     {
         return other.GetID() == GetID();
     }
+
+    protected override int GetPriority()
+    {
+        return JobProvider.CRAFTER;
+    }
+
+    public override Job GetJob(NPC npc)
+    {
+        throw new NotImplementedException();
+    }
 }
 

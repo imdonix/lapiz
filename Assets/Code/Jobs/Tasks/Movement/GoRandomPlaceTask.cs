@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GoRandomPlaceTask : GoTask
 {
-    private const int RANGE = 30;
+    private const int MIN = 30;
+    private const int MAX = 80;
     private const float MAX_TIME = 5.5F;
 
     private float timer = 0;
 
-    public GoRandomPlaceTask(Ninja owner) : base(owner, GetRandomPositon(owner)) {}
+    public GoRandomPlaceTask(Ninja owner) : base(owner, GetRandomPositonWorldPos()) {}
 
     protected override void DoUpdate()
     {
@@ -20,18 +21,13 @@ public class GoRandomPlaceTask : GoTask
         }
         else
         {
-            owner.SetTargetLook(target);
             base.DoUpdate();
         }
 
     }
 
-    private static Vector3 GetRandomPositon(Entity entity)
+    private static Vector3 GetRandomPositonWorldPos()
     {
-        return new Vector3(
-            entity.transform.position.x + Random.Range(-RANGE, RANGE),
-            0,
-            entity.transform.position.z + Random.Range(-RANGE, RANGE)
-            );
+        return new Vector3(Random.Range(MIN, MAX), 0, Random.Range(MIN, MAX));
     }
 }

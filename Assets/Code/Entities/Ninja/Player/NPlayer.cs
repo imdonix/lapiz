@@ -12,6 +12,7 @@ public class NPlayer : Ninja
 
     #region UNITY
 
+
     protected override void Start()
     {
         base.Start();
@@ -33,6 +34,11 @@ public class NPlayer : Ninja
             MoveCamera();
             UpdateGUI();
         }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Story.Loaded.population.Populate(this);
+        }
     }
 
     protected override void FixedUpdate()
@@ -41,9 +47,7 @@ public class NPlayer : Ninja
         if (photonView.IsMine)
             Move();
     }
-    
-
-
+  
     #endregion
 
     #region PUBLIC
@@ -140,7 +144,6 @@ public class NPlayer : Ninja
     private void Claim()
     {
         RequestBadge(Village.Mater);
-        Story.Loaded.population.Populate(this);
     }
 
     private void MoveCamera()
@@ -156,6 +159,7 @@ public class NPlayer : Ninja
     {
         DropInventoryItems();
         PhotonNetwork.Destroy(photonView);
+        Story.Loaded.population.RegisterDead(this);
 
         World.Loaded.TakeFreeCam();
     }

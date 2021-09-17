@@ -12,6 +12,7 @@ public class GoTask : Task
     private Path path = null;
     private PathFindRequest request = null;
     private float pathFindTimer = CHECK_PATH + 1;
+    private float reach = REACH * 6F;
 
     protected readonly Vector3 target;
 
@@ -20,8 +21,16 @@ public class GoTask : Task
         this.target = target;
     }
 
+    public GoTask(Ninja owner, Vector3 target, float reach) : base(owner)
+    {
+        this.target = target;
+        this.reach = reach + 0.75F; // coz we nee to take the entity size too
+    }
+
     protected override void DoUpdate()
     {
+        owner.SetTargetLook(target);
+
         if (!ReferenceEquals(request, null))
         {
             if (request.IsDone())
@@ -65,7 +74,7 @@ public class GoTask : Task
 
         if (ReferenceEquals(path, null) || airDistance < SIMPLE || heightDistance > TO_HIGH)
         {
-            if (airDistance > REACH * 6F)
+            if (airDistance > reach)
                 owner.MoveTorwards(direction);
             else
                 Succeed();
