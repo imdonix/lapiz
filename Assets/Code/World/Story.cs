@@ -71,23 +71,10 @@ public class Story : MonoBehaviourPun, IPunObservable
 
     #endregion
 
-    private IEnumerator SpawnNextWave()
+    private void StartGame()
     {
-        index++;
-        int current = index % Waves.Length;
-        int level = index / Waves.Length;
-
-        Wave wave = Waves[current];
-        float wait = OPTIMAL_SPAWN / wave.Entities.Length;
-        foreach (LivingEntity entity in wave.Entities)
-        {
-            LivingEntity ent = PhotonNetwork.InstantiateRoomObject(entity.name,
-                World.Loaded.GetAEnemySpawnPosition(),
-                Quaternion.identity).GetComponent<LivingEntity>();
-            ent.LevelUp(level);
-            yield return new WaitForSeconds(Mathf.Max(wait, MIN));
-            if (end) yield break;
-        }
+        population = new Population(this);
+        IdlePhase();
     }
 
     private void IdlePhase()
@@ -96,10 +83,8 @@ public class Story : MonoBehaviourPun, IPunObservable
         attacking = false;
 
         int missingVillagers = GetIdealVillagerCount() - population.GetVillagerCount();
-        Debug.Assert(missingVillagers > 0);
-        Debug.LogError(missingVillagers);
-        for (int i = 0; i < missingVillagers && i < MAX_VILLAGER_SPAWN; i++)
-            SpawnVillager();
+        Debug.Assert(missingVillagers > 0);        
+        SpawnVillager(missingVillagers);
     }
 
     private void AttackPhase()
@@ -108,33 +93,55 @@ public class Story : MonoBehaviourPun, IPunObservable
         ready = false;
         countDown = attackPhaseTime;
         attacking = true;
-        StartCoroutine(SpawnNextWave());
+        SpawnNextWave();
     }
 
-    private void StartGame()
-    {
-        population = new Population(this);
-        IdlePhase();
-    }
 
-    private int GetIdealVillagerCount()
-    {
-        return 2 + Mathf.Min((index / 3), 5);
-    }
-
-    public void SpawnVillager()
+    public void SpawnVillager(int missingVillagers)
     {
         StartCoroutine(Spawn());
         IEnumerator Spawn()
         {
-            yield return new WaitForSeconds(OPTIMAL_SPAWN / 2);
-            if (end) yield break;
+            for (int i = 0; i < missingVillagers && i < MAX_VILLAGER_SPAWN; i++)
+            {
+                yield return new WaitForSeconds(OPTIMAL_SPAWN / 2);
+                if (end) yield break;
 
-            PhotonNetwork.InstantiateRoomObject(
-                VillagerPref.name,
-                World.Loaded.GetVillagerSpawnPoint(),
-                Quaternion.identity);
+                PhotonNetwork.InstantiateRoomObject(
+                    VillagerPref.name,
+                    World.Loaded.GetVillagerSpawnPoint(),
+                    Quaternion.identity);
+            }
         }
+    }
+
+    private void SpawnNextWave()
+    {
+        StartCoroutine(Spawn());
+        IEnumerator Spawn()
+        {
+            index++;
+            int current = index % Waves.Length;
+            int level = index / Waves.Length;
+
+            Wave wave = Waves[current];
+            float wait = OPTIMAL_SPAWN / wave.Entities.Length;
+            foreach (LivingEntity entity in wave.Entities)
+            {
+                LivingEntity ent = PhotonNetwork.InstantiateRoomObject(entity.name,
+                    World.Loaded.GetAEnemySpawnPosition(),
+                    Quaternion.identity).GetComponent<LivingEntity>();
+                ent.LevelUp(level);
+                yield return new WaitForSeconds(Mathf.Max(wait, MIN));
+                if (end) yield break;
+            }
+        }
+    }
+
+
+    private int GetIdealVillagerCount()
+    {
+        return 2 + Mathf.Min((index / 3), 5);
     }
 
     private bool CheckEndConditions()
