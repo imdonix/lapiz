@@ -30,6 +30,8 @@ public class ItemLibrary : MonoBehaviour
     [SerializeField] public BaseSword SwordPref;
     [SerializeField] public Axe AxePref;
     [SerializeField] public PickAxe PickaxePref;
+    [SerializeField] public Stick StickPref;
+    
 
     private void InitItemList()
     {

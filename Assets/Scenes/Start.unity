@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.4964127, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3287,6 +3287,7 @@ MonoBehaviour:
   SwordPref: {fileID: 4120688044040194568, guid: c16bd31b856e23a4a871b5d087c2dc11, type: 3}
   AxePref: {fileID: 508854258028147154, guid: a7c4c5873f2c8424a986122e3733829d, type: 3}
   PickaxePref: {fileID: 3181478977058302495, guid: e73c70f514c64b54b88779e4c96a6168, type: 3}
+  StickPref: {fileID: 2237871434000795086, guid: 4feebf45bccd9c6429b5d230b0a0cc41, type: 3}
 --- !u!1 &1950872095
 GameObject:
   m_ObjectHideFlags: 0

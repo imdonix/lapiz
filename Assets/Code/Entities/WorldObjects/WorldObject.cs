@@ -39,4 +39,5 @@ public abstract class WorldObject : Entity, IJobProvider
 
     public abstract Job GetJob(NPC npc);
 
+    public  abstract bool IsWorkAvailable();
 }

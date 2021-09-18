@@ -35,5 +35,8 @@ public class Thrower : Machine
         throw new NotImplementedException();
     }
 
-
+    public override bool IsWorkAvailable()
+    {
+        return false;
+    }
 }

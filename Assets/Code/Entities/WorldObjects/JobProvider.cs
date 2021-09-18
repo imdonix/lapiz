@@ -40,6 +40,8 @@ public class JobProvider
 
     public bool IsAvailable()
     {
+        if (!station.IsWorkAvailable())
+            return false;
         if (ReferenceEquals(this.worker, null))
             return true;
         if (ReferenceEquals(this.worker.GetCurrentProvider(), this))

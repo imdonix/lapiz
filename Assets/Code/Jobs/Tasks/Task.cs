@@ -49,7 +49,6 @@ public abstract class Task
     public void Init(Item carried)
     {
         this.carried = carried;
-        Debug.Log("I got " + carried);
     }
 
     protected void Succeed()

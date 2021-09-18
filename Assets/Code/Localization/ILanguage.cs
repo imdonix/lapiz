@@ -22,5 +22,6 @@
     string TakeItem { get; }
     string NoItemAvaiable { get; }
     string Scare { get; }
+    string Stick { get; }
 }
 

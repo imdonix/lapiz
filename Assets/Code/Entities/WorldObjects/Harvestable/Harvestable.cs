@@ -1,32 +1,34 @@
 ﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class Harvestable : WorldObject, IHarvestable
 {
-    private int state = 0;
+    private int harvest = 0;
 
     public bool Harvest(LivingEntity harvester, HandTool tool, out Item reward)
     {
         reward = null;  
         if (!IsCorrectTool(tool)) return false;
 
-        this.state++;
-
-        if (state >= GetRate())
+        this.harvest++;
+        if (harvest >= GetRate())
         {
-            Vector3 pos = transform.position + Vector3.up + (harvester.transform.position - transform.position).normalized * GetDropDistacne();
+            Vector3 pos = transform.position + Vector3.up + (harvester.transform.position - transform.position).normalized * GetSize();
             reward = SpawnItem(pos);
-            this.state = 0;
+            this.harvest = 0;
             this.GetProvider().DiscardJob();
+            OnHarvested();
             return true;
         }
+
         return false;
     }
+
+    public bool IsCorrectTool(HandTool tool)
+    {
+        return tool.GetItemPref().Equals(GetCorrectTool());
+    }
+
 
     private Item SpawnItem(Vector3 pos)
     {
@@ -34,24 +36,27 @@ public abstract class Harvestable : WorldObject, IHarvestable
         return PhotonNetwork.Instantiate(pref.name, pos, Quaternion.identity).GetComponent<Item>();
     }
 
-    protected abstract Item GetReward();
-
-    protected abstract int GetRate();
-
-    protected abstract bool IsCorrectTool(HandTool tool);
-
-    protected abstract float GetDropDistacne();
-
-    public abstract Tool GetCorrectTool();
-
     protected override int GetPriority()
     {
-        return JobProvider.HARVESTABLE;
+        return JobProvider.HARVESTABLE + UnityEngine.Random.Range(0, 3);
     }
 
     public override Job GetJob(NPC npc)
     {
         return new HarvestJob(npc, this);
     }
+
+    public override bool IsWorkAvailable()
+    {
+        return true;
+    }
+
+    protected abstract void OnHarvested();
+
+    protected abstract Item GetReward();
+
+    protected abstract int GetRate();
+
+    public abstract Tool GetCorrectTool();
 }
 

@@ -97,8 +97,17 @@ public class Storage : Machine, IInteractable
         input.Add(item);
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {}
+    public override bool IsWorkAvailable()
+    {
+        return false;
+    }
 
+    #region SERIALIZATION
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+
+    #endregion
+    
     #region RPC
 
     [PunRPC]

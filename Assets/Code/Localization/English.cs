@@ -31,5 +31,6 @@ public class English : ILanguage
     public string TakeItem => "Take";
     public string NoItemAvaiable => "Empty";
     public string Scare => "Scare";
+    public string Stick => "Stick";
 }
 

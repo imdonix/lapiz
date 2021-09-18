@@ -58,6 +58,11 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
         storage.Clear();
     }
 
+    public override bool IsWorkAvailable()
+    {
+        return false;
+    }
+
     public bool IsCrafting() 
     {
         return pending.Count > 0;

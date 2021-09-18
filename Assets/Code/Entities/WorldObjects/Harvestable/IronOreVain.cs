@@ -4,11 +4,6 @@ public class IronOreVain : Harvestable
 {
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}
 
-    protected override float GetDropDistacne()
-    {
-        return 2F;
-    }
-
     protected override int GetRate()
     {
         return 15;
@@ -17,11 +12,6 @@ public class IronOreVain : Harvestable
     protected override Item GetReward()
     {
         return ItemLibrary.Instance.IronOrePref;
-    }
-
-    protected override bool IsCorrectTool(HandTool tool)
-    {
-        return tool.GetType().Equals(typeof(HandPickaxe));
     }
 
     public override Tool GetCorrectTool()
@@ -33,6 +23,8 @@ public class IronOreVain : Harvestable
     {
         return 2.25F;
     }
+
+    protected override void OnHarvested(){}
 }
 
 

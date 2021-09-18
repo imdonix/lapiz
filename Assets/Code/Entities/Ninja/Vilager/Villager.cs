@@ -62,7 +62,6 @@ public class Villager : NPC, IInteractable
 
     protected override void Die()
     {
-        DropInventoryItems();
         Story.Loaded.population.RegisterDead(this);
         PhotonNetwork.Destroy(photonView);
     }
