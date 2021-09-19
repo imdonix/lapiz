@@ -23,5 +23,8 @@
     string NoItemAvaiable { get; }
     string Scare { get; }
     string Stick { get; }
+    string GameOver { get; }
+    string Level { get; }
+    string BackToMenu { get; }
 }
 

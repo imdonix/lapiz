@@ -10,12 +10,13 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>
     private const float DEFAULT_LIFETIME = 60F * 5;
 
     [Header("Item")]
+    private Sprite icon;
 
     protected Rigidbody rigid;
     protected Collider colider;
 
     protected float lifeTime = 0;
-    [SerializeField] protected bool pickedUp = false;
+    protected bool pickedUp = false;
 
     #region UNITY
 
@@ -75,6 +76,16 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>
         return string.Format("{0} {1}", Manager.Instance.GetLanguage().PickUp, GetName());
     }
 
+    public Sprite GetIcon()
+    {
+        return icon;
+    }
+
+    public void SetIcon(Sprite sprite)
+    {
+        this.icon = sprite;
+    }
+
     public bool IsPickUp()
     {
         return pickedUp;
@@ -115,16 +126,16 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>
         transform.position = position;
     }
 
+    protected virtual float GetLifeTime()
+    {
+        return DEFAULT_LIFETIME;
+    }
+
     public abstract string GetID();
 
     public abstract string GetName();
 
     public abstract Item GetItemPref();
-
-    protected virtual float GetLifeTime()
-    {
-        return DEFAULT_LIFETIME;
-    }
 
     #region PHOTON
 

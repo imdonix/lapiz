@@ -63,9 +63,9 @@ public class Story : MonoBehaviourPun, IPunObservable
             end = CheckEndConditions();
 
             if (end)
-                HUD.Instance.SwitchGameOverOverlay();
+                SendGameOver();
             else
-                HUD.Instance.UpdateStory(attacking, countDown, remaining, ready);
+                HUD.Instance.Story.Show(attacking, countDown, remaining, ready);
         }
     }
 
@@ -159,8 +159,8 @@ public class Story : MonoBehaviourPun, IPunObservable
             this.attacking = (bool)stream.ReceiveNext();
             this.remaining = (int)stream.ReceiveNext();
             this.ready = attacking ? false : this.ready;
-            HUD.Instance.UpdateStory(attacking, countDown, remaining, ready);
-        }
+            HUD.Instance.Story.Show(attacking, countDown, remaining, ready);
+        }   
         else
         {
             stream.SendNext(countDown);
@@ -190,6 +190,17 @@ public class Story : MonoBehaviourPun, IPunObservable
     {
         ready = !ready;
         photonView.RPC("OnReady", RpcTarget.MasterClient, ready);
+    }
+
+    [PunRPC]
+    public void OnGameOver(int level)
+    {
+        HUD.Instance.SwitchGameOverOverlay(level);
+    }
+
+    public void SendGameOver()
+    {
+        photonView.RPC("OnGameOver", RpcTarget.AllBuffered, index);
     }
 
     #endregion

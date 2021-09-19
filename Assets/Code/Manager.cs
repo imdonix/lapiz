@@ -1,9 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
-using System.Collections;
-using UnityEngine.SceneManagement;
+
 
 public class Manager : MonoBehaviourPunCallbacks
 {
@@ -22,8 +20,9 @@ public class Manager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(transform.parent.gameObject);
         SetupLanguage();
+        DontDestroyOnLoad(transform.parent.gameObject);
+        
     }
 
     private void Start()

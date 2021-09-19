@@ -7,14 +7,16 @@ using UnityEngine;
 
 public class ItemLibrary : MonoBehaviour
 {
+    private const string ICON_PATH = "icons";
 
     public static ItemLibrary Instance;
-    private static List<Item> cache;
+    private static List<Item> cache;    
 
     private void Awake()
     {
         Instance = this;
-        InitItemList();
+        InitItemList(); 
+        CrawleIcons();
         DontDestroyOnLoad(transform.parent.gameObject);
     }
 
@@ -31,7 +33,23 @@ public class ItemLibrary : MonoBehaviour
     [SerializeField] public Axe AxePref;
     [SerializeField] public PickAxe PickaxePref;
     [SerializeField] public Stick StickPref;
-    
+
+
+    private void CrawleIcons()
+    {
+        Sprite[] sprites = Resources.LoadAll(ICON_PATH, typeof(Sprite))
+        .Select(obj => (Sprite)obj)
+        .ToArray();
+
+        foreach (Item item in cache)
+            foreach (Sprite sprite in sprites)
+                if (item.GetID().Equals(sprite.name))
+                    item.SetIcon(sprite);
+
+        foreach (Item item in cache)
+            if (ReferenceEquals(item.GetIcon(), null))
+                throw new Exception(string.Format("Icon is not set for {0}", item.name));
+    }
 
     private void InitItemList()
     {
@@ -68,5 +86,9 @@ public class ItemLibrary : MonoBehaviour
         return null;
     }
 
+    public List<Item> GetAll()
+    {
+        return ItemLibrary.cache;
+    }
 }
 

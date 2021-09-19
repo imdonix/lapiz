@@ -3,7 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoryDisplay : MonoBehaviour
+public class StoryDisplay : Display
 {
     [SerializeField] private Image image;
     [SerializeField] private Text text;
@@ -30,8 +30,6 @@ public class StoryDisplay : MonoBehaviour
             if (!ready)
                 stringBuilder.AppendLine(string.Format("[{0}] {1}", Settings.Instance.Ready.ToString(), Manager.Instance.GetLanguage().Ready, remaining));
         }
-
-
 
         return stringBuilder.ToString();
     }

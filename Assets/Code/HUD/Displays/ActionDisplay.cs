@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActionDisplay : MonoBehaviour
+public class ActionDisplay : Display
 {
     [SerializeField] private Text Action;
-
 
     public void Show(IInteractable interactable, Item hand)
     {

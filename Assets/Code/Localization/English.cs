@@ -32,5 +32,8 @@ public class English : ILanguage
     public string NoItemAvaiable => "Empty";
     public string Scare => "Scare";
     public string Stick => "Stick";
+    public string GameOver => "The village is lost!";
+    public string Level => "Level";
+    public string BackToMenu => "Back to menu";
 }
 

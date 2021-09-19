@@ -21,6 +21,11 @@ public class NPlayer : Ninja
         {
             Claim();
         }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Story.Loaded.population.Populate(this);
+        }
     }
 
     protected override void Update()
@@ -33,11 +38,6 @@ public class NPlayer : Ninja
             PassInteraction();
             MoveCamera();
             UpdateGUI();
-        }
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Story.Loaded.population.Populate(this);
         }
     }
 
@@ -57,6 +57,7 @@ public class NPlayer : Ninja
         this.name = "-Local Player-";
         MaskBodyParts();
         Camera.SetupCurrent(head.AttachCamera());
+        HUD.Instance.SwitchPlayerOverlay();
     }
 
     public override bool IsAlly()
@@ -130,8 +131,8 @@ public class NPlayer : Ninja
 
     private void UpdateGUI()
     {
-        HUD.Instance.Show(head.GetCurrentInteractable(), arms.GetItemInHand());
-        HUD.Instance.UpdateStatus(health, maxHealth, chakra, maxChakra);
+        HUD.Instance.Action.Show(head.GetCurrentInteractable(), arms.GetItemInHand());
+        HUD.Instance.LiveState.UpdateStatus(health, maxHealth, chakra, maxChakra);
     }
 
     private void MaskBodyParts()

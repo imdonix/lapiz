@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiveStateDisplay : MonoBehaviour
+public class LiveStateDisplay : Display
 {
     [SerializeField] public StatusBar Health;
     [SerializeField] public StatusBar Chakra;
