@@ -2327,6 +2327,7 @@ MonoBehaviour:
   Throw: 113
   Consume: 99
   Ready: 116
+  ItemLib: 105
 --- !u!1 &1457444885
 GameObject:
   m_ObjectHideFlags: 0

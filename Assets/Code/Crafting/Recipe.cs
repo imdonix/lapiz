@@ -39,6 +39,11 @@ public class Recipe
         return true;
     }
 
+    public Pair<Item, int>[] GetIngredients()
+    {
+        return ingredients;
+    }
+
     public static Recipe Create(int piece)
     {
         return new Recipe(piece);

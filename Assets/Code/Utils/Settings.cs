@@ -11,9 +11,9 @@ public class Settings : MonoBehaviour
     [SerializeField] public KeyCode Throw;
     [SerializeField] public KeyCode Consume;
     [SerializeField] public KeyCode Ready;
+    [SerializeField] public KeyCode ItemLib;
 
     public static Settings Instance;
-
 
     private void Awake()
     {

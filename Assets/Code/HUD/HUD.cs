@@ -16,6 +16,7 @@ public class HUD : MonoBehaviour
     [SerializeField] public StoryDisplay Story;
     [SerializeField] public GameOverDisplay GameOver;
     [SerializeField] public ItemLibraryDisplay ItemLibrary;
+    [SerializeField] public CraftingDisplay Craft;
 
     #region UNITY
 
@@ -29,17 +30,47 @@ public class HUD : MonoBehaviour
 
     public void SwitchPlayerOverlay()
     {
-        OpenAll(LiveState, Action, Story, ItemLibrary);
+        SetCursor(false);
+        OpenAll(LiveState, Action, Story);
     }
 
     public void SwitchFreecamOverlay()
     {
+        SetCursor(false);
         OpenAll(Story);
     }
 
     public void SwitchGameOverOverlay(int level)
     {
+        SetCursor(true);
         OpenAll(GameOver);
+    }
+
+    public void ToggleItemLibrary()
+    {
+        if (!ItemLibrary.isActiveAndEnabled)
+        {
+            SetCursor(true);
+            OpenAll(ItemLibrary);
+        }
+        else
+            SwitchPlayerOverlay();
+    }
+
+    private void SetCursor(bool enabled)
+    {
+#if UNITY_EDITOR
+#else
+        Cursor.visible = enabled;
+        Cursor.lockState = enabled ? CursorLockMode.Confined : CursorLockMode.Locked;
+        
+#endif
+    }
+
+    public void ShowCraftRecipe(ICraftable craftable)
+    {
+        Craft.Render(craftable);
+        OpenAll(Craft);
     }
 
 
