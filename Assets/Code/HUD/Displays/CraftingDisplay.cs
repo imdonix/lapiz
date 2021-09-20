@@ -10,10 +10,12 @@ public class CraftingDisplay : Display
 
     private ICraftable craftable = null;
     private List<ItemComp> cache = new List<ItemComp>();
+    private Stack<ICraftable> stack = new Stack<ICraftable>();
 
     public void Render(ICraftable craftable)
     {
         this.craftable = craftable;
+        stack.Push(this.craftable);
     }
 
     protected override void OnOpen()
@@ -55,6 +57,17 @@ public class CraftingDisplay : Display
         foreach (ItemComp comp in this.cache)
             Destroy(comp.gameObject);
         this.cache.Clear();
+    }
+
+    protected override void OnBack()
+    {
+        if (stack.Count > 1)
+        {
+            stack.Pop();
+            HUD.Instance.ShowCraftRecipe(stack.Pop());
+        }
+        else
+            base.OnBack();
     }
 
     private ItemComp Component()

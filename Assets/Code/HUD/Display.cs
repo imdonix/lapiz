@@ -25,9 +25,19 @@ public class Display : MonoBehaviour
         OnClose(); 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnBack();
+        }
+    }
+
     protected virtual void OnOpen() {}
 
     protected virtual void OnClose(){ }
 
     protected virtual void OnInit() { }
+
+    protected virtual void OnBack() { HUD.Instance.SwitchPlayerOverlay(); }
 }
