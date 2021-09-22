@@ -27,5 +27,7 @@
     string Level { get; }
     string BackToMenu { get; }
     string Workstation { get; }
+    string Backstone { get; }
+    string BackstoneOre { get; }
 }
 

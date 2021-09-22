@@ -26,7 +26,7 @@ public abstract class HandTool : Weapon
             if (!ReferenceEquals(harvestable, null))
             {
                 Item item;
-                harvestable.Harvest(owner, this, out item);
+                harvestable.Harvest(owner, 5, this, out item);
             }
         }
     }

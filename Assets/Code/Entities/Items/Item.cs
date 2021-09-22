@@ -7,7 +7,7 @@ using Photon.Realtime;
 [RequireComponent(typeof(Collider))]
 public abstract class Item : Entity, IInteractable, IEquatable<Item>
 {
-    private const float DEFAULT_LIFETIME = 60F * 5;
+    private const float DEFAULT_LIFETIME = 30F * 15;
 
     [Header("Item")]
     private Sprite icon;

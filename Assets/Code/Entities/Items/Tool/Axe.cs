@@ -38,7 +38,7 @@ public class Axe : Tool, ICraftable
     {
         Recipe recipe = Recipe.Create(2);
         recipe.Add(ItemLibrary.Instance.StickPref, 2);
-        recipe.Add(ItemLibrary.Instance.IronIngotPref, 1);
+        recipe.Add(ItemLibrary.Instance.BackstonePref, 1);
         return recipe;
     }
 

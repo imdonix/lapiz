@@ -36,5 +36,7 @@ public class English : ILanguage
     public string Level => "Level";
     public string BackToMenu => "Back to menu";
     public string Workstation => "Workstation";
+    public string Backstone => "Backstone";
+    public string BackstoneOre => "Backstone ore";
 }
 

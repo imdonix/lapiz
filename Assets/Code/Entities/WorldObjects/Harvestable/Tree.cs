@@ -69,6 +69,11 @@ public class Tree : Harvestable
         transform.localScale = Vector3.one * Mathf.Lerp(MIN, MAX, state / MAX_TIME);
     }
 
+    protected override int GetPriority()
+    {
+        return base.GetPriority() - 1;
+    }
+
     #region SERIALIZATION
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

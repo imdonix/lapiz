@@ -9,8 +9,6 @@ public class ItemLibraryDisplay : Display
 
     protected override void OnInit()
     {
-        HUD.Instance.Craft.ResetStack();
-
         List<Item> items = ItemLibrary.Instance.GetAll();
         int n = items.Count;
         int q = NearestSqrNumber(n);
@@ -24,6 +22,12 @@ public class ItemLibraryDisplay : Display
                 comp.SetItem(items[((i * q) + j)]);
                 comp.SetPosition(new Vector2(j * size - shift, i * size - shift));
             }
+    }
+
+    protected override void OnOpen()
+    {
+        base.OnOpen();
+        HUD.Instance.Craft.ResetStack();
     }
 
     private static int NearestSqrNumber(int n)

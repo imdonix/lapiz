@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class HighBlade : Tool
+public class HighBlade : Tool, ICraftable
 {
     private const string ID = "highblade";
+
 
     public override string GetID()
     {
@@ -27,6 +28,24 @@ public class HighBlade : Tool
     public override ToolType GetToolType()
     {
         return ToolType.Sword;
+    }
+
+    public Crafter GetCrafterPrefhab()
+    {
+        return World.Loaded.FurcanePref;
+    }
+
+    public Recipe GetRecipe()
+    {
+        Recipe recipe = Recipe.Create(2);
+        recipe.Add(ItemLibrary.Instance.SwordPref, 1);
+        recipe.Add(ItemLibrary.Instance.BackstonePref, 3);
+        return recipe;
+    }
+
+    public float GetTime()
+    {
+        return 20F;
     }
 }
 

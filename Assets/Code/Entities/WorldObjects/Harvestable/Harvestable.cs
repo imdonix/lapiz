@@ -5,12 +5,13 @@ public abstract class Harvestable : WorldObject, IHarvestable
 {
     private int harvest = 0;
 
-    public bool Harvest(LivingEntity harvester, HandTool tool, out Item reward)
+
+    public bool Harvest(LivingEntity harvester, int rate, HandTool tool, out Item reward)
     {
-        reward = null;  
+        reward = null;
         if (!IsCorrectTool(tool)) return false;
 
-        this.harvest++;
+        this.harvest += rate;
         if (harvest >= GetRate())
         {
             Vector3 pos = transform.position + Vector3.up + (harvester.transform.position - transform.position).normalized * GetSize();
@@ -22,6 +23,11 @@ public abstract class Harvestable : WorldObject, IHarvestable
         }
 
         return false;
+    }
+
+    public bool Harvest(LivingEntity harvester, HandTool tool, out Item reward)
+    {
+        return Harvest(harvester, 1, tool, out reward);
     }
 
     public bool IsCorrectTool(HandTool tool)
@@ -38,7 +44,7 @@ public abstract class Harvestable : WorldObject, IHarvestable
 
     protected override int GetPriority()
     {
-        return JobProvider.HARVESTABLE + UnityEngine.Random.Range(0, 3);
+        return JobProvider.HARVESTABLE + Random.Range(0, 4);
     }
 
     public override Job GetJob(NPC npc)
@@ -58,5 +64,7 @@ public abstract class Harvestable : WorldObject, IHarvestable
     protected abstract int GetRate();
 
     public abstract Tool GetCorrectTool();
+
+
 }
 

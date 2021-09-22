@@ -18,12 +18,16 @@ public class World : MonoBehaviour
     [SerializeField] private Vector3 VillagerStartPosition;
     [SerializeField] private Vector3[] EnemyStartPositions;
     [SerializeField] private List<Vector3> IronOreVainPositions;
+    [SerializeField] private List<Vector3> BackstoneVainPositions;
     [SerializeField] private List<Vector3> TreePositions;
     [SerializeField] private List<Vector3> FurnacePositions;
+    [SerializeField] private List<Vector3> WorkstationPositions;
+    [SerializeField] private Vector3 StartItemPosition;
     [SerializeField] private Vector3 StoragePositions;
 
     [Header("Resources")]
     [SerializeField] public IronOreVain IronOreVainPref;
+    [SerializeField] public BackstoneOreVain BackstoneOreVainPref;
     [SerializeField] public Tree TreePref;
 
     [Header("Machines")]
@@ -150,12 +154,9 @@ public class World : MonoBehaviour
 
     private void CreateWorld()
     {
+        SpawnStartItems();
         CreateHarvestables();
         CreateMachines();
-
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.SwordPref.name, PlayerStartPosition, Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.IronIngotPref.name, PlayerStartPosition, Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.IronOrePref.name, PlayerStartPosition, Quaternion.identity);
     }
 
     private void CreateHarvestables()
@@ -165,6 +166,16 @@ public class World : MonoBehaviour
             Harvestable harvestable = PhotonNetwork.InstantiateRoomObject(
                 IronOreVainPref.name, 
                 pos, 
+                Quaternion.identity)
+                .GetComponent<Harvestable>();
+            jobs.Add(harvestable);
+        }
+
+        foreach (Vector3 pos in BackstoneVainPositions)
+        {
+            Harvestable harvestable = PhotonNetwork.InstantiateRoomObject(
+                BackstoneOreVainPref.name,
+                pos,
                 Quaternion.identity)
                 .GetComponent<Harvestable>();
             jobs.Add(harvestable);
@@ -181,6 +192,12 @@ public class World : MonoBehaviour
         }
     }
 
+    private void SpawnStartItems()
+    {
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.PickaxePref.name, StartItemPosition, Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject(ItemLibrary.Instance.AxePref.name, StartItemPosition, Quaternion.identity);
+    }
+
     private void CreateMachines()
     {
         CreateSotrages();
@@ -193,7 +210,8 @@ public class World : MonoBehaviour
             ItemLibrary.Instance.LapizPref,
             ItemLibrary.Instance.IronOrePref,
             ItemLibrary.Instance.IronIngotPref,
-            ItemLibrary.Instance.StickPref
+            ItemLibrary.Instance.StickPref,
+            ItemLibrary.Instance.BackstoneOrePref
         };
 
         for (int i = 0; i < storedItems.Length; i++)
@@ -213,6 +231,13 @@ public class World : MonoBehaviour
             Furnace furnace = PhotonNetwork.InstantiateRoomObject(FurcanePref.name, pos, Quaternion.identity)
                 .GetComponent<Furnace>();
             jobs.Add(furnace);
+        }
+
+        foreach (Vector3 pos in WorkstationPositions)
+        {
+            Workstation workstation = PhotonNetwork.InstantiateRoomObject(WorkstationPref.name, pos, Quaternion.identity)
+                .GetComponent<Workstation>();
+            jobs.Add(workstation);
         }
 
     }

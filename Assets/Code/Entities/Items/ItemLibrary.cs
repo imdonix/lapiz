@@ -33,7 +33,8 @@ public class ItemLibrary : MonoBehaviour
     [SerializeField] public Axe AxePref;
     [SerializeField] public PickAxe PickaxePref;
     [SerializeField] public Stick StickPref;
-
+    [SerializeField] public BackstoneOre BackstoneOrePref;
+    [SerializeField] public Backstone BackstonePref;
 
     private void CrawleIcons()
     {

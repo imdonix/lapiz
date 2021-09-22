@@ -38,7 +38,7 @@ public class PickAxe : Tool, ICraftable
     {
         Recipe recipe = Recipe.Create(2);
         recipe.Add(ItemLibrary.Instance.StickPref, 1);
-        recipe.Add(ItemLibrary.Instance.IronIngotPref, 2);
+        recipe.Add(ItemLibrary.Instance.BackstonePref, 2);
         return recipe;
     }
 
