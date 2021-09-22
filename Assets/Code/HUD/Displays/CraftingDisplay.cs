@@ -18,6 +18,11 @@ public class CraftingDisplay : Display
         stack.Push(this.craftable);
     }
 
+    public void ResetStack()
+    {
+        stack.Clear();
+    }
+
     protected override void OnOpen()
     {
         if (ReferenceEquals(null, this.craftable)) return;

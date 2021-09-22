@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class Axe : Tool
+public class Axe : Tool, ICraftable
 {
     private const string ID = "axe";
 
@@ -28,5 +28,24 @@ public class Axe : Tool
     {
         return ToolType.Tool;
     }
+
+    public Crafter GetCrafterPrefhab()
+    {
+        return World.Loaded.WorkstationPref;
+    }
+
+    public Recipe GetRecipe()
+    {
+        Recipe recipe = Recipe.Create(2);
+        recipe.Add(ItemLibrary.Instance.StickPref, 2);
+        recipe.Add(ItemLibrary.Instance.IronIngotPref, 1);
+        return recipe;
+    }
+
+    public float GetTime()
+    {
+        return 10F;
+    }
+
 }
 

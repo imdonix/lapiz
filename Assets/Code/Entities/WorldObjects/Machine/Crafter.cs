@@ -117,7 +117,13 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
             pending.Remove(craft);
     }
 
-    protected abstract void RegisterCraftables();
+    protected void RegisterCraftables()
+    {
+        foreach (ICraftable craftable in ItemLibrary.Instance.GetCraftablePrefs(this))
+        {
+            craftables.Add(craftable);
+        }
+    }
 
     public abstract string GetID();
 

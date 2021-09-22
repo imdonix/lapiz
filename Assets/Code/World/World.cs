@@ -30,6 +30,7 @@ public class World : MonoBehaviour
     [SerializeField] public Thrower ThrowerPref;
     [SerializeField] public Furnace FurcanePref;
     [SerializeField] public Storage StoragePref;
+    [SerializeField] public Workstation WorkstationPref;
 
 
     private PathFinder pathFinder;

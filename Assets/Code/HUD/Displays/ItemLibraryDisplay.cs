@@ -9,6 +9,8 @@ public class ItemLibraryDisplay : Display
 
     protected override void OnInit()
     {
+        HUD.Instance.Craft.ResetStack();
+
         List<Item> items = ItemLibrary.Instance.GetAll();
         int n = items.Count;
         int q = NearestSqrNumber(n);

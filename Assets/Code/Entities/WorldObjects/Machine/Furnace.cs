@@ -32,14 +32,6 @@ public class Furnace : Crafter
 
     #endregion
 
-    protected override void RegisterCraftables()
-    {
-        foreach (ICraftable craftable in ItemLibrary.Instance.GetCraftablePrefs(this))
-        {
-            craftables.Add(craftable);
-        }
-    }
-
     public override string GetID()
     {
         return ID;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class PickAxe : Tool
+public class PickAxe : Tool, ICraftable
 {
     private const string ID = "pickaxe";
 
@@ -27,6 +27,24 @@ public class PickAxe : Tool
     public override ToolType GetToolType()
     {
         return ToolType.Tool;
+    }
+
+    public Crafter GetCrafterPrefhab()
+    {
+        return World.Loaded.WorkstationPref;
+    }
+
+    public Recipe GetRecipe()
+    {
+        Recipe recipe = Recipe.Create(2);
+        recipe.Add(ItemLibrary.Instance.StickPref, 1);
+        recipe.Add(ItemLibrary.Instance.IronIngotPref, 2);
+        return recipe;
+    }
+
+    public float GetTime()
+    {
+        return 10F;
     }
 }
 

@@ -35,5 +35,6 @@ public class English : ILanguage
     public string GameOver => "The village is lost!";
     public string Level => "Level";
     public string BackToMenu => "Back to menu";
+    public string Workstation => "Workstation";
 }
 

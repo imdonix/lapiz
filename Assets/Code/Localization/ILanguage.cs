@@ -26,5 +26,6 @@
     string GameOver { get; }
     string Level { get; }
     string BackToMenu { get; }
+    string Workstation { get; }
 }
 
