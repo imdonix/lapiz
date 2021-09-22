@@ -47,5 +47,10 @@ public class NatureSword : Tool, ICraftable
     {
         return World.Loaded.WorkstationPref;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.RARE;
+    }
 }
 

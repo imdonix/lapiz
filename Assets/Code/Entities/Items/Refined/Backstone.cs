@@ -94,6 +94,11 @@ public class Backstone : Item, ICraftable
         return 4.5F;
     }
 
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.RARE;
+    }
+
     #region SERIALIZATION
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

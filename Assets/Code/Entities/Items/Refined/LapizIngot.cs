@@ -42,5 +42,10 @@ public class LapizIngot : Item, ICraftable
     {
         return CRAFT_TIME;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.RARE;
+    }
 }
 

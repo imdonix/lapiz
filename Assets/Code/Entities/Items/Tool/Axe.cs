@@ -47,5 +47,10 @@ public class Axe : Tool, ICraftable
         return 10F;
     }
 
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.COMMON;
+    }
+
 }
 

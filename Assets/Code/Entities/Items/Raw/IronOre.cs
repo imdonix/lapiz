@@ -23,6 +23,11 @@ public class IronOre : Item
     {
         return ItemLibrary.Instance.IronOrePref;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.COMMON;
+    }
 }
 
 

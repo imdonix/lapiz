@@ -18,4 +18,9 @@ public class Stick : Item
     {
         return Manager.Instance.GetLanguage().Stick;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.COMMON;
+    }
 }

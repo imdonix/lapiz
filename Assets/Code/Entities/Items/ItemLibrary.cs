@@ -60,6 +60,8 @@ public class ItemLibrary : MonoBehaviour
             object fieldValue = field.GetValue(this);
             if(fieldValue is Item)
                 ItemLibrary.cache.Add((Item)fieldValue);
+
+            cache.Sort();
         }            
     }
 

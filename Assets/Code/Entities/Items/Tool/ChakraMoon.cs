@@ -46,5 +46,10 @@ public class ChakraMoon : Tool, ICraftable
     {
         return ToolType.Sword;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.LEGENDARY;
+    }
 }
 

@@ -51,6 +51,7 @@ public class CraftingDisplay : Display
         var eq = Component();
         eq.SetPosition(Vector2.right * (index++ * size - half));
         eq.SetSprite(EqSpritePref, craftable.GetCrafterPrefhab().GetName());
+        eq.SetBadge(Mathf.RoundToInt(craftable.GetTime()).ToString());
 
         var res = Component();
         res.SetPosition(Vector2.right * (index++ * size - half));

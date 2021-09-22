@@ -24,10 +24,7 @@ public class Workstation : Crafter
 
     #region SERIALIZATION
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}
 
 
     #endregion

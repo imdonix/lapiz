@@ -47,5 +47,10 @@ public class HighBlade : Tool, ICraftable
     {
         return 20F;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.RARE;
+    }
 }
 

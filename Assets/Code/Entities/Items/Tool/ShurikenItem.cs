@@ -28,5 +28,10 @@ public class ShurikenItem : Tool
     {
         return ToolType.Throwable;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.LEGENDARY;
+    }
 }
 

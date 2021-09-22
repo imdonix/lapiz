@@ -19,5 +19,10 @@ public class BackstoneOre : Item
     {
         return ItemLibrary.Instance.BackstoneOrePref;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.COMMON;
+    }
 }
 

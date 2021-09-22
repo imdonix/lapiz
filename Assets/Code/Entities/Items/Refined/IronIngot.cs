@@ -41,5 +41,10 @@ public class IronIngot : Item, ICraftable
     {
         return CRAFT_TIME;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.RARE;
+    }
 }
 

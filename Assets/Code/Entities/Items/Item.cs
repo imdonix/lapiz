@@ -5,7 +5,7 @@ using Photon.Realtime;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public abstract class Item : Entity, IInteractable, IEquatable<Item>
+public abstract class Item : Entity, IInteractable, IEquatable<Item>, IComparable<Item>
 {
     private const float DEFAULT_LIFETIME = 30F * 15;
 
@@ -131,11 +131,18 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>
         return DEFAULT_LIFETIME;
     }
 
+    public int CompareTo(Item other)
+    {
+        return other.GetQuality() - GetQuality();
+    }
+
     public abstract string GetID();
 
     public abstract string GetName();
 
     public abstract Item GetItemPref();
+
+    public abstract ItemQuality GetQuality();
 
     #region PHOTON
 

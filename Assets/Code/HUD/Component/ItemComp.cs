@@ -7,9 +7,11 @@ public class ItemComp : MonoBehaviour
 {
     public const float SIZE = 225;
     public const float BORDER = 45;
+    private Color[] colors = new Color[4] { Color.gray, Color.green, Color.blue, Color.yellow };
 
     [SerializeField] private Text nameText;
     [SerializeField] private Image image;
+    [SerializeField] private Image quality;
     [SerializeField] private Text ammount;
     [SerializeField] private GameObject holder;
 
@@ -24,6 +26,7 @@ public class ItemComp : MonoBehaviour
 
     public void SetItem(Item item)
     {
+        SetColor(item);
         SetSprite(item.GetIcon());
         nameText.text = item.GetName();
         holder.SetActive(false);
@@ -33,8 +36,7 @@ public class ItemComp : MonoBehaviour
     public void SetItem(Item item, int n)
     {
         SetItem(item);
-        holder.SetActive(true);
-        ammount.text = n.ToString();
+        SetBadge(n.ToString());
     }
 
     public void SetItem(ItemStack stack)
@@ -63,6 +65,18 @@ public class ItemComp : MonoBehaviour
     public void SetPosition(Vector2 p)
     {
         trans.anchoredPosition = p;
+    }
+
+    public void SetBadge(string text)
+    {
+        holder.SetActive(true);
+        ammount.text = text;
+    }
+
+    private void SetColor(Item item)
+    {
+        int q = (int) item.GetQuality();
+        quality.color = colors[q];
     }
 
     #region UI

@@ -49,4 +49,9 @@ public class Lapiz : Item, IConsumable, ICraftable
     {
         return 5F;
     }
+
+    public override ItemQuality GetQuality()
+    {
+        return ItemQuality.RARE;
+    }
 }
