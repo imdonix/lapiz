@@ -1,14 +1,18 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviourPun, IPunObservable
 {
 
+    protected EntityTag myTag;
+
     #region UNITY
 
-    protected virtual void Awake() {}
+    protected virtual void Awake() 
+    {
+        this.myTag = InitTag();
+    }
 
     protected virtual void Start() {}
 
@@ -25,6 +29,7 @@ public abstract class Entity : MonoBehaviourPun, IPunObservable
     #endregion
 
 
+    
     public virtual void Teleport(Vector3 position)
     {
         transform.position = position;
@@ -42,6 +47,29 @@ public abstract class Entity : MonoBehaviourPun, IPunObservable
             Teleport(World.Loaded.GetPlayerSpawnPoint());
         }
     }
+
+    private EntityTag InitTag()
+    {
+        if (HasTag())
+        {
+            EntityTag entityTag = Instantiate(HUD.Instance.TagPref, HUD.Instance.Tags.transform).GetComponent<EntityTag>();
+            entityTag.Bind(this);
+            return entityTag;
+        }
+        return null;
+    }
+
+    public virtual void Update(EntityTag entityTag)
+    {
+        entityTag.SetName(GetName());
+    }
+
+    public virtual string GetName() 
+    {
+        return string.Empty; 
+    }
+
+    public abstract bool HasTag();
 
     public abstract void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info);
 }

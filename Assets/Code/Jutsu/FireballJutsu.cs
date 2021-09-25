@@ -16,5 +16,10 @@ public class FireballJutsu : Jutsu
         Fireball fire = PhotonNetwork.Instantiate(Fireball.name, from, Quaternion.identity, 0, args).GetComponent<Fireball>();
         fire.DoDamage(caster, Range, direction, damage, burnTime);
     }
+
+    public override bool HasTag()
+    {
+        return false;
+    }
 }
 

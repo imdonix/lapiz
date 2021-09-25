@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class Chunin : Invader 
 {
+    private const string NAME = "Chunin";
+
+    public override string GetName()
+    {
+        return NAME;
+    }
+
     #region UNITY
 
     protected override void Awake()

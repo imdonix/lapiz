@@ -33,7 +33,10 @@ public class Fireball : Entity, IPunInstantiateMagicCallback
 
     #endregion
 
-
+    public override bool HasTag()
+    {
+        return false;
+    }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){}
 
@@ -59,12 +62,12 @@ public class Fireball : Entity, IPunInstantiateMagicCallback
                 if (entity != owner)
                 {
                     entity.Damage(owner, damage);
-                    //TODO Ignite
                 }
 
         }
 
 
     }
+
 }
 

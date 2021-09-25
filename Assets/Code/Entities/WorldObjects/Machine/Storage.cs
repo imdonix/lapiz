@@ -15,6 +15,15 @@ public class Storage : Machine, IInteractable
 
     private List<Item> input = new List<Item>();
 
+    #region UNITY
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    #endregion
+
     public void InitItem(Item item)
     {
         All.Add(this);
@@ -64,6 +73,23 @@ public class Storage : Machine, IInteractable
             return string.Format("{0} [{1}]", Manager.Instance.GetLanguage().NoItemAvaiable, stack.GetName());
     }
 
+    public override bool HasTag()
+    {
+        return true;
+    }
+
+    public override string GetName()
+    {
+        return Manager.Instance.GetLanguage().Storage;
+    }
+
+    public override void Update(EntityTag entityTag)
+    {
+        entityTag.SetBadge(GetName());
+        if (!ReferenceEquals(stack, null))
+            entityTag.SetName(string.Format("{0}\n [{1}]", stack.GetName(), count));
+    }
+
     protected override void Process()
     {
         if (ReferenceEquals(stack, null)) return;
@@ -75,7 +101,6 @@ public class Storage : Machine, IInteractable
                 photonView.RPC("OnItemRecived", RpcTarget.All, count + 1);
             }
     }
-
 
     protected override int GetPriority()
     {

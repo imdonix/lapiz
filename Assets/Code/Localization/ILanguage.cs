@@ -29,5 +29,6 @@
     string Workstation { get; }
     string Backstone { get; }
     string BackstoneOre { get; }
+    string Storage { get; }
 }
 

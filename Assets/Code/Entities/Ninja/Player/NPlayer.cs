@@ -1,8 +1,11 @@
 ﻿using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class NPlayer : Ninja
 {
+    public static NPlayer Local;
+
     private Vector3 camRot = Vector3.zero;
     private Vector2 mouse = Vector2.zero;
     private bool interact = false;
@@ -11,8 +14,8 @@ public class NPlayer : Ninja
     private bool ready = false;
     private bool itemLib = false;
 
-    #region UNITY
 
+    #region UNITY
 
     protected override void Start()
     {
@@ -48,7 +51,7 @@ public class NPlayer : Ninja
         if (photonView.IsMine)
             Move();
     }
-  
+
     #endregion
 
     #region PUBLIC
@@ -56,9 +59,12 @@ public class NPlayer : Ninja
     public void TakeControll()
     {
         this.name = "-Local Player-";
+        NPlayer.Local = this;
         MaskBodyParts();
-        Camera.SetupCurrent(head.AttachCamera());
+        Camera cam = head.AttachCamera();
+        Camera.SetupCurrent(cam);
         HUD.Instance.SwitchPlayerOverlay();
+        HUD.selected = cam;
     }
 
     public override bool IsAlly()
@@ -69,6 +75,23 @@ public class NPlayer : Ninja
     public override bool IsVillager()
     {
         return false;
+    }
+
+    public override string GetName()
+    {
+        return photonView.Owner.NickName;
+    }
+
+    public override bool HasTag()
+    {
+        return !photonView.IsMine;
+    }
+
+    public override void Update(EntityTag entityTag)
+    {
+        entityTag.SetName(photonView.Owner.NickName ?? "Lajos");
+        entityTag.SetHealth(this);
+        entityTag.SetChakra(this);
     }
 
     #endregion

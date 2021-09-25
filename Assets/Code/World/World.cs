@@ -125,6 +125,7 @@ public class World : MonoBehaviour
     public void TakeFreeCam()
     {
         HUD.Instance.SwitchFreecamOverlay();
+        HUD.selected = freeCam.GetCamera();
         freeCam.EnableFreeCam();
     }
 
@@ -218,7 +219,7 @@ public class World : MonoBehaviour
         {
             Storage storage = PhotonNetwork.InstantiateRoomObject(
                 StoragePref.name,
-                StoragePositions + (Vector3.left * 2 * i),
+                StoragePositions + (Vector3.left * 3 * i),
                 Quaternion.identity).GetComponent<Storage>();
             storage.InitItem(storedItems[i]);
         }

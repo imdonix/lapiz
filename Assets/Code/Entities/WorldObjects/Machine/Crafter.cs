@@ -127,8 +127,6 @@ public abstract class Crafter : Machine, IEquatable<Crafter>
 
     public abstract string GetID();
 
-    public abstract string GetName();
-
     public bool Equals(Crafter other)
     {
         return other.GetID() == GetID();

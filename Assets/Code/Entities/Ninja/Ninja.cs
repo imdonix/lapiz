@@ -73,6 +73,11 @@ public abstract class Ninja : LivingEntity
 
     #endregion
 
+    public override bool HasTag()
+    {
+        return true;
+    }
+
     public Body GetBody()
     {
         return body;
@@ -88,20 +93,9 @@ public abstract class Ninja : LivingEntity
         return arms;
     }
 
-    public float GetChakra()
-    {
-        return chakra;
-    }
-
     public Inventory GetInventory()
     {
         return inventory;
-    }
-
-    public void SpendChakra(float chakra)
-    {
-        this.chakra -= chakra;
-        if (this.chakra < 0) this.chakra = 0;
     }
 
     public Vector3 GetLookDirection()

@@ -57,6 +57,11 @@ public abstract class Harvestable : WorldObject, IHarvestable
         return true;
     }
 
+    public override bool HasTag()
+    {
+        return false;
+    }
+
     protected abstract void OnHarvested();
 
     protected abstract Item GetReward();

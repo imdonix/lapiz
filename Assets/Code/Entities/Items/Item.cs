@@ -30,7 +30,7 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>, IComparabl
 
     protected override void Update()
     {
-        base.Awake();
+        base.Update();
 
         if (photonView.IsMine)
         {
@@ -126,6 +126,11 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>, IComparabl
         transform.position = position;
     }
 
+    public override bool HasTag()
+    {
+        return false;
+    }
+
     protected virtual float GetLifeTime()
     {
         return DEFAULT_LIFETIME;
@@ -137,8 +142,6 @@ public abstract class Item : Entity, IInteractable, IEquatable<Item>, IComparabl
     }
 
     public abstract string GetID();
-
-    public abstract string GetName();
 
     public abstract Item GetItemPref();
 

@@ -6,9 +6,14 @@ using UnityEngine;
 public class Villager : NPC, IInteractable
 {
 
+    protected string nick;
+
+    #region UNITY
+
     protected override void Start()
     {
         base.Start();
+        this.nick = DNA.GetName(this.dna);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -16,6 +21,13 @@ public class Villager : NPC, IInteractable
             RequestBadge(Village.None);
         }
     }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    #endregion
 
     protected override Job FindJob()
     {
@@ -52,6 +64,22 @@ public class Villager : NPC, IInteractable
     public override bool IsVillager()
     {
         return true;
+    }
+
+    public override bool HasTag()
+    {
+        return true;
+    }
+
+    public override string GetName()
+    {
+        return this.nick;
+    }
+
+    public override void Update(EntityTag entityTag)
+    {
+        entityTag.SetName(GetName());
+        entityTag.SetHealth(this);
     }
 
     public override void Alert(LivingEntity source)

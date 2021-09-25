@@ -15,4 +15,9 @@ public class BlinkJutsu : Jutsu
         else
             caster.Teleport(from + (direction * (Range - 1F)));
     }
+
+    public override bool HasTag()
+    {
+        return false;
+    }
 }

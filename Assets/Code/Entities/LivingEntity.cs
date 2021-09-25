@@ -28,9 +28,9 @@ public abstract class LivingEntity : Entity, IDamagable
     [Header("View")]
     [SerializeField] protected float health;
     [SerializeField] protected float chakra;
-    [SerializeField] protected float level;
+    [SerializeField] protected int level;
 
-    private int dna;
+    protected int dna;
 
     #region UNITY
 
@@ -74,6 +74,14 @@ public abstract class LivingEntity : Entity, IDamagable
         if (chakra > maxChakra) chakra = maxChakra;
     }
 
+    public override void Update(EntityTag entityTag)
+    {
+        base.Update(entityTag);
+        entityTag.SetBadge(string.Format("{0} lvl", GetLevel()));
+        entityTag.SetChakra(this);
+        entityTag.SetHealth(this);
+    }
+
     private void InitStats()
     {
         this.health = maxHealth;
@@ -98,12 +106,43 @@ public abstract class LivingEntity : Entity, IDamagable
         health += amount;
     }
 
+    public void SpendChakra(float chakra)
+    {
+        this.chakra -= chakra;
+        if (this.chakra < 0) this.chakra = 0;
+    }
+
+    public float GetMaxHP()
+    {
+        return maxHealth;
+    }
+
+    public float GetMaxChakra()
+    {
+        return maxChakra;
+    }
+
+    public float GetHP()
+    {
+        return health;
+    }
+
+    public float GetChakra()
+    {
+        return chakra;
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
     public virtual void LevelUp(int level)
     {
         int corrected = level + 1;
         this.maxHealth *= HEALTH_INC_LEVEL * corrected;
         this.maxChakra *= CHAKRA_INC_LEVEL * corrected;
-        this.level = corrected;
+        this.level = level;
         InitStats();
     }
 
@@ -145,7 +184,9 @@ public abstract class LivingEntity : Entity, IDamagable
     {
         SplashBlood();
         health -= damage;
-        if (health < 0) Die();
+        if (health < 0) 
+            Die();
+
     }
 
     #region SERIALIZATION

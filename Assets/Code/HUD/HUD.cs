@@ -7,8 +7,13 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public static Camera selected;
     public static HUD Instance;
     private static List<Display> cache;
+
+    [Header("Tags")]
+    [SerializeField] public Canvas Tags;
+    [SerializeField] public EntityTag TagPref;
 
     [Header("Components")]
     [SerializeField] public LiveStateDisplay LiveState;
@@ -17,6 +22,7 @@ public class HUD : MonoBehaviour
     [SerializeField] public GameOverDisplay GameOver;
     [SerializeField] public ItemLibraryDisplay ItemLibrary;
     [SerializeField] public CraftingDisplay Craft;
+
 
     #region UNITY
 

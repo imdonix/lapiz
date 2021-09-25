@@ -62,6 +62,11 @@ public abstract class Machine : WorldObject
         npcRequested.Add(item);
     }
 
+    public override bool HasTag()
+    {
+        return true;
+    }
+
     protected abstract void ResetInput();
 
     protected abstract void Store(Item item);
@@ -72,4 +77,5 @@ public abstract class Machine : WorldObject
     {
         return transform.position + outputLocalPosition;
     }
+
 }

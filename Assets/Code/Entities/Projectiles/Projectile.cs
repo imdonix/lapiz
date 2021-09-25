@@ -33,4 +33,9 @@ public abstract class Projectile : Entity
     {
         PhotonNetwork.Destroy(gameObject);
     }
+
+    public override bool HasTag()
+    {
+        return false;
+    }
 }

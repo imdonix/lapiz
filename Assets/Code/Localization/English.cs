@@ -38,5 +38,6 @@ public class English : ILanguage
     public string Workstation => "Workstation";
     public string Backstone => "Backstone";
     public string BackstoneOre => "Backstone ore";
+    public string Storage => "Storage";
 }
 

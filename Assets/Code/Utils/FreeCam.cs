@@ -71,4 +71,9 @@ public class FreeCam : MonoBehaviour
     {
         active = false;
     }
+
+    public Camera GetCamera()
+    {
+        return cam;
+    }
 }
