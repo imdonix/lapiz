@@ -4,8 +4,9 @@ Lapiz is the codename for ??? named game which is a Tower defense / Survival co-
 The game use the [Photon PUN](https://www.photonengine.com/en-US/PUN) network engine.
 
 # How you can try it out:
-## Downloads:
-Soon
+
+See real
+
 ## Clone
 1. Clone the repo.
 2. Open with [Unity 2020.3.18f1](https://unity3d.com/get-unity/download/archive).
