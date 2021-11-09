@@ -5,7 +5,7 @@ The game use the [Photon PUN](https://www.photonengine.com/en-US/PUN) network en
 
 # How you can try it out:
 
-See real
+See releases: [HERE](https://github.com/imdonix/lapiz/releases) 
 
 ## Clone
 1. Clone the repo.
