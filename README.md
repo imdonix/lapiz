@@ -14,12 +14,12 @@ See releases: [HERE](https://github.com/imdonix/lapiz/releases)
 4. Done.
 
 # Footage
-
-![1](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/1.png)
-![2](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/2.png)
-![3](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/3.png)
-![4](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/4.png)
-![5](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/5.png)
-![6](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/6.png)
-![7](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/7.png)
-![8](https://raw.githubusercontent.com/imdonix/lapiz/master/Doc/8.png)
+	/assets/images/electrocat.png
+![1](Doc/1.png)
+![2](Doc/2.png)
+![3](Doc/3.png)
+![4](Doc/4.png)
+![5](Doc/5.png)
+![6](Doc/6.png)
+![7](Doc/7.png)
+![8](Doc/8.png)
