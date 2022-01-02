@@ -1,20 +1,20 @@
 # Lapiz
 Lapiz is the codename for ??? named game which is a Tower defense / Survival co-op multiplayer game inspirated by the [Naruto](https://en.wikipedia.org/wiki/Naruto).
-
 The game use the [Photon PUN](https://www.photonengine.com/en-US/PUN) network engine.
 
-# Realeases
 
-See releases: [HERE](https://github.com/imdonix/lapiz/releases) 
+## How to play
 
-## Clone
 1. Clone the repo.
 2. Open with [Unity 2020.3.18f1](https://unity3d.com/get-unity/download/archive).
 3. Set the Photon application key in `Assets/Photon/PhotonUnityNetworking/Resources`.
-4. Done.
+4. Build or Run the game.
+
+OR
+
+See Alpha releases: [HERE](https://github.com/imdonix/lapiz/releases) 
 
 # Footage
-	/assets/images/electrocat.png
 ![1](Doc/1.png)
 ![2](Doc/2.png)
 ![3](Doc/3.png)
